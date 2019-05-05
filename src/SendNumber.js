@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { ImageBackground, Image, Text, View, Dimensions, TouchableOpacity, TextInput } from 'react-native';
+import { Actions } from 'react-native-router-flux';
+import InputScrollView from 'react-native-input-scroll-view';
 
 
-export default class SendNumber extends React.Component {
+
+export default class SendNumber extends Component {
 
     constructor(props) {
         super(props)
@@ -11,64 +14,69 @@ export default class SendNumber extends React.Component {
         }
     }
 
-
-
-    _sendNumber = () => {
+    _enterCode = () => {
+        Actions.enterCode()
 
     }
 
 
     render() {
         return (
-            <View style={styles.SendNumber}>
-                <ImageBackground style={styles.SNImage}
-                    imageStyle={{
-                        borderBottomRightRadius: 300,
-                    }}
-                    source={require('./../Assets/Images/sendNumber.png')}
-                >
+            <InputScrollView multilineInputStyle={styles.ISV}>
+                <View style={styles.SendNumber}>
+                    <ImageBackground style={styles.SNImage}
+                        imageStyle={{
+                            borderBottomRightRadius: 300,
+                        }}
+                        source={require('./../Assets/Images/sendNumber.png')}
+                    >
 
-                    <View style={styles.logoBox} >
-                        <Image style={styles.logo} source={require('../Assets/Images/logo1.png')} />
-                    </View>
-
-                    <View style={styles.SNBox}>
-                        <Text style={styles.SNBoxTitle} >
-                            شماره تلفن
-                        </Text>
-                        <View style={styles.SNInpuBox} >
-
-                            <TextInput
-                                style={styles.SNInpuBox1}
-                                onChangeText={(countryCode) => this.setState({ countryCode })}
-                                value={this.state.text}
-                                keyboardType='numeric'
-                            />
-                            <TextInput
-                                style={styles.SNInpuBox2}
-                                onChangeText={(number) => this.setState({ number })}
-                                value={this.state.text}
-                                keyboardType='numeric'
-                            />
+                        <View style={styles.logoBox} >
+                            <Image style={styles.logo} source={require('../Assets/Images/logo1.png')} />
                         </View>
-                    </View>
 
-                    <TouchableOpacity style={styles.SNBtn} onPress={this._sentNumber} activeOpacity={.6}>
-                        <ImageBackground style={styles.SNBImg} imageStyle={{ borderRadius: 50 }} source={require('./../Assets/Images/sendButton.png')}>
-                            <Text style={styles.SNBtnText} >
-                                فرستادن
+                        <View style={styles.SNBox}>
+                            <Text style={styles.SNBoxTitle} >
+                                شماره تلفن
+                        </Text>
+                            <View style={styles.SNInpuBox} >
+
+                                <TextInput
+                                    style={styles.SNInpuBox1}
+                                    onChangeText={(countryCode) => this.setState({ countryCode })}
+                                    value={this.state.text}
+                                    keyboardType='numeric'
+                                    value="+98"
+                                />
+                                <TextInput
+                                    style={styles.SNInpuBox2}
+                                    onChangeText={(number) => this.setState({ number })}
+                                    value={this.state.text}
+                                    keyboardType='numeric'
+                                />
+                            </View>
+                        </View>
+
+                        <TouchableOpacity style={styles.SNBtn} onPress={this._enterCode} activeOpacity={.6}>
+                            <ImageBackground style={styles.SNBImg} imageStyle={{ borderRadius: 50 }} source={require('./../Assets/Images/sendButton.png')}>
+                                <Text style={styles.SNBtnText} >
+                                    فرستادن
                             </Text>
-                        </ImageBackground>
-                    </TouchableOpacity>
-                </ImageBackground>
-            </View>
+                            </ImageBackground>
+                        </TouchableOpacity>
+                    </ImageBackground>
+                </View>
+            </InputScrollView>
+
         );
     }
 }
 
 const styles = ({
+    ISV:{
+        flex:1
+    },
     SendNumber: {
-        backgroundColor: '#fff',
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
@@ -80,12 +88,12 @@ const styles = ({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    logoBox:{
-        width:150,
-        height:150,
+    logoBox: {
+        width: 150,
+        height: 150,
         backgroundColor: '#f1f1f1',
-        borderRadius:100,
-        justifyContent:'center',
+        borderRadius: 100,
+        justifyContent: 'center',
         alignItems: 'center',
 
     },
@@ -98,7 +106,7 @@ const styles = ({
         flexDirection: 'row',
         width: Dimensions.get('window').width - 100,
         borderRadius: 5,
-        shadowColor: "#eee",
+        shadowColor: "#f7f7f7",
         shadowOpacity: 1,
         elevation: 1,
     },
@@ -107,7 +115,7 @@ const styles = ({
         width: '30%',
         borderRightWidth: 1,
         borderRightColor: '#ccc',
-        paddingLeft: 10,
+        paddingLeft: 30,
         fontSize: 12,
         fontWeight: '900'
     },
