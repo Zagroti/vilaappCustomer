@@ -24,8 +24,8 @@ export default class EnterCode extends Component {
     }
 
 
-    _sendNumber = () => {
-        Actions.sendNumber()
+    _codeAuth = () => {
+        Actions.home()
 
     }
 
@@ -171,12 +171,12 @@ export default class EnterCode extends Component {
                     </View>
 
 
-                    <TouchableOpacity style={styles.SaveButton} onPress={this._enterCode} activeOpacity={.6}>
+                    <TouchableOpacity style={styles.SaveButton} onPress={this._codeAuth} activeOpacity={.6}>
                         <ImageBackground style={styles.SaveButtonImage}
                             imageStyle={{
                                 borderRadius: 50,
                             }}
-                            source={require('./../Assets/Images/save.png')}
+                            source={require('./../../Assets/Images/save.png')}
                         >
                             <Text style={styles.SaveText} >
                                 ذخیره
@@ -198,7 +198,6 @@ const styles = ({
         alignItems: 'center',
     },
     EnterCode: {
-        backgroundColor: '#f6f6f6',
         flexDirection: 'column',
         justifyContent: 'space-around',
         alignItems: 'center',

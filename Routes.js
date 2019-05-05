@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
-import { Router,Stack, Scene , Actions } from 'react-native-router-flux';
-import { Text, View ,Image, TouchableOpacity } from 'react-native';
+import { Router, Stack, Scene, Actions, Drawer } from 'react-native-router-flux';
+import { Text, View, Image, TouchableOpacity } from 'react-native';
 
 
-import SendNumber from './src/SendNumber'
-import EnterCode from './src/EnterCode'
+import SendNumber from './src/components/SendNumber'
+import EnterCode from './src/components/EnterCode'
+import Home from './src/container/Home'
 
-
+//back button
 const renderBackButton = () => (
     <TouchableOpacity
-		onPress={() => Actions.pop()}
-		style={{ width: 30, height: 20 , marginLeft:20}}
+        onPress={() => Actions.pop()}
+        style={{ width: 30, height: 20, marginLeft: 20 }}
     >
         <View style={{ alignItems: 'center' }}>
             <Image
@@ -24,31 +25,43 @@ const renderBackButton = () => (
     </TouchableOpacity>
 );
 
+
+
+
 const Routes = () => (
-	<Router   >
-		<Stack key="root" >
-            <Scene key="sendNumber" 
-                   component={SendNumber} 
-                   title="Send Number" initial={true}  
-                   hideNavBar={true}
-                   />
-            <Scene key="enterCode" component={EnterCode} 
-                   title="" 
-                   titleStyle={{ color: 'transparent' }}
-                   renderBackButton={() => renderBackButton()}
-                   navigationBarStyle={styles.login_style_bar}
-                   sceneStyle={styles.login_scene_style}
-                   />
-		</Stack>
-	</Router>
+    <Router   >
+        <Stack key="root" >
+            <Scene key="sendNumber"
+                component={SendNumber}
+                title="Send Number" initial={true}
+                hideNavBar={true}
+            />
+            <Scene key="enterCode" component={EnterCode}
+                title=""
+                titleStyle={{ color: 'transparent' }}
+                renderBackButton={() => renderBackButton()}
+                navigationBarStyle={styles.login_style_bar}
+                sceneStyle={styles.login_scene_style}
+            />
+            <Scene key="home"
+                component={Home}
+                title="home" 
+                hideNavBar={true}
+            />
+
+        </Stack>
+    </Router>
 );
+
+
+
 
 const styles = ({
     login_style_bar: {
         backgroundColor: '#f6f6f6',
         shadowColor: "#f7f7f7",
         elevation: 0,
-        height:50,
+        height: 50,
 
     },
 

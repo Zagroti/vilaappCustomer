@@ -10,7 +10,7 @@ export default class SplashScreen extends Component {
                                  imageStyle={{
                                     borderBottomRightRadius: 300,
                                  }}
-                                 source={require('./../Assets/Images/splash.png')} >
+                                 source={require('./../../Assets/Images/splash.png')} >
                     <View style={styles.VilaApp} >
                         <Text style={styles.VilaAppText} >
                             Power By VilaApp

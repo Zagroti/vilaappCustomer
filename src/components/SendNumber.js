@@ -38,10 +38,10 @@ export default class SendNumber extends Component {
                         imageStyle={{
                             borderBottomRightRadius: 300,
                         }}
-                        source={require('./../Assets/Images/sendNumber.png')}
+                        source={require('./../../Assets/Images/sendNumber.png')}
                     >
                         <View style={styles.logoBox} >
-                            <Image style={styles.logo} source={require('../Assets/Images/logo1.png')} />
+                            <Image style={styles.logo} source={require('../../Assets/Images/logo1.png')} />
                         </View>
 
                         <View style={styles.numberInputs}>
@@ -67,7 +67,7 @@ export default class SendNumber extends Component {
                         </View>
 
                         <TouchableOpacity style={styles.sendBtn} onPress={this._enterCode} activeOpacity={.6}>
-                            <ImageBackground style={styles.sendBtnImg} imageStyle={{ borderRadius: 50 }} source={require('./../Assets/Images/sendButton.png')}>
+                            <ImageBackground style={styles.sendBtnImg} imageStyle={{ borderRadius: 50 }} source={require('./../../Assets/Images/sendButton.png')}>
                                 <Text style={styles.sendBtnText} >
                                     فرستادن
                                 </Text>
@@ -90,7 +90,6 @@ const styles = ({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#A52D53',
-
     },
     bgImage: {
         height: Dimensions.get('window').height,

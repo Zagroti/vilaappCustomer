@@ -3,7 +3,7 @@
 import React, {Component} from 'react';
 
 
-import SplashScreen from './src/SplashScreen'
+import SplashScreen from './src/components/SplashScreen'
 import Routes from './Routes';
 
 
@@ -33,15 +33,15 @@ export default class App extends Component {
     return new Promise((resolve) =>
       setTimeout(
         () => { resolve('result') },
-        1000
+        0
       )
     );
   }
 
   render() {
-    // if (this.state.isLoading) {
-    //   return <SplashScreen />;
-    // }
+    if (this.state.isLoading) {
+      return <SplashScreen />;
+    }
   
     return (
         <Routes />
