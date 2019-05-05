@@ -25,8 +25,8 @@ const renderBackButton = () => (
 );
 
 const Routes = () => (
-	<Router >
-		<Stack key="root"  >
+	<Router   >
+		<Stack key="root" >
             <Scene key="sendNumber" 
                    component={SendNumber} 
                    title="Send Number" initial={true}  
@@ -48,6 +48,8 @@ const styles = ({
         backgroundColor: '#f6f6f6',
         shadowColor: "#f7f7f7",
         elevation: 0,
+        height:50,
+
     },
 
 })

@@ -1,17 +1,27 @@
 import React, { Component } from 'react';
-import { Text, View, Dimensions, ImageBackground, 
-         TouchableOpacity, 
-         TouchableWithoutFeedback,
-         Keyboard
-        
-        } from 'react-native';
+import {
+    Text, View, Dimensions, ImageBackground,
+    TouchableOpacity,
+    TextInput
+} from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import InputScrollView from 'react-native-input-scroll-view';
 
 
 
 export default class EnterCode extends Component {
 
-
+    constructor(props) {
+        super(props)
+        this.state = {
+            bg1: '#dfdfdf',
+            bg2: '#dfdfdf',
+            bg3: '#dfdfdf',
+            bg4: '#dfdfdf',
+            bg5: '#dfdfdf',
+            bg6: '#dfdfdf',
+        }
+    }
 
 
     _sendNumber = () => {
@@ -22,13 +32,13 @@ export default class EnterCode extends Component {
 
     render() {
         return (
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss()} accessible={false}>
+            <InputScrollView multilineInputStyle={styles.ISV}>
                 <View style={styles.EnterCode}>
 
                     <View style={styles.Box1} >
                         <Text style={styles.MyCode} >
                             کد فعال سازی
-                    </Text>
+                        </Text>
                         <View style={styles.ResendBox}>
                             <TouchableOpacity style={styles.Resend} onPress={this._sendNumber} activeOpacity={.6}>
                                 <Text style={styles.ResendText} >ارسال مجدد</Text>
@@ -40,14 +50,123 @@ export default class EnterCode extends Component {
                     <View style={styles.Box2} >
                         <Text style={styles.ActivationCodeText} >
                             کد فعال سازی خود را وارد کنید
-                    </Text>
+                        </Text>
+
                         <View style={styles.codeShowBox}>
-                            <Text style={styles.MyCodeNumber}>3</Text>
-                            <Text style={styles.MyCodeNumber}>4</Text>
-                            <Text style={styles.MyCodeNumber}>0</Text>
-                            <Text style={styles.MyCodeNumber}>9</Text>
-                            <Text style={styles.MyCodeNumber}>2</Text>
-                            <Text style={styles.MyCodeNumber}>8</Text>
+                            <TextInput style={styles.MyCodeNumber}
+                                onFocus={() => {
+                                    this.setState({ bg1: '#C72A54' })
+                                }}
+                                onBlur={() => {
+                                    this.setState({ bg1: '#dfdfdf' })
+                                }} value="2"
+                                style={{
+                                    borderBottomColor: this.state.bg1,
+                                    marginHorizontal: 5,
+                                    paddingHorizontal: 5,
+                                    fontSize: 30,
+                                    paddingBottom: 5,
+                                    borderBottomWidth: 2,
+                                    fontWeight: '900',
+                                    textAlign: 'center'
+
+                                }}
+                            />
+                            <TextInput style={styles.MyCodeNumber}
+                                onFocus={() => {
+                                    this.setState({ bg2: '#C72A54' })
+                                }}
+                                onBlur={() => {
+                                    this.setState({ bg2: '#dfdfdf' })
+                                }} value="4"
+                                style={{
+                                    borderBottomColor: this.state.bg2,
+                                    marginHorizontal: 5,
+                                    paddingHorizontal: 5,
+                                    fontSize: 30,
+                                    paddingBottom: 5,
+                                    borderBottomWidth: 2,
+                                    fontWeight: '900',
+                                    textAlign: 'center'
+
+                                }}
+                            />
+                            <TextInput style={styles.MyCodeNumber}
+                                onFocus={() => {
+                                    this.setState({ bg3: '#C72A54' })
+                                }}
+                                onBlur={() => {
+                                    this.setState({ bg3: '#dfdfdf' })
+                                }} value="7"
+                                style={{
+                                    borderBottomColor: this.state.bg3,
+                                    marginHorizontal: 5,
+                                    paddingHorizontal: 5,
+                                    fontSize: 30,
+                                    paddingBottom: 5,
+                                    borderBottomWidth: 2,
+                                    fontWeight: '900',
+                                    textAlign: 'center'
+
+                                }}
+                            />
+                            <TextInput style={styles.MyCodeNumber}
+                                onFocus={() => {
+                                    this.setState({ bg4: '#C72A54' })
+                                }}
+                                onBlur={() => {
+                                    this.setState({ bg4: '#dfdfdf' })
+                                }} value="0"
+                                style={{
+                                    borderBottomColor: this.state.bg4,
+                                    marginHorizontal: 5,
+                                    paddingHorizontal: 5,
+                                    fontSize: 30,
+                                    paddingBottom: 5,
+                                    borderBottomWidth: 2,
+                                    fontWeight: '900',
+                                    textAlign: 'center'
+
+                                }}
+                            />
+                            <TextInput style={styles.MyCodeNumber}
+                                onFocus={() => {
+                                    this.setState({ bg5: '#C72A54' })
+                                }}
+                                onBlur={() => {
+                                    this.setState({ bg5: '#dfdfdf' })
+                                }} value="0"
+                                style={{
+                                    borderBottomColor: this.state.bg5,
+                                    marginHorizontal: 5,
+                                    paddingHorizontal: 5,
+                                    fontSize: 30,
+                                    paddingBottom: 5,
+                                    borderBottomWidth: 2,
+                                    fontWeight: '900',
+                                    textAlign: 'center'
+
+                                }}
+                            />
+                            <TextInput style={styles.MyCodeNumber}
+                                onFocus={() => {
+                                    this.setState({ bg6: '#C72A54' })
+                                }}
+                                onBlur={() => {
+                                    this.setState({ bg6: '#dfdfdf' })
+                                }} value="9"
+                                style={{
+                                    borderBottomColor: this.state.bg6,
+                                    marginHorizontal: 5,
+                                    paddingHorizontal: 5,
+                                    fontSize: 30,
+                                    paddingBottom: 5,
+                                    borderBottomWidth: 2,
+                                    fontWeight: '900',
+                                    textAlign: 'center'
+
+                                }}
+                            />
                         </View>
                     </View>
 
@@ -61,29 +180,31 @@ export default class EnterCode extends Component {
                         >
                             <Text style={styles.SaveText} >
                                 ذخیره
-                    </Text>
+                            </Text>
                         </ImageBackground>
                     </TouchableOpacity>
-
-
-
                 </View>
-                </TouchableWithoutFeedback>
+            </InputScrollView>
+
+
+
         );
     }
 }
 
 const styles = ({
-    x:{
-        flex:1
+    ISV: {
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     EnterCode: {
         backgroundColor: '#f6f6f6',
-        flex: 1,
         flexDirection: 'column',
-        justifyContent: 'space-between',
+        justifyContent: 'space-around',
         alignItems: 'center',
-
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').height - 50,
+        backgroundColor: '#f6f6f6',
     },
 
     Box1: {
@@ -134,7 +255,6 @@ const styles = ({
         shadowColor: "#f7f7f7",
         shadowOpacity: 1,
         elevation: 2,
-        height: 10
     },
 
     ActivationCodeText: {
@@ -145,22 +265,17 @@ const styles = ({
 
     },
     codeShowBox: {
-        flexDirection:'row',
+        flexDirection: 'row',
     },
-    MyCodeNumber:{
-        marginHorizontal: 5,
-        paddingHorizontal: 5,
-        fontSize:20,
-        paddingBottom: 5,
-        borderBottomWidth: 1,
-        borderBottomColor: '#dfdfdf',
-        fontWeight:'900'
+    MyCodeNumber: {
+
     },
 
     SaveButton: {
         width: Dimensions.get('window').width - 100,
         marginTop: 40,
-        flexGrow: 1,
+        flexGrow: 2,
+        justifyContent: "flex-start"
     },
     SaveButtonImage: {
         width: '100%',
