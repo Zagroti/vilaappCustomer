@@ -9,6 +9,7 @@ import {
     TouchableOpacity
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import NoRequest from '../components/NoRequest';
 
 export default class Home extends Component {
 
@@ -71,24 +72,31 @@ export default class Home extends Component {
                     <View style={styles.up}>
                         <View style={styles.requestBox} >
                             <Text style={styles.title} >درخواست های من</Text>
-                            <View style={styles.noRequest}>
-                                <Image style={styles.marker} source={require('../../Assets/Images/mappin.png')} />
-                                <Text style={styles.noRequestTitle}>چیزی برای نمایش وجود ندارد</Text>
-                                <Text style={styles.noRequestText}>برای درخواست دکمه ی نشانه گر را فشار دهید</Text>
-                            </View>
+                            <NoRequest />
                         </View>
                     </View>
 
                     <View style={styles.down}>
-                        <View>
-                            <Image style={styles.bottomIcons} source={require('../../Assets/Images/user.png')} />
-                        </View>
-                        <View style={styles.middleBtn}>
-                            <Image style={styles.bottomIcons} source={require('../../Assets/Images/bluemarker.png')} />
-                        </View>
-                        <View>
-                            <Image style={styles.bottomIcons} source={require('../../Assets/Images/history.png')} />
-                        </View>
+                        <TouchableOpacity activeOpacity={.6}>
+                            <View style={styles.bottomIcons}>
+                                <Image style={styles.bottomIcon} source={require('../../Assets/Images/user.png')} />
+                            </View>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity activeOpacity={.9}>
+                            <View style={styles.middleBtn}>
+                                <View style={styles.middleInside}>
+                                    <Image style={styles.middleIcon} source={require('../../Assets/Images/bluemarker.png')} />
+
+                                </View>
+                            </View>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity activeOpacity={.6}>
+                            <View style={styles.bottomIcons}>
+                                <Image style={styles.bottomIcon} source={require('../../Assets/Images/history.png')} />
+                            </View>
+                        </TouchableOpacity>
                     </View >
 
                 </View>
@@ -147,47 +155,54 @@ const styles = ({
         marginVertical: 20,
     },
 
-    noRequest: {
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: Dimensions.get('window').width - 100,
-        backgroundColor: '#fff',
-        padding: 20,
-        borderRadius: 10,
-    },
-
-    marker: {
-        fontWeight: '500',
-        marginBottom: 20,
-        width: 50,
-        height: 50
-    },
-
-    noRequestTitle: {
-        fontSize: 20,
-        fontWeight: '500',
-        color: '#333'
-    },
-    noRequestText: {
-        fontSize: 14,
-        fontWeight: '500',
-        color: '#555'
-    },
-
+    
     down: {
         width: Dimensions.get('window').width,
         height: 100,
         backgroundColor: "#C92652",
         flexDirection: 'row',
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
+        alignItems: 'center',
     },
     middleBtn: {
         positions: 'absulote',
-        bottom: 20,
+        bottom: 50,
+        width: 90,
+        height: 90,
+        borderRadius: 50,
+        borderWidth: 5,
+        borderColor: '#C92652',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-    bottomIcons:{
-        
+    middleInside: {
+        width: 80,
+        height: 80,
+        backgroundColor: '#fff',
+        // borderBottomWidth:1,
+        // borderTopWidth:1,
+        // borderRightWidth:1,
+        // borderLeftWidth:1,
+        borderWidth: 2,
+        borderColor: '#eee',
+        borderRadius: 50,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+
+    },
+    middleIcon: {
+        width: 40,
+        height: 50,
+    },
+
+    bottomIcons: {
+
+    },
+    bottomIcon: {
+        width: 30,
+        height: 30
     }
 
 
