@@ -1,4 +1,4 @@
-import React ,  { Component } from 'react';
+import React, { Component } from 'react';
 import {
     Text,
     View,
@@ -91,25 +91,18 @@ export default class Home extends Component {
                     </View>
 
                     <View style={styles.down}>
-                        <TouchableOpacity activeOpacity={.6}>
-                            <View style={styles.bottomIcons}>
-                                <Image style={styles.bottomIcon} source={require('../../Assets/Images/user.png')} />
+                        <TouchableOpacity activeOpacity={.6} style={styles.bottomIcons}>
+                            <Image style={styles.bottomIcon} source={require('../../Assets/Images/user.png')} />
+                        </TouchableOpacity>
+
+                        <TouchableOpacity activeOpacity={.9} style={styles.middleBtn}>
+                            <View style={styles.middleInside}>
+                                <Image style={styles.middleIcon} source={require('../../Assets/Images/bluemarker.png')} />
                             </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity activeOpacity={.9}>
-                            <View style={styles.middleBtn}>
-                                <View style={styles.middleInside}>
-                                    <Image style={styles.middleIcon} source={require('../../Assets/Images/bluemarker.png')} />
-
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity activeOpacity={.6}>
-                            <View style={styles.bottomIcons}>
-                                <Image style={styles.bottomIcon} source={require('../../Assets/Images/history.png')} />
-                            </View>
+                        <TouchableOpacity activeOpacity={.6} style={styles.bottomIcons}>
+                            <Image style={styles.bottomIcon} source={require('../../Assets/Images/history.png')} />
                         </TouchableOpacity>
                     </View >
 
@@ -167,7 +160,7 @@ const styles = ({
 
     },
 
-    
+
     down: {
         width: Dimensions.get('window').width,
         height: 100,
