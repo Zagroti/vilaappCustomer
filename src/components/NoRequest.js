@@ -1,15 +1,22 @@
+import React , { Component } from 'react';
+import { Text, View, Dimensions , Image } from 'react-native';
 
-import {Text, View, Dimensions} from 'react-native';
+export default class NoRequest extends Component {
 
 
 
-const NoRequest = (
-    <View style={styles.noRequest}>
-        <Image style={styles.marker} source={require('../../Assets/Images/mappin.png')} />
-        <Text style={styles.noRequestTitle}>چیزی برای نمایش وجود ندارد</Text>
-        <Text style={styles.noRequestText}>برای درخواست دکمه ی نشانه گر را فشار دهید</Text>
-    </View>
-)
+
+    render() {
+
+        return (
+            <View style={styles.noRequest}>
+                <Image style={styles.marker} source={require('../../Assets/Images/mappin.png')} />
+                <Text style={styles.noRequestTitle}>چیزی برای نمایش وجود ندارد</Text>
+                <Text style={styles.noRequestText}>برای درخواست دکمه ی نشانه گر را فشار دهید</Text>
+            </View>
+        )
+    }
+}
 
 const styles = ({
     noRequest: {
@@ -29,16 +36,14 @@ const styles = ({
     },
 
     noRequestTitle: {
-        fontSize: 20,
-        fontWeight: '500',
+        fontSize: 16,
+        fontFamily: 'ISBold',
         color: '#333'
     },
     noRequestText: {
-        fontSize: 14,
-        fontWeight: '500',
+        fontSize: 12,
+        fontFamily: 'ISBold',        
         color: '#555'
     },
 
 })
-
-export default NoRequest;

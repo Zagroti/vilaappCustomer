@@ -215,8 +215,8 @@ const styles = ({
     },
 
     MyCode: {
-        fontSize: 32,
-        fontWeight: '500'
+        fontSize: 22,
+        fontFamily: 'ISBold',
     },
 
     ResendBox: {
@@ -235,10 +235,10 @@ const styles = ({
     },
 
     ResendText: {
-        fontSize: 16,
-        fontWeight: '900',
+        fontSize: 14,
+        fontFamily: 'ISBold',
         marginRight: 10,
-        color: '#333'
+        color: '#555'
     },
 
 
@@ -257,11 +257,10 @@ const styles = ({
     },
 
     ActivationCodeText: {
-        fontSize: 14,
+        fontFamily:"ISBold",
         color: '#333',
-        fontWeight: '900',
         marginBottom: 20,
-
+        fontSize:12
     },
     codeShowBox: {
         flexDirection: 'row',
@@ -285,9 +284,9 @@ const styles = ({
 
     },
     SaveText: {
-        fontWeight: '500',
+        fontFamily:"ISBold",
         color: '#fff',
-        fontSize: 18,
+        fontSize: 16,
     },
 
 

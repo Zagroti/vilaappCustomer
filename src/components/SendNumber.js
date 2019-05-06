@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React , { Component } from 'react';
 import { ImageBackground, Image, Text, View, Dimensions, TouchableOpacity, TextInput } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import InputScrollView from 'react-native-input-scroll-view';
@@ -141,9 +141,10 @@ const styles = ({
     },
     numberInputsTitle: {
         color: '#686868',
-        fontSize: 18,
-        fontWeight: '500',
-        marginBottom: 10
+        fontSize: 16,
+        marginBottom: 10,
+        fontFamily: 'ISBold',
+
     },
     sendBtn: {
         width: Dimensions.get('window').width - 100,
@@ -159,9 +160,9 @@ const styles = ({
     },
 
     sendBtnText: {
-        fontWeight: '500',
+        fontFamily:'ISBold',
         color: '#fff',
-        fontSize: 18,
+        fontSize: 16,
     }
 
 

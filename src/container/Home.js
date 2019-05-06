@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React ,  { Component } from 'react';
 import {
     Text,
     View,
@@ -6,7 +6,9 @@ import {
     DrawerLayoutAndroid,
     Image,
     ImageBackground,
-    TouchableOpacity
+    TouchableOpacity,
+    BackHandler,
+    ToastAndroid,
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import NoRequest from '../components/NoRequest';
@@ -29,7 +31,19 @@ export default class Home extends Component {
         this.refs['DRAWER_REF'].openDrawer();
     }
 
+    componentDidMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+    }
 
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+    }
+
+    //for disable back button haedware
+    handleBackButton() {
+        ToastAndroid.show('Back button is pressed', ToastAndroid.SHORT);
+        return true;
+    }
 
     render() {
 
@@ -141,18 +155,16 @@ const styles = ({
         borderBottomLeftRadius: 50,
     },
 
-    requestBox: {
-
-    },
 
     title: {
-        fontSize: 28,
-        fontWeight: '900',
+        fontSize: 22,
+        fontFamily: 'ISBold',
         color: '#333',
         borderBottomWidth: 1,
         borderBottomColor: '#e7e7e7',
         paddingBottom: 10,
         marginVertical: 20,
+
     },
 
     

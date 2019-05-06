@@ -1,6 +1,6 @@
 
 
-import React, {Component} from 'react';
+import React , {Component} from 'react';
 
 
 import SplashScreen from './src/components/SplashScreen'

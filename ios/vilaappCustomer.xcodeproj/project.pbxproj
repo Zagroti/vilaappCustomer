@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -40,6 +39,30 @@
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
 		ED2971652150620600B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2971642150620600B7C4FE /* JavaScriptCore.framework */; };
+		4E865A034D8249128949FFF6 /* font1.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 756D3C437DC642279B045B0E /* font1.ttf */; };
+		6393C3A75B0A425FA16C9EBB /* IRANSansWeb_Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F10B2C81A6E4134AD81EC24 /* IRANSansWeb_Bold.ttf */; };
+		D943A98CDF954616902EF4CC /* IRANSansWeb_Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE1042519B70445DA8913E4F /* IRANSansWeb_Light.ttf */; };
+		F453BD1F3CEA4152B1700D44 /* IRANSansWeb_Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 243752899A3540DDAFAA503C /* IRANSansWeb_Medium.ttf */; };
+		7E6725F5E5E84BAB89F168FB /* IRANSansWeb_UltraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A08DB3AA92F74A078A509A2B /* IRANSansWeb_UltraLight.ttf */; };
+		3D32D9DCAE274ABB9682F99C /* IRANSansWeb(FaNum)_Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF16C102816A4B26A377B99C /* IRANSansWeb(FaNum)_Bold.ttf */; };
+		33F7A351378846E0A778104D /* IRANSansWeb(FaNum)_Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4F6A252105284A739181C662 /* IRANSansWeb(FaNum)_Light.ttf */; };
+		D542553EBBE74A0795E5D732 /* IRANSansWeb(FaNum)_Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D7A89C1E7D0D494AB7891353 /* IRANSansWeb(FaNum)_Medium.ttf */; };
+		96D2F1132F9F4D74A56F1781 /* IRANSansWeb(FaNum)_UltraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7694AF35F9C741708FA4B839 /* IRANSansWeb(FaNum)_UltraLight.ttf */; };
+		A03C5CCB033F4BBB85D0D77E /* IRANSansWeb(FaNum).ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0C42F369C7C4F17B3135D35 /* IRANSansWeb(FaNum).ttf */; };
+		4D3262F8DFC74C4DA9BBF51F /* xxx.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F30DC0DB137741E2B6A25C6D /* xxx.ttf */; };
+		66AA4994983542DBAC8E3089 /* sss.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6FC2E05342FB444EB985D44D /* sss.ttf */; };
+		A8D4F5F0ABBB49DF8E9775AB /* yes.otf in Resources */ = {isa = PBXBuildFile; fileRef = 09A36658D38845B88F797C42 /* yes.otf */; };
+		C011456FA5544EF596B92C19 /* IS.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E1A9BB2274D24B88BE7104EA /* IS.ttf */; };
+		28B087B393834CF398AD7D4D /* ISBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3DC38531590B4D52842FBECD /* ISBold.ttf */; };
+		2546B852FE034FCE8DA602C0 /* ISF(FaNum).ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D3EB9AC22EC4B06BF94DA4F /* ISF(FaNum).ttf */; };
+		B3792B612B194CE7A0D7411B /* ISFBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 317175AEBF554CBFBED2B1BB /* ISFBold.ttf */; };
+		1690E6B7951D424892C482C0 /* ISFLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C9898D0F14E24E6B8CEB0003 /* ISFLight.ttf */; };
+		785CE0C0998341EDAB9B7A0A /* ISFMedium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A69F0A0580D44571B64B6086 /* ISFMedium.ttf */; };
+		9B63E712C98E4FF1AEB1C181 /* ISFUltraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3BD5B2197D664F68AE2D47EF /* ISFUltraLight.ttf */; };
+		58FEF96AE48745459497A855 /* ISLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A7843FBA6FB5436E85BB3B2E /* ISLight.ttf */; };
+		69FA001AB297475E9223EA3C /* ISMedium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6C2B67034224427AAB305908 /* ISMedium.ttf */; };
+		5605B9BB228E4DA4A687D21A /* ISUltraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A80D784660BD4C2EB65FAE21 /* ISUltraLight.ttf */; };
+		F7EC4579AB6542B8AD234968 /* ISF.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 986E5F180B6C41C7A51B86F9 /* ISF.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -347,6 +370,30 @@
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		756D3C437DC642279B045B0E /* font1.ttf */ = {isa = PBXFileReference; name = "font1.ttf"; path = "../Assets/fonts/font1.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		1F10B2C81A6E4134AD81EC24 /* IRANSansWeb_Bold.ttf */ = {isa = PBXFileReference; name = "IRANSansWeb_Bold.ttf"; path = "../Assets/fonts/IRANSansWeb_Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FE1042519B70445DA8913E4F /* IRANSansWeb_Light.ttf */ = {isa = PBXFileReference; name = "IRANSansWeb_Light.ttf"; path = "../Assets/fonts/IRANSansWeb_Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		243752899A3540DDAFAA503C /* IRANSansWeb_Medium.ttf */ = {isa = PBXFileReference; name = "IRANSansWeb_Medium.ttf"; path = "../Assets/fonts/IRANSansWeb_Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A08DB3AA92F74A078A509A2B /* IRANSansWeb_UltraLight.ttf */ = {isa = PBXFileReference; name = "IRANSansWeb_UltraLight.ttf"; path = "../Assets/fonts/IRANSansWeb_UltraLight.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		EF16C102816A4B26A377B99C /* IRANSansWeb(FaNum)_Bold.ttf */ = {isa = PBXFileReference; name = "IRANSansWeb(FaNum)_Bold.ttf"; path = "../Assets/fonts/IRANSansWeb(FaNum)_Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4F6A252105284A739181C662 /* IRANSansWeb(FaNum)_Light.ttf */ = {isa = PBXFileReference; name = "IRANSansWeb(FaNum)_Light.ttf"; path = "../Assets/fonts/IRANSansWeb(FaNum)_Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D7A89C1E7D0D494AB7891353 /* IRANSansWeb(FaNum)_Medium.ttf */ = {isa = PBXFileReference; name = "IRANSansWeb(FaNum)_Medium.ttf"; path = "../Assets/fonts/IRANSansWeb(FaNum)_Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		7694AF35F9C741708FA4B839 /* IRANSansWeb(FaNum)_UltraLight.ttf */ = {isa = PBXFileReference; name = "IRANSansWeb(FaNum)_UltraLight.ttf"; path = "../Assets/fonts/IRANSansWeb(FaNum)_UltraLight.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F0C42F369C7C4F17B3135D35 /* IRANSansWeb(FaNum).ttf */ = {isa = PBXFileReference; name = "IRANSansWeb(FaNum).ttf"; path = "../Assets/fonts/IRANSansWeb(FaNum).ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F30DC0DB137741E2B6A25C6D /* xxx.ttf */ = {isa = PBXFileReference; name = "xxx.ttf"; path = "../Assets/fonts/xxx.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6FC2E05342FB444EB985D44D /* sss.ttf */ = {isa = PBXFileReference; name = "sss.ttf"; path = "../Assets/fonts/sss.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		09A36658D38845B88F797C42 /* yes.otf */ = {isa = PBXFileReference; name = "yes.otf"; path = "../Assets/fonts/yes.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E1A9BB2274D24B88BE7104EA /* IS.ttf */ = {isa = PBXFileReference; name = "IS.ttf"; path = "../Assets/fonts/IS.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3DC38531590B4D52842FBECD /* ISBold.ttf */ = {isa = PBXFileReference; name = "ISBold.ttf"; path = "../Assets/fonts/ISBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3D3EB9AC22EC4B06BF94DA4F /* ISF(FaNum).ttf */ = {isa = PBXFileReference; name = "ISF(FaNum).ttf"; path = "../Assets/fonts/ISF(FaNum).ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		317175AEBF554CBFBED2B1BB /* ISFBold.ttf */ = {isa = PBXFileReference; name = "ISFBold.ttf"; path = "../Assets/fonts/ISFBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C9898D0F14E24E6B8CEB0003 /* ISFLight.ttf */ = {isa = PBXFileReference; name = "ISFLight.ttf"; path = "../Assets/fonts/ISFLight.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A69F0A0580D44571B64B6086 /* ISFMedium.ttf */ = {isa = PBXFileReference; name = "ISFMedium.ttf"; path = "../Assets/fonts/ISFMedium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3BD5B2197D664F68AE2D47EF /* ISFUltraLight.ttf */ = {isa = PBXFileReference; name = "ISFUltraLight.ttf"; path = "../Assets/fonts/ISFUltraLight.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A7843FBA6FB5436E85BB3B2E /* ISLight.ttf */ = {isa = PBXFileReference; name = "ISLight.ttf"; path = "../Assets/fonts/ISLight.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6C2B67034224427AAB305908 /* ISMedium.ttf */ = {isa = PBXFileReference; name = "ISMedium.ttf"; path = "../Assets/fonts/ISMedium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A80D784660BD4C2EB65FAE21 /* ISUltraLight.ttf */ = {isa = PBXFileReference; name = "ISUltraLight.ttf"; path = "../Assets/fonts/ISUltraLight.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		986E5F180B6C41C7A51B86F9 /* ISF.ttf */ = {isa = PBXFileReference; name = "ISF.ttf"; path = "../Assets/fonts/ISF.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -585,6 +632,7 @@
 				00E356EF1AD99517003FC87E /* vilaappCustomerTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
+				BA538B5E0F5944E8980D2486 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -610,6 +658,38 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
+		};
+		BA538B5E0F5944E8980D2486 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				756D3C437DC642279B045B0E /* font1.ttf */,
+				1F10B2C81A6E4134AD81EC24 /* IRANSansWeb_Bold.ttf */,
+				FE1042519B70445DA8913E4F /* IRANSansWeb_Light.ttf */,
+				243752899A3540DDAFAA503C /* IRANSansWeb_Medium.ttf */,
+				A08DB3AA92F74A078A509A2B /* IRANSansWeb_UltraLight.ttf */,
+				EF16C102816A4B26A377B99C /* IRANSansWeb(FaNum)_Bold.ttf */,
+				4F6A252105284A739181C662 /* IRANSansWeb(FaNum)_Light.ttf */,
+				D7A89C1E7D0D494AB7891353 /* IRANSansWeb(FaNum)_Medium.ttf */,
+				7694AF35F9C741708FA4B839 /* IRANSansWeb(FaNum)_UltraLight.ttf */,
+				F0C42F369C7C4F17B3135D35 /* IRANSansWeb(FaNum).ttf */,
+				F30DC0DB137741E2B6A25C6D /* xxx.ttf */,
+				6FC2E05342FB444EB985D44D /* sss.ttf */,
+				09A36658D38845B88F797C42 /* yes.otf */,
+				E1A9BB2274D24B88BE7104EA /* IS.ttf */,
+				3DC38531590B4D52842FBECD /* ISBold.ttf */,
+				3D3EB9AC22EC4B06BF94DA4F /* ISF(FaNum).ttf */,
+				317175AEBF554CBFBED2B1BB /* ISFBold.ttf */,
+				C9898D0F14E24E6B8CEB0003 /* ISFLight.ttf */,
+				A69F0A0580D44571B64B6086 /* ISFMedium.ttf */,
+				3BD5B2197D664F68AE2D47EF /* ISFUltraLight.ttf */,
+				A7843FBA6FB5436E85BB3B2E /* ISLight.ttf */,
+				6C2B67034224427AAB305908 /* ISMedium.ttf */,
+				A80D784660BD4C2EB65FAE21 /* ISUltraLight.ttf */,
+				986E5F180B6C41C7A51B86F9 /* ISF.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -692,7 +772,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 940;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -1057,6 +1137,30 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				4E865A034D8249128949FFF6 /* font1.ttf in Resources */,
+				6393C3A75B0A425FA16C9EBB /* IRANSansWeb_Bold.ttf in Resources */,
+				D943A98CDF954616902EF4CC /* IRANSansWeb_Light.ttf in Resources */,
+				F453BD1F3CEA4152B1700D44 /* IRANSansWeb_Medium.ttf in Resources */,
+				7E6725F5E5E84BAB89F168FB /* IRANSansWeb_UltraLight.ttf in Resources */,
+				3D32D9DCAE274ABB9682F99C /* IRANSansWeb(FaNum)_Bold.ttf in Resources */,
+				33F7A351378846E0A778104D /* IRANSansWeb(FaNum)_Light.ttf in Resources */,
+				D542553EBBE74A0795E5D732 /* IRANSansWeb(FaNum)_Medium.ttf in Resources */,
+				96D2F1132F9F4D74A56F1781 /* IRANSansWeb(FaNum)_UltraLight.ttf in Resources */,
+				A03C5CCB033F4BBB85D0D77E /* IRANSansWeb(FaNum).ttf in Resources */,
+				4D3262F8DFC74C4DA9BBF51F /* xxx.ttf in Resources */,
+				66AA4994983542DBAC8E3089 /* sss.ttf in Resources */,
+				A8D4F5F0ABBB49DF8E9775AB /* yes.otf in Resources */,
+				C011456FA5544EF596B92C19 /* IS.ttf in Resources */,
+				28B087B393834CF398AD7D4D /* ISBold.ttf in Resources */,
+				2546B852FE034FCE8DA602C0 /* ISF(FaNum).ttf in Resources */,
+				B3792B612B194CE7A0D7411B /* ISFBold.ttf in Resources */,
+				1690E6B7951D424892C482C0 /* ISFLight.ttf in Resources */,
+				785CE0C0998341EDAB9B7A0A /* ISFMedium.ttf in Resources */,
+				9B63E712C98E4FF1AEB1C181 /* ISFUltraLight.ttf in Resources */,
+				58FEF96AE48745459497A855 /* ISLight.ttf in Resources */,
+				69FA001AB297475E9223EA3C /* ISMedium.ttf in Resources */,
+				5605B9BB228E4DA4A687D21A /* ISUltraLight.ttf in Resources */,
+				F7EC4579AB6542B8AD234968 /* ISF.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

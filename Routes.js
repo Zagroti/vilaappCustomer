@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import { Router, Stack, Scene, Actions, Drawer } from 'react-native-router-flux';
+import React from 'react';
+
+import { Router, Stack, Scene, Actions } from 'react-native-router-flux';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 
 
