@@ -1,5 +1,5 @@
 import React , { Component } from 'react';
-import { ImageBackground, Image, Text, View, Dimensions, TouchableOpacity, TextInput } from 'react-native';
+import { ImageBackground, Image, Text, View, Dimensions, TouchableOpacity, TextInput , Platform } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import InputScrollView from 'react-native-input-scroll-view';
 
@@ -26,7 +26,7 @@ export default class SendNumber extends Component {
     }
 
     _enterCode = () => {
-        Actions.enterCode()
+        Actions.EnterCode()
     }
 
 
@@ -118,6 +118,8 @@ const styles = ({
         shadowColor: "#f7f7f7",
         shadowOpacity: 1,
         elevation: 1,
+        backgroundColor:'#fff'
+
     },
     inputBox1: {
         height: 50,
@@ -126,14 +128,26 @@ const styles = ({
         borderRightColor: '#ccc',
         paddingLeft: 30,
         fontSize: 12,
-        fontWeight: '900'
+        fontWeight: '900',
+        ...Platform.select({
+           
+            android: {
+                fontFamily: 'ISFBold',
+            }
+        })
     },
     inputBox2: {
         height: 50,
         width: '70%',
         paddingLeft: 10,
         fontSize: 18,
-        fontWeight: '900'
+        fontWeight: '900',
+        ...Platform.select({
+           
+            android: {
+                fontFamily: 'ISFBold',
+            }
+        })
     },
     numberInputs: {
         marginTop: 50,

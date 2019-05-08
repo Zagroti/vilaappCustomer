@@ -25,8 +25,7 @@ export default class EnterCode extends Component {
 
 
     _codeAuth = () => {
-        Actions.home()
-
+        Actions.Home()
     }
 
 
