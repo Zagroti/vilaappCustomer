@@ -126,7 +126,7 @@ export default class Details extends Component {
                             </View>
                             <View style={styles.avilibiy_item} >
                                 <Text style={styles.avilibiy_text} >لباسشویی</Text>
-                                <Image style={styles.avilibiy_icon} source={require('./../../Assets/Images/check.png')}></Image>
+                                <Image style={styles.avilibiy_icon} source={require('./../../Assets/Images/checkgrey.png')}></Image>
                             </View>
                             <View style={styles.avilibiy_item} >
                                 <Text style={styles.avilibiy_text} >سیستم گرمایشی</Text>
