@@ -11,19 +11,17 @@ import {
     ToastAndroid,
     ScrollView,
     Modal,
-    Alert,
     TextInput,
     Platform
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import InputScrollView from 'react-native-input-scroll-view';
-
+// import PersianCalendarPicker from 'react-native-jalali-date-picker-rtl';
 
 
 //components 
 import NoRequest from '../components/NoRequest';
 import Requestitems from '../components/RequestItems';
-
 
 
 
@@ -33,7 +31,8 @@ export default class Home extends Component {
         super(props)
         this.state = {
             modalVisible: false,
-        }
+
+        };
     }
 
     //click humberger menu to open drawer
@@ -82,11 +81,10 @@ export default class Home extends Component {
     render() {
 
         const navigationView = (
-            <View style={{ flex: 1, backgroundColor: 'green' }}>
+            <View style={{ flex: 1, backgroundColor: '#eee' }}>
                 <Text style={{ margin: 10, fontSize: 15, textAlign: 'left' }}>I'm in the Drawer!</Text>
             </View>
         );
-
 
 
 
@@ -101,14 +99,14 @@ export default class Home extends Component {
                 onDrawerClose={(e) => { console.log('close') }}
                 onDrawerOpen={(e) => { this._openDrawer.bind(this) }}
             >
-
-
-
                 <View style={styles.home_cover} >
 
                     {/* MENU */}
                     <View style={styles.menu} >
-                        <TouchableOpacity style={styles.humberger}>
+                        <TouchableOpacity
+                            style={styles.humberger}
+                            onPress={() => alert('توجهات')}
+                        >
                             <ImageBackground
                                 style={styles.bell}
                                 source={require('./../../Assets/Images/bell.png')}
@@ -119,11 +117,12 @@ export default class Home extends Component {
                             </ImageBackground>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.humberger} onPress={this._openDrawer}>
-
                             <Image style={styles.humberger} source={require('../../Assets/Images/menu.png')} />
                         </TouchableOpacity>
                     </View>
 
+
+                    {/* request box  */}
                     <View style={styles.up}>
                         <Text style={styles.title} >درخواست های من</Text>
                         <ScrollView contentContainerStyle={styles.requestBox} >
@@ -135,13 +134,14 @@ export default class Home extends Component {
                         </ScrollView>
                     </View>
 
+
+                    {/* footer */}
                     <View style={styles.footer}>
 
                         {/* got to profile */}
                         <TouchableOpacity activeOpacity={.6} style={styles.bottomIcons} onPress={(e) => this._navigate('profile')}>
                             <Image style={styles.bottomIcon} source={require('../../Assets/Images/user.png')} />
                         </TouchableOpacity>
-
 
                         {/* open Modal filter */}
                         <TouchableOpacity activeOpacity={.9} style={styles.middleBtn}
@@ -153,7 +153,6 @@ export default class Home extends Component {
                                 <Image style={styles.middleIcon} source={require('../../Assets/Images/bluemarker.png')} />
                             </View>
                         </TouchableOpacity>
-
 
                         {/* got to history */}
                         <TouchableOpacity activeOpacity={.6} style={styles.bottomIcons} onPress={(e) => this._navigate('history')}>
@@ -177,11 +176,11 @@ export default class Home extends Component {
                     }}
 
                 >
-                    <InputScrollView>
+                    <InputScrollView >
                         {/* Close modal  */}
                         <View
                             style={{
-                                backgroundColor: '#f7f7f7',
+                                backgroundColor: '#f6f6f6',
                                 width: '100%',
                                 height: 50,
                                 flexDirection: 'row',
@@ -244,6 +243,14 @@ export default class Home extends Component {
                                     <Image style={styles.modal_icons} source={require('../../Assets/Images/calendergrey.png')} />
                                 </View>
                                 <Text style={styles.select_time} >1398 / 11 / 15</Text>
+                                {/* <View style={styles.container}>
+                                    <PersianCalendarPicker
+                                        selectedDate={date}
+                                        onDateChange={this.onDateChange}
+                                        screenWidth={Dimensions.get('window').width}
+                                    />
+                                    <Text style={styles.selectedDate}> Date: {this.state.date.toString()} </Text>
+                                </View> */}
                             </View>
 
                             {/* nights */}
@@ -252,7 +259,17 @@ export default class Home extends Component {
                                     <Text style={styles.modal_titles}>تعداد شبها</Text>
                                     <Image style={styles.modal_icons} source={require('../../Assets/Images/moon.png')} />
                                 </View>
-                                <Text style={styles.select_nights} >esrcferf</Text>
+                                <TextInput
+                                    placeholderStyle={{
+                                        fontFamily: 'ISFBold',
+                                        color: '#636363'
+                                    }}
+                                    placeholder="2"
+                                    style={styles.price_input}
+                                    onChangeText={(price) => this.setState({ price })}
+                                    keyboardType='numeric'
+
+                                />
                             </View>
 
                             {/* request btn */}
@@ -310,8 +327,8 @@ const styles = ({
         height: 14,
         borderRadius: 7,
         backgroundColor: '#B22850',
-        start: 15,
-        top: -5,
+        start: 10,
+        top: -10,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -334,6 +351,7 @@ const styles = ({
         borderBottomRightRadius: 50,
         borderBottomLeftRadius: 50,
         overflow: 'hidden',
+        zIndex: 1
     },
 
 
@@ -345,7 +363,7 @@ const styles = ({
         borderBottomColor: '#e7e7e7',
         paddingBottom: 10,
         marginTop: 20,
-        width: Dimensions.get('window').width - 100,
+        width: Dimensions.get('window').width - 50,
 
 
     },
@@ -363,6 +381,7 @@ const styles = ({
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
+        zIndex: 20
     },
     middleBtn: {
         bottom: 50,
@@ -373,6 +392,8 @@ const styles = ({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+        zIndex: 2,
+
     },
     middleInside: {
         width: 80,
@@ -383,11 +404,12 @@ const styles = ({
         borderRadius: 50,
         justifyContent: 'center',
         alignItems: 'center',
-
+        zIndex: 20
     },
     middleIcon: {
         width: 40,
         height: 50,
+        zIndex: 20
     },
 
     bottomIcons: {
@@ -402,8 +424,8 @@ const styles = ({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#f7f7f7',
-        height: Dimensions.get('window').height - 50,
-        width: Dimensions.get('window').width
+        // height: Dimensions.get('window').height ,
+        width: Dimensions.get('window').width,
     },
     modal_description: {
         backgroundColor: '#eee',
@@ -411,16 +433,17 @@ const styles = ({
         borderBottomLeftRadius: 10,
         borderTopLeftRadius: 50,
         borderTopRightRadius: 20,
-        width: '80%',
+        width: '90%',
         flexDirection: 'row',
         alignItems: 'center',
         shadowColor: "#f7f7f7",
         shadowOpacity: 1,
         elevation: 1,
-        height: 150,
+        height: 120,
         padding: 10,
-        marginTop:50
+        marginTop: 50,
     },
+
     home_icon_marker: {
         width: 100,
         resizeMode: "contain",
@@ -441,9 +464,10 @@ const styles = ({
         fontFamily: 'IS',
     },
     modal_price: {
-        width: '80%',
+        width: '90%',
         flexDirection: 'column',
         marginVertical: 20,
+        paddingVertical: 20,
         borderRadius: 5
     },
     modal_details: {
@@ -462,7 +486,6 @@ const styles = ({
         fontSize: 12,
         fontFamily: 'ISBold',
         color: '#636363'
-
     },
     toman: {
         fontSize: 8,
@@ -495,7 +518,7 @@ const styles = ({
 
     },
     start_date: {
-        width: '80%',
+        width: '90%',
         height: 100
     },
     select_time: {
@@ -515,7 +538,7 @@ const styles = ({
         alignItems: 'center',
     },
     nights: {
-        width: '80%',
+        width: '90%',
         height: 100
     },
     select_nights: {
@@ -537,15 +560,18 @@ const styles = ({
 
     new_request_box: {
         width: '100%',
-        height: 100,
+        height: 140,
         backgroundColor: 'red',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#ebebeb'
+        backgroundColor: '#ebebeb',
+        marginTop: 40,
+        // paddingTop: 50,
+        // paddingBottom: 300,
     },
 
     new_request_btn: {
-        width: Dimensions.get('window').width - 100,
+        width: '90%',
     },
     new_request_btn_img: {
         width: '100%',

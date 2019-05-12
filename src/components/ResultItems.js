@@ -62,7 +62,7 @@ export default class ResultItems extends Component {
                     </View>
                 </View>
                 <View style={styles.image_box} >
-                    <Image style={styles.image} source={require('../../Assets/Images/villa.png')} />
+                    <Image style={styles.image} source={require('../../Assets/Images/detail.jpg')} />
 
                 </View>
 
@@ -91,17 +91,17 @@ const styles = ({
     image_box: {
         width: 120,
         height: 120,
-        padding: 0,
-        borderWidth: 2,
-        borderColor: '#fff',
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 5,
+        
     },
     image: {
-        width: '100%',
-        height: '100%',
+        width:120,
+        height: 120,
         resizeMode: 'cover',
+        borderWidth: 2,
+        borderRadius: 5,
+        borderColor: '#fff',
     },
     up: {
         flexDirection: 'row',

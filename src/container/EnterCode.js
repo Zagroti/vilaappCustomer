@@ -24,7 +24,11 @@ export default class EnterCode extends Component {
     }
 
 
-    _codeAuth = () => {
+    _sendNumber = () => {
+        Actions.SendNumber()
+    }
+
+    _goHome = () => {
         Actions.Home()
     }
 
@@ -39,8 +43,12 @@ export default class EnterCode extends Component {
                             کد فعال سازی
                         </Text>
                         <View style={styles.ResendBox}>
-                            <TouchableOpacity style={styles.Resend} onPress={this._sendNumber} activeOpacity={.6}>
-                                <Text style={styles.ResendText} >ارسال مجدد</Text>
+                            <TouchableOpacity
+                                style={styles.Resend}
+                                activeOpacity={.6}
+                                onPress={this._sendNumber}
+                            >
+                                <Text style={styles.ResendText}  >ارسال مجدد</Text>
                             </TouchableOpacity>
                             <Text style={styles.MyNumber}>+989121113600</Text>
                         </View>
@@ -170,7 +178,7 @@ export default class EnterCode extends Component {
                     </View>
 
 
-                    <TouchableOpacity style={styles.SaveButton} onPress={this._codeAuth} activeOpacity={.6}>
+                    <TouchableOpacity style={styles.SaveButton} onPress={this._goHome} activeOpacity={.6}>
                         <ImageBackground style={styles.SaveButtonImage}
                             imageStyle={{
                                 borderRadius: 50,
@@ -256,10 +264,10 @@ const styles = ({
     },
 
     ActivationCodeText: {
-        fontFamily:"ISBold",
+        fontFamily: "ISBold",
         color: '#333',
         marginBottom: 20,
-        fontSize:12
+        fontSize: 12
     },
     codeShowBox: {
         flexDirection: 'row',
@@ -283,7 +291,7 @@ const styles = ({
 
     },
     SaveText: {
-        fontFamily:"ISBold",
+        fontFamily: "ISBold",
         color: '#fff',
         fontSize: 16,
     },

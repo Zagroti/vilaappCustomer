@@ -86,7 +86,7 @@ const styles = ({
         flex: 1
     },
     SendNumber: {
-        flex: 1,
+        // flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#A52D53',
@@ -109,8 +109,9 @@ const styles = ({
     logo: {
         width: 100,
         height: 100,
-        marginBottom: 30,
+        marginBottom: 50,
     },
+    
     inputBox: {
         flexDirection: 'row',
         width: Dimensions.get('window').width - 100,
@@ -130,7 +131,6 @@ const styles = ({
         fontSize: 12,
         fontWeight: '900',
         ...Platform.select({
-           
             android: {
                 fontFamily: 'ISFBold',
             }
@@ -162,7 +162,7 @@ const styles = ({
     },
     sendBtn: {
         width: Dimensions.get('window').width - 100,
-        marginTop: 80,
+        marginTop: 50,
         // flexGrow:5
 
     },

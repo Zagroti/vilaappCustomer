@@ -105,7 +105,7 @@ export default class Profile extends Component {
                                 ذخیره
                             </Text>
                             <View style={styles.right}>
-                                <Image source={require('../../Assets/Images/right.png')} />
+                                <Image style={{width:8,resizeMode: "contain"}} source={require('../../Assets/Images/right.png')} />
                             </View>
 
                         </ImageBackground>

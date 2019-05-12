@@ -10,8 +10,12 @@ import Home from './src/container/Home';
 import Profile from './src/container/Profile';
 import ResultItemsPage from './src/container/ResultItemsPage'
 import Details from './src/container/Details'
+
+
+
+
 //back button
-const renderBackButton = () => (
+const backButton = () => (
     <TouchableOpacity
         onPress={() => Actions.pop()}
         style={{ width: 30, height: 20, marginLeft: 20 }}
@@ -28,6 +32,13 @@ const renderBackButton = () => (
     </TouchableOpacity>
 );
 
+const backButtonDetail = () => (
+    <TouchableOpacity style={styles.back_box} onPress={() => Actions.pop()} >
+        <Image style={styles.back}
+            source={require('./Assets/Images/left-arrow-white.png')} />
+    </TouchableOpacity>
+)
+
 
 
 const Routes = () => (
@@ -38,12 +49,13 @@ const Routes = () => (
                 component={SendNumber}
                 title="Send Number"
                 hideNavBar={true}
+                initial={true}
 
             />
             <Scene key="EnterCode" component={EnterCode}
                 title=""
                 titleStyle={{ color: 'transparent' }}
-                renderBackButton={() => renderBackButton()}
+                renderBackButton={() => backButton()}
                 navigationBarStyle={styles.login_style_bar}
                 sceneStyle={styles.login_scene_style}
             />
@@ -52,39 +64,49 @@ const Routes = () => (
                 component={Home}
                 title="home"
                 hideNavBar={true}
-                initial={true}
 
             />
 
             <Scene key="Profile" component={Profile}
                 title=""
                 titleStyle={{ color: 'transparent' }}
-                renderBackButton={() => renderBackButton()}
+                renderBackButton={() => backButton()}
                 navigationBarStyle={styles.login_style_bar}
                 sceneStyle={styles.login_scene_style}
-                hideNavBar={true}
-
             />
 
             <Scene key="ResultItemsPage" component={ResultItemsPage}
                 title=""
                 titleStyle={{ color: 'transparent' }}
-                renderBackButton={() => renderBackButton()}
+                renderBackButton={() => backButton()}
                 navigationBarStyle={styles.login_style_bar}
                 sceneStyle={styles.login_scene_style}
-                onRight={() => this.renderRightButton()}
-                rightButtonImage={require('./Assets/Images/bell.png')}
+                onRight={() => alert('right')}
+                // rightButtonImage={require('./Assets/Images/bell.png')}
+                renderRightButton={() => (
+                    <TouchableOpacity style={styles.notification_box} 
+                                      onPress={()=> alert('توجهات')}>
+                        <ImageBackground
+                            style={styles.bell}
+                            source={require('./Assets/Images/bell.png')}
+                        >
+                            <View style={styles.notification} >
+                                <Text style={styles.notification_text} >3</Text>
+                            </View>
+                        </ImageBackground>
+                    </TouchableOpacity>
+                )}
             />
 
             <Scene key="Details" component={Details}
                 title=""
-                titleStyle={{ color: 'transparent' }}
-                renderBackButton={() => renderBackButton()}
-                navigationBarStyle={styles.login_style_bar}
+                titleStyle={{ color: 'red' }}
+                renderBackButton={() => backButtonDetail()}
+                navigationBarStyle={styles.login_style_bar_detail}
                 sceneStyle={styles.login_scene_style}
-                onRight={() => this.renderRightButton()}
-                rightButtonImage={require('./Assets/Images/bell.png')}
             />
+
+
 
 
 
@@ -106,6 +128,76 @@ const styles = ({
         shadowColor: "#f7f7f7",
         elevation: 0,
         height: 50,
+    },
+    login_style_bar_detail: {
+        backgroundColor: 'transparent',
+        shadowColor: "#f7f7f7",
+        elevation: 0,
+        height: 50,
+    },
+    bell: {
+        width: 30,
+        height: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    notification: {
+        width: 14,
+        height: 14,
+        borderRadius: 7,
+        backgroundColor: '#B22850',
+        start: 10,
+        top: -10,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    notification_text: {
+        color: '#fff',
+        fontSize: 9,
+        fontFamily: 'ISFMedium',
+    },
+    back_box: {
+        backgroundColor: '#33333338',
+        padding: 10,
+        width: 50,
+        height: 50,
+        borderRadius: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+        top: 10,
+        start: 10
+    },
+    back: {
+        width: 30,
+        resizeMode: 'contain'
+    },
+    notification_box: {
+        width: 40,
+        height: 40,
+        right:20,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    bell: {
+        width: 30,
+        height: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    notification: {
+        width: 14,
+        height: 14,
+        borderRadius: 7,
+        backgroundColor: '#B22850',
+        start: 10,
+        top: -10,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    notification_text: {
+        color: '#fff',
+        fontSize: 9,
+        fontFamily: 'ISFMedium',
     },
 
 })

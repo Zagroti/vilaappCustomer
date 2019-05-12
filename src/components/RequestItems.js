@@ -62,7 +62,8 @@ const styles = ({
         borderRadius: 10,
         height: 100,
         marginBottom: 20,
-        zIndex: 10
+        zIndex: 2,
+        
     },
 
     right: {
@@ -178,7 +179,7 @@ const styles = ({
         fontFamily: 'ISFBold',
         fontSize: 12,
         start: -25,
-        top: -20,
+        top: -10,
         zIndex: 10
     }
 
