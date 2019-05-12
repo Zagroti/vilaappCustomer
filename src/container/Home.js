@@ -117,7 +117,7 @@ export default class Home extends Component {
                             </ImageBackground>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.humberger} onPress={this._openDrawer}>
-                            <Image style={styles.humberger} source={require('../../Assets/Images/menu.png')} />
+                            <Image style={styles.humberger_icon} source={require('../../Assets/Images/menu.png')} />
                         </TouchableOpacity>
                     </View>
 
@@ -338,8 +338,13 @@ const styles = ({
         fontFamily: 'ISFMedium',
     },
     humberger: {
+        width: 50,
+        height: 50,
+        alignItems: 'center',
+    },
+    humberger_icon:{
         width: 30,
-        height: 30
+        height: 30,
     },
     up: {
         flexDirection: 'column',

@@ -33,8 +33,23 @@ const backButton = () => (
 );
 
 const backButtonDetail = () => (
-    <TouchableOpacity style={styles.back_box} onPress={() => Actions.pop()} >
-        <Image style={styles.back}
+    <TouchableOpacity
+        style={{
+            backgroundColor: '#33333320',
+            padding: 10,
+            width: 50,
+            height: 50,
+            borderRadius: 30,
+            justifyContent: 'center',
+            alignItems: 'center',
+            top: 10,
+            start: 10,
+
+        }} onPress={() => Actions.pop()} >
+        <Image style={{
+            width: 30,
+            resizeMode: 'contain'
+        }}
             source={require('./Assets/Images/left-arrow-white.png')} />
     </TouchableOpacity>
 )
@@ -84,8 +99,8 @@ const Routes = () => (
                 onRight={() => alert('right')}
                 // rightButtonImage={require('./Assets/Images/bell.png')}
                 renderRightButton={() => (
-                    <TouchableOpacity style={styles.notification_box} 
-                                      onPress={()=> alert('توجهات')}>
+                    <TouchableOpacity style={styles.notification_box}
+                        onPress={() => alert('توجهات')}>
                         <ImageBackground
                             style={styles.bell}
                             source={require('./Assets/Images/bell.png')}
@@ -104,6 +119,7 @@ const Routes = () => (
                 renderBackButton={() => backButtonDetail()}
                 navigationBarStyle={styles.login_style_bar_detail}
                 sceneStyle={styles.login_scene_style}
+
             />
 
 
@@ -156,25 +172,11 @@ const styles = ({
         fontSize: 9,
         fontFamily: 'ISFMedium',
     },
-    back_box: {
-        backgroundColor: '#33333338',
-        padding: 10,
-        width: 50,
-        height: 50,
-        borderRadius: 30,
-        justifyContent: 'center',
-        alignItems: 'center',
-        top: 10,
-        start: 10
-    },
-    back: {
-        width: 30,
-        resizeMode: 'contain'
-    },
+
     notification_box: {
         width: 40,
         height: 40,
-        right:20,
+        right: 20,
         justifyContent: 'center',
         alignItems: 'center',
     },
