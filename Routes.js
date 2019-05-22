@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Router, Scene, Actions } from 'react-native-router-flux';
-import { Text, View, Image, TouchableOpacity, ImageBackground } from 'react-native';
+import { Text, View, Image, TouchableOpacity, ImageBackground, StatusBar } from 'react-native';
 
 
 import SendNumber from './src/container/SendNumber';
@@ -57,73 +57,76 @@ const backButtonDetail = () => (
 
 
 const Routes = () => (
-    <Router >
-        <Scene key="root" >
-
-            <Scene key="SendNumber"
-                component={SendNumber}
-                title="Send Number"
-                hideNavBar={true}
-                initial={true}
-
-            />
-            <Scene key="EnterCode" component={EnterCode}
-                title=""
-                titleStyle={{ color: 'transparent' }}
-                renderBackButton={() => backButton()}
-                navigationBarStyle={styles.login_style_bar}
-                sceneStyle={styles.login_scene_style}
-            />
-
-            <Scene key="Home"
-                component={Home}
-                title="home"
-                hideNavBar={true}
-
-            />
-
-            <Scene key="Profile" component={Profile}
-                title=""
-                titleStyle={{ color: 'transparent' }}
-                renderBackButton={() => backButton()}
-                navigationBarStyle={styles.login_style_bar}
-                sceneStyle={styles.login_scene_style}
-            />
-
-            <Scene key="ResultItemsPage" component={ResultItemsPage}
-                title=""
-                titleStyle={{ color: 'transparent' }}
-                renderBackButton={() => backButton()}
-                navigationBarStyle={styles.login_style_bar}
-                sceneStyle={styles.login_scene_style}
-                onRight={() => alert('right')}
-                // rightButtonImage={require('./Assets/Images/bell.png')}
-                renderRightButton={() => (
-                    <TouchableOpacity style={styles.notification_box}
-                        onPress={() => alert('توجهات')}>
-                        <ImageBackground
-                            style={styles.bell}
-                            source={require('./Assets/Images/bell.png')}
-                        >
-                            <View style={styles.notification} >
-                                <Text style={styles.notification_text} >3</Text>
-                            </View>
-                        </ImageBackground>
-                    </TouchableOpacity>
-                )}
-            />
-
-            <Scene key="Details" component={Details}
-                title=""
-                titleStyle={{ color: 'red' }}
-                renderBackButton={() => backButtonDetail()}
-                navigationBarStyle={styles.login_style_bar_detail}
-                sceneStyle={styles.login_scene_style}
-
-            />
+  
 
 
 
+        <Router >
+            <Scene key="root" >
+
+                <Scene key="SendNumber"
+                    component={SendNumber}
+                    title="Send Number"
+                    hideNavBar={true}
+                    initial={true}
+
+
+                />
+                <Scene key="EnterCode" component={EnterCode}
+                    title=""
+                    titleStyle={{ color: 'transparent' }}
+                    renderBackButton={() => backButton()}
+                    navigationBarStyle={styles.login_style_bar}
+                    sceneStyle={styles.login_scene_style}
+
+                />
+
+                <Scene key="Home"
+                    component={Home}
+                    title="home"
+                    hideNavBar={true}
+
+                />
+
+                <Scene key="Profile" component={Profile}
+                    title=""
+                    titleStyle={{ color: 'transparent' }}
+                    renderBackButton={() => backButton()}
+                    navigationBarStyle={styles.login_style_bar}
+                    sceneStyle={styles.login_scene_style}
+                />
+
+                <Scene key="ResultItemsPage" component={ResultItemsPage}
+                    title=""
+                    titleStyle={{ color: 'transparent' }}
+                    renderBackButton={() => backButton()}
+                    navigationBarStyle={styles.login_style_bar}
+                    sceneStyle={styles.login_scene_style}
+                    onRight={() => alert('right')}
+                    // rightButtonImage={require('./Assets/Images/bell.png')}
+                    renderRightButton={() => (
+                        <TouchableOpacity style={styles.notification_box}
+                            onPress={() => alert('توجهات')}>
+                            <ImageBackground
+                                style={styles.bell}
+                                source={require('./Assets/Images/bell.png')}
+                            >
+                                <View style={styles.notification} >
+                                    <Text style={styles.notification_text} >3</Text>
+                                </View>
+                            </ImageBackground>
+                        </TouchableOpacity>
+                    )}
+                />
+
+                <Scene key="Details" component={Details}
+                    title=""
+                    titleStyle={{ color: 'red' }}
+                    renderBackButton={() => backButtonDetail()}
+                    navigationBarStyle={styles.login_style_bar_detail}
+                    sceneStyle={styles.login_scene_style}
+
+                />
 
 
 
@@ -132,8 +135,12 @@ const Routes = () => (
 
 
 
-        </Scene>
-    </Router>
+
+
+
+            </Scene>
+        </Router>
+    
 )
 
 export default Routes;

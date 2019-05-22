@@ -81,8 +81,34 @@ export default class Home extends Component {
     render() {
 
         const navigationView = (
-            <View style={{ flex: 1, backgroundColor: '#eee' }}>
-                <Text style={{ margin: 10, fontSize: 15, textAlign: 'left' }}>I'm in the Drawer!</Text>
+            <View style={{ flex: 1, backgroundColor: '#A52D53' , alignItems:'center' }}>
+                {/* <Text style={{ margin: 10, fontSize: 15, textAlign: 'left' }}>I'm in the Drawer!</Text> */}
+                <View style={{
+                    alignItems: 'center',
+                    paddingVertical: 20,
+                    backgroundColor: '#b04267',
+                    width:'100%'
+                }} >
+                    <View style={styles.icon_parent} >
+                        <View style={styles.icon_child} >
+                            <Image style={styles.icon} source={require('../../Assets/Images/natalie.jpeg')} />
+                        </View>
+                    </View>
+                    <View style={styles.person_desc} >
+                        <Text style={styles.person_name} >جمیله باغی تبار</Text>
+                    </View>
+                    
+                </View>
+                <TouchableOpacity activeOpacity={.6} style={styles.bottomIcons} onPress={(e) => this._navigate('profile')}>
+                    <Text style={styles.drawer_text}>پروفایل</Text>
+                    <Image style={styles.bottomIcon} source={require('../../Assets/Images/user.png')} />
+                </TouchableOpacity>
+
+                {/* got to history */}
+                <TouchableOpacity activeOpacity={.6} style={styles.bottomIcons} onPress={(e) => this._navigate('history')}>
+                    <Text style={styles.drawer_text}>تاریخچه</Text>
+                    <Image style={styles.bottomIcon} source={require('../../Assets/Images/history.png')} />
+                </TouchableOpacity>
             </View>
         );
 
@@ -123,7 +149,7 @@ export default class Home extends Component {
 
 
                     {/* request box  */}
-                    <View style={styles.up}>
+                    <View style={styles.up} >
                         <Text style={styles.title} >درخواست های من</Text>
                         <ScrollView contentContainerStyle={styles.requestBox} >
                             {/* <NoRequest /> */}
@@ -131,20 +157,39 @@ export default class Home extends Component {
                             <Requestitems navigate={this._showRequestsNavigate} />
                             <Requestitems navigate={this._showRequestsNavigate} />
                             <Requestitems navigate={this._showRequestsNavigate} />
+                            <Requestitems navigate={this._showRequestsNavigate} />
+                            <Requestitems navigate={this._showRequestsNavigate} />
+                            <Requestitems navigate={this._showRequestsNavigate} />
                         </ScrollView>
                     </View>
-
+                    <TouchableOpacity activeOpacity={.9} style={{
+                        position: 'absolute', bottom: 20, zIndex: 10, right: 20, width: 90,
+                        height: 90,
+                        borderRadius: 50,
+                        backgroundColor: '#C92652',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}
+                        onPress={() => {
+                            this.setModalVisible(true);
+                        }}
+                    >
+                        <View style={styles.middleInside}>
+                            <Image style={styles.middleIcon} source={require('../../Assets/Images/bluemarker.png')} />
+                        </View>
+                    </TouchableOpacity>
 
                     {/* footer */}
-                    <View style={styles.footer}>
+                    {/* <View style={styles.footer}> */}
 
-                        {/* got to profile */}
-                        <TouchableOpacity activeOpacity={.6} style={styles.bottomIcons} onPress={(e) => this._navigate('profile')}>
+                    {/* got to profile */}
+                    {/* <TouchableOpacity activeOpacity={.6} style={styles.bottomIcons} onPress={(e) => this._navigate('profile')}>
                             <Image style={styles.bottomIcon} source={require('../../Assets/Images/user.png')} />
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
 
-                        {/* open Modal filter */}
-                        <TouchableOpacity activeOpacity={.9} style={styles.middleBtn}
+                    {/* open Modal filter */}
+                    {/* <TouchableOpacity activeOpacity={.9} style={styles.middleBtn}
                             onPress={() => {
                                 this.setModalVisible(true);
                             }}
@@ -152,13 +197,13 @@ export default class Home extends Component {
                             <View style={styles.middleInside}>
                                 <Image style={styles.middleIcon} source={require('../../Assets/Images/bluemarker.png')} />
                             </View>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
 
-                        {/* got to history */}
-                        <TouchableOpacity activeOpacity={.6} style={styles.bottomIcons} onPress={(e) => this._navigate('history')}>
+                    {/* got to history */}
+                    {/* <TouchableOpacity activeOpacity={.6} style={styles.bottomIcons} onPress={(e) => this._navigate('history')}>
                             <Image style={styles.bottomIcon} source={require('../../Assets/Images/history.png')} />
-                        </TouchableOpacity>
-                    </View >
+                        </TouchableOpacity> */}
+                    {/* </View > */}
 
                 </View>
 
@@ -306,7 +351,9 @@ const styles = ({
     home_cover: {
         backgroundColor: "#C92652",
         width: Dimensions.get('window').width,
-        flex: 1
+        height: Dimensions.get('window').width,
+        flex: 1,
+
     },
 
     menu: {
@@ -342,7 +389,7 @@ const styles = ({
         height: 50,
         alignItems: 'center',
     },
-    humberger_icon:{
+    humberger_icon: {
         width: 30,
         height: 30,
     },
@@ -351,12 +398,13 @@ const styles = ({
         justifyContent: 'flex-start',
         alignItems: 'center',
         width: Dimensions.get('window').width,
-        height: Dimensions.get('window').height - 150,
+        height: Dimensions.get('window').height,
         backgroundColor: '#f6f6f6',
-        borderBottomRightRadius: 50,
-        borderBottomLeftRadius: 50,
+        // borderBottomRightRadius: 300,
+        borderBottomLeftRadius: 0,
         overflow: 'hidden',
-        zIndex: 1
+        zIndex: 1,
+
     },
 
 
@@ -376,7 +424,7 @@ const styles = ({
         width: Dimensions.get('window').width,
         alignItems: 'center',
         paddingTop: 20,
-        paddingBottom: 40
+        paddingBottom: 200,
     },
 
     footer: {
@@ -417,8 +465,72 @@ const styles = ({
         zIndex: 20
     },
 
-    bottomIcons: {
+    icon_parent: {
+        width: 120,
+        height: 120,
+        backgroundColor: '#aaa',
+        borderWidth: 10,
+        borderColor: '#f5f5f5',
+        borderRadius: 60,
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: "#f7f7f7",
+        shadowOpacity: 1,
+        elevation: 1,
+    },
+    icon_child: {
+        width: 100,
+        height: 100,
+        backgroundColor: '#fff',
+        borderWidth: 10,
+        borderColor: '#f8f8f8',
+        borderRadius: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: "#f7f7f7",
+        shadowOpacity: 1,
+        elevation: 1,
+    },
 
+    icon_cover: {
+        width: 80,
+        height: 80,
+        backgroundColor: '#C92652',
+        borderRadius: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    icon: {
+        width: '100%',
+        height: '100%',
+        borderRadius: 40,
+
+    },
+    person_desc: {
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    person_name: {
+        fontSize: 18,
+        fontFamily: 'ISBold',
+        marginTop: 10,
+        color:'#fff'
+    },
+    bottomIcons: {
+        padding: 20,
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        flexDirection: 'row',
+        borderBottomColor:'#ffffff82',
+        borderBottomWidth:1,
+        width:'95%'
+    },
+    drawer_text: {
+        fontSize: 16,
+        color: '#333',
+        fontFamily: 'ISBold',
+        marginRight: 10,
+        color: '#fff'
     },
     bottomIcon: {
         width: 30,

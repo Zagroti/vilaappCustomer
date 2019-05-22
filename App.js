@@ -2,6 +2,7 @@
 
 import React , {Component} from 'react';
 
+import {StatusBar , View ,Dimensions } from 'react-native'
 
 import SplashScreen from './src/components/SplashScreen'
 import Routes from './Routes';
@@ -39,12 +40,20 @@ export default class App extends Component {
   }
 
   render() {
+
+    StatusBar.setBackgroundColor('#A52D53', true);
+
     if (this.state.isLoading) {
       return <SplashScreen />;
     }
   
     return (
-        <Routes />
+
+      <View style={{height: Dimensions.get('window').height + 100}}>
+
+          <Routes />
+      </View>
+        
     );
   }
 }

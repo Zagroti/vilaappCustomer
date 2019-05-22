@@ -4,6 +4,7 @@ import {
     TouchableOpacity,
     TextInput
 } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import { Actions } from 'react-native-router-flux';
 import InputScrollView from 'react-native-input-scroll-view';
 
@@ -20,6 +21,15 @@ export default class EnterCode extends Component {
             bg4: '#dfdfdf',
             bg5: '#dfdfdf',
             bg6: '#dfdfdf',
+
+            code1: '1',
+            code2: '2',
+            code3: '3',
+            code4: '4',
+            code5: '5',
+            code6: '6',
+
+
         }
     }
 
@@ -28,170 +38,200 @@ export default class EnterCode extends Component {
         Actions.SendNumber()
     }
 
-    _goHome = () => {
-        Actions.Home()
+    _goHome = async () => {
+        Actions.Home();
+
+        // entered user code
+        await this.setState({
+            codeMerged:
+                this.state.code1 +
+                this.state.code2 +
+                this.state.code3 +
+                this.state.code4 +
+                this.state.code5 +
+                this.state.code6
+        })
+
     }
 
 
     render() {
         return (
-            <InputScrollView multilineInputStyle={styles.ISV}>
-                <View style={styles.EnterCode}>
-
-                    <View style={styles.Box1} >
-                        <Text style={styles.MyCode} >
-                            کد فعال سازی
+            <View style={styles.EnterCode}>
+                <InputScrollView >
+                    <View style={{
+                        height: Dimensions.get('window').height,
+                        width: Dimensions.get('window').width,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}>
+                        <View style={styles.Box1} >
+                            <Text style={styles.MyCode} >
+                                کد فعال سازی
                         </Text>
-                        <View style={styles.ResendBox}>
-                            <TouchableOpacity
-                                style={styles.Resend}
-                                activeOpacity={.6}
-                                onPress={this._sendNumber}
-                            >
-                                <Text style={styles.ResendText}  >ارسال مجدد</Text>
-                            </TouchableOpacity>
-                            <Text style={styles.MyNumber}>+989121113600</Text>
+                            <View style={styles.ResendBox}>
+                                <TouchableOpacity
+                                    style={styles.Resend}
+                                    activeOpacity={.6}
+                                    onPress={this._sendNumber}
+                                >
+                                    <Text style={styles.ResendText}  >ارسال مجدد</Text>
+                                </TouchableOpacity>
+                                <Text style={styles.MyNumber}>+989121113600</Text>
+                            </View>
                         </View>
+
+                        <View style={styles.Box2} >
+                            <Text style={styles.ActivationCodeText} >
+                                کد فعال سازی خود را وارد کنید
+                        </Text>
+
+                            <View style={styles.codeShowBox}>
+                                <TextInput style={styles.MyCodeNumber}
+                                    onFocus={() => {
+                                        this.setState({ bg1: '#C72A54' })
+                                    }}
+                                    onBlur={() => {
+                                        this.setState({ bg1: '#dfdfdf' })
+                                    }} value={this.state.code1}
+                                    onChangeText={(e) => this.setState({ code1: e })}
+                                    maxLength={1}
+                                    style={{
+                                        borderBottomColor: this.state.bg1,
+                                        marginHorizontal: 5,
+                                        paddingHorizontal: 5,
+                                        fontSize: 30,
+                                        paddingBottom: 5,
+                                        borderBottomWidth: 2,
+                                        fontWeight: '900',
+                                        textAlign: 'center',
+                                    }}
+                                    keyboardType='numeric'
+                                />
+                                <TextInput style={styles.MyCodeNumber}
+                                    onFocus={() => {
+                                        this.setState({ bg2: '#C72A54' })
+                                    }}
+                                    onBlur={() => {
+                                        this.setState({ bg2: '#dfdfdf' })
+                                    }} value={this.state.code2}
+                                    onChangeText={(e) => this.setState({ code2: e })}
+                                    maxLength={1}
+                                    style={{
+                                        borderBottomColor: this.state.bg2,
+                                        marginHorizontal: 5,
+                                        paddingHorizontal: 5,
+                                        fontSize: 30,
+                                        paddingBottom: 5,
+                                        borderBottomWidth: 2,
+                                        fontWeight: '900',
+                                        textAlign: 'center',
+                                    }}
+                                    keyboardType='numeric'
+                                />
+                                <TextInput style={styles.MyCodeNumber}
+                                    onFocus={() => {
+                                        this.setState({ bg3: '#C72A54' })
+                                    }}
+                                    onBlur={() => {
+                                        this.setState({ bg3: '#dfdfdf' })
+                                    }} value={this.state.code3}
+                                    onChangeText={(e) => this.setState({ code3: e })}
+                                    maxLength={1}
+                                    style={{
+                                        borderBottomColor: this.state.bg3,
+                                        marginHorizontal: 5,
+                                        paddingHorizontal: 5,
+                                        fontSize: 30,
+                                        paddingBottom: 5,
+                                        borderBottomWidth: 2,
+                                        fontWeight: '900',
+                                        textAlign: 'center',
+                                    }}
+                                    keyboardType='numeric'
+                                />
+                                <TextInput style={styles.MyCodeNumber}
+                                    onFocus={() => {
+                                        this.setState({ bg4: '#C72A54' })
+                                    }}
+                                    onBlur={() => {
+                                        this.setState({ bg4: '#dfdfdf' })
+                                    }} value={this.state.code4}
+                                    onChangeText={(e) => this.setState({ code4: e })}
+                                    maxLength={1}
+                                    style={{
+                                        borderBottomColor: this.state.bg4,
+                                        marginHorizontal: 5,
+                                        paddingHorizontal: 5,
+                                        fontSize: 30,
+                                        paddingBottom: 5,
+                                        borderBottomWidth: 2,
+                                        fontWeight: '900',
+                                        textAlign: 'center',
+                                    }}
+                                    keyboardType='numeric'
+                                />
+                                <TextInput style={styles.MyCodeNumber}
+                                    onFocus={() => {
+                                        this.setState({ bg5: '#C72A54' })
+                                    }}
+                                    onBlur={() => {
+                                        this.setState({ bg5: '#dfdfdf' })
+                                    }} value={this.state.code5}
+                                    onChangeText={(e) => this.setState({ code5: e })}
+                                    maxLength={1}
+                                    style={{
+                                        borderBottomColor: this.state.bg5,
+                                        marginHorizontal: 5,
+                                        paddingHorizontal: 5,
+                                        fontSize: 30,
+                                        paddingBottom: 5,
+                                        borderBottomWidth: 2,
+                                        fontWeight: '900',
+                                        textAlign: 'center',
+                                    }}
+                                    keyboardType='numeric'
+                                />
+                                <TextInput style={styles.MyCodeNumber}
+                                    onFocus={() => {
+                                        this.setState({ bg6: '#C72A54' })
+                                    }}
+                                    onBlur={() => {
+                                        this.setState({ bg6: '#dfdfdf' })
+                                    }} value={this.state.code6}
+                                    onChangeText={(e) => this.setState({ code6: e })}
+                                    maxLength={1}
+                                    style={{
+                                        borderBottomColor: this.state.bg6,
+                                        marginHorizontal: 5,
+                                        paddingHorizontal: 5,
+                                        fontSize: 30,
+                                        paddingBottom: 5,
+                                        borderBottomWidth: 2,
+                                        fontWeight: '900',
+                                        textAlign: 'center',
+                                    }}
+                                    keyboardType='numeric'
+                                />
+                            </View>
+                        </View>
+
+
+                        <TouchableOpacity style={styles.save_button} onPress={this._goHome} activeOpacity={.6}>
+                            <LinearGradient
+                                start={{ x: 0, y: 0 }}
+                                end={{ x: 1, y: 0 }}
+                                colors={['#36a35b', '#6fcf97']}
+                                style={styles.linear}>
+                                <Text style={styles.save_text} >
+                                    ورود
+                                </Text>
+                            </LinearGradient>
+                        </TouchableOpacity>
                     </View>
 
-                    <View style={styles.Box2} >
-                        <Text style={styles.ActivationCodeText} >
-                            کد فعال سازی خود را وارد کنید
-                        </Text>
-
-                        <View style={styles.codeShowBox}>
-                            <TextInput style={styles.MyCodeNumber}
-                                onFocus={() => {
-                                    this.setState({ bg1: '#C72A54' })
-                                }}
-                                onBlur={() => {
-                                    this.setState({ bg1: '#dfdfdf' })
-                                }} value="2"
-                                style={{
-                                    borderBottomColor: this.state.bg1,
-                                    marginHorizontal: 5,
-                                    paddingHorizontal: 5,
-                                    fontSize: 30,
-                                    paddingBottom: 5,
-                                    borderBottomWidth: 2,
-                                    fontWeight: '900',
-                                    textAlign: 'center'
-
-                                }}
-                            />
-                            <TextInput style={styles.MyCodeNumber}
-                                onFocus={() => {
-                                    this.setState({ bg2: '#C72A54' })
-                                }}
-                                onBlur={() => {
-                                    this.setState({ bg2: '#dfdfdf' })
-                                }} value="4"
-                                style={{
-                                    borderBottomColor: this.state.bg2,
-                                    marginHorizontal: 5,
-                                    paddingHorizontal: 5,
-                                    fontSize: 30,
-                                    paddingBottom: 5,
-                                    borderBottomWidth: 2,
-                                    fontWeight: '900',
-                                    textAlign: 'center'
-
-                                }}
-                            />
-                            <TextInput style={styles.MyCodeNumber}
-                                onFocus={() => {
-                                    this.setState({ bg3: '#C72A54' })
-                                }}
-                                onBlur={() => {
-                                    this.setState({ bg3: '#dfdfdf' })
-                                }} value="7"
-                                style={{
-                                    borderBottomColor: this.state.bg3,
-                                    marginHorizontal: 5,
-                                    paddingHorizontal: 5,
-                                    fontSize: 30,
-                                    paddingBottom: 5,
-                                    borderBottomWidth: 2,
-                                    fontWeight: '900',
-                                    textAlign: 'center'
-
-                                }}
-                            />
-                            <TextInput style={styles.MyCodeNumber}
-                                onFocus={() => {
-                                    this.setState({ bg4: '#C72A54' })
-                                }}
-                                onBlur={() => {
-                                    this.setState({ bg4: '#dfdfdf' })
-                                }} value="0"
-                                style={{
-                                    borderBottomColor: this.state.bg4,
-                                    marginHorizontal: 5,
-                                    paddingHorizontal: 5,
-                                    fontSize: 30,
-                                    paddingBottom: 5,
-                                    borderBottomWidth: 2,
-                                    fontWeight: '900',
-                                    textAlign: 'center'
-
-                                }}
-                            />
-                            <TextInput style={styles.MyCodeNumber}
-                                onFocus={() => {
-                                    this.setState({ bg5: '#C72A54' })
-                                }}
-                                onBlur={() => {
-                                    this.setState({ bg5: '#dfdfdf' })
-                                }} value="0"
-                                style={{
-                                    borderBottomColor: this.state.bg5,
-                                    marginHorizontal: 5,
-                                    paddingHorizontal: 5,
-                                    fontSize: 30,
-                                    paddingBottom: 5,
-                                    borderBottomWidth: 2,
-                                    fontWeight: '900',
-                                    textAlign: 'center'
-
-                                }}
-                            />
-                            <TextInput style={styles.MyCodeNumber}
-                                onFocus={() => {
-                                    this.setState({ bg6: '#C72A54' })
-                                }}
-                                onBlur={() => {
-                                    this.setState({ bg6: '#dfdfdf' })
-                                }} value="9"
-                                style={{
-                                    borderBottomColor: this.state.bg6,
-                                    marginHorizontal: 5,
-                                    paddingHorizontal: 5,
-                                    fontSize: 30,
-                                    paddingBottom: 5,
-                                    borderBottomWidth: 2,
-                                    fontWeight: '900',
-                                    textAlign: 'center'
-
-                                }}
-                            />
-                        </View>
-                    </View>
-
-
-                    <TouchableOpacity style={styles.SaveButton} onPress={this._goHome} activeOpacity={.6}>
-                        <ImageBackground style={styles.SaveButtonImage}
-                            imageStyle={{
-                                borderRadius: 50,
-                            }}
-                            source={require('./../../Assets/Images/save.png')}
-                        >
-                            <Text style={styles.SaveText} >
-                                ذخیره
-                            </Text>
-                        </ImageBackground>
-                    </TouchableOpacity>
-                </View>
-            </InputScrollView>
+                </InputScrollView>
+            </View>
 
 
 
@@ -200,16 +240,13 @@ export default class EnterCode extends Component {
 }
 
 const styles = ({
-    ISV: {
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
+
     EnterCode: {
         flexDirection: 'column',
         justifyContent: 'space-around',
         alignItems: 'center',
         width: Dimensions.get('window').width,
-        height: Dimensions.get('window').height - 50,
+        height: Dimensions.get('window').height,
         backgroundColor: '#f6f6f6',
     },
 
@@ -222,18 +259,18 @@ const styles = ({
     },
 
     MyCode: {
-        fontSize: 22,
+        fontSize: 24,
         fontFamily: 'ISBold',
     },
 
     ResendBox: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 5
+        marginTop: 10
     },
 
     MyNumber: {
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: '900',
         color: '#b7b7b7'
     },
@@ -245,7 +282,11 @@ const styles = ({
         fontSize: 14,
         fontFamily: 'ISBold',
         marginRight: 10,
-        color: '#555'
+        color: '#fff',
+        backgroundColor: '#C72A54',
+        borderRadius: 50,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
     },
 
 
@@ -256,7 +297,8 @@ const styles = ({
         alignItems: 'center',
         backgroundColor: '#fff',
         padding: 10,
-        marginVertical: 50,
+        marginTop: 80,
+        marginBottom: 30,
         borderRadius: 10,
         shadowColor: "#f7f7f7",
         shadowOpacity: 1,
@@ -264,10 +306,10 @@ const styles = ({
     },
 
     ActivationCodeText: {
-        fontFamily: "ISBold",
+        fontFamily: "ISMedium",
         color: '#333',
         marginBottom: 20,
-        fontSize: 12
+        fontSize: 14
     },
     codeShowBox: {
         flexDirection: 'row',
@@ -276,21 +318,23 @@ const styles = ({
 
     },
 
-    SaveButton: {
+    save_button: {
         width: Dimensions.get('window').width - 100,
-        marginTop: 40,
+        marginTop: 0,
         flexGrow: 2,
-        justifyContent: "flex-start"
+        justifyContent: "flex-start",
+
     },
-    SaveButtonImage: {
+    linear: {
         width: '100%',
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
         fontSize: 40,
+        borderRadius:50
 
     },
-    SaveText: {
+    save_text: {
         fontFamily: "ISBold",
         color: '#fff',
         fontSize: 16,
