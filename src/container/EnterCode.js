@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import {
     Text, View, Dimensions, ImageBackground,
     TouchableOpacity,
-    TextInput
+    TextInput,
+    KeyboardAvoidingView
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Actions } from 'react-native-router-flux';
-import InputScrollView from 'react-native-input-scroll-view';
+
 
 
 
@@ -58,7 +59,11 @@ export default class EnterCode extends Component {
     render() {
         return (
             <View style={styles.EnterCode}>
-                <InputScrollView >
+                 <KeyboardAvoidingView style={{
+                        width: '100%',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }} behavior="padding">
                     <View style={{
                         height: Dimensions.get('window').height,
                         width: Dimensions.get('window').width,
@@ -230,7 +235,7 @@ export default class EnterCode extends Component {
                         </TouchableOpacity>
                     </View>
 
-                </InputScrollView>
+                </KeyboardAvoidingView>
             </View>
 
 

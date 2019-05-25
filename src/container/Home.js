@@ -67,6 +67,9 @@ export default class Home extends Component {
         if (path === 'history') {
             return false;
         }
+
+        this.refs['DRAWER_REF'].closeDrawer();
+
     }
 
     _showRequestsNavigate = () => {
@@ -116,7 +119,7 @@ export default class Home extends Component {
 
         return (
             <DrawerLayoutAndroid
-                drawerWidth={300}
+                drawerWidth={250}
                 ref={'DRAWER_REF'}
                 drawerPosition={DrawerLayoutAndroid.positions.Right}
                 renderNavigationView={() => navigationView}
@@ -163,7 +166,7 @@ export default class Home extends Component {
                         </ScrollView>
                     </View>
                     <TouchableOpacity activeOpacity={.9} style={{
-                        position: 'absolute', bottom: 20, zIndex: 10, right: 20, width: 90,
+                        position: 'absolute', bottom: 140, zIndex: 10, right: 20, width: 90,
                         height: 90,
                         borderRadius: 50,
                         backgroundColor: '#C92652',
@@ -180,30 +183,7 @@ export default class Home extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    {/* footer */}
-                    {/* <View style={styles.footer}> */}
-
-                    {/* got to profile */}
-                    {/* <TouchableOpacity activeOpacity={.6} style={styles.bottomIcons} onPress={(e) => this._navigate('profile')}>
-                            <Image style={styles.bottomIcon} source={require('../../Assets/Images/user.png')} />
-                        </TouchableOpacity> */}
-
-                    {/* open Modal filter */}
-                    {/* <TouchableOpacity activeOpacity={.9} style={styles.middleBtn}
-                            onPress={() => {
-                                this.setModalVisible(true);
-                            }}
-                        >
-                            <View style={styles.middleInside}>
-                                <Image style={styles.middleIcon} source={require('../../Assets/Images/bluemarker.png')} />
-                            </View>
-                        </TouchableOpacity> */}
-
-                    {/* got to history */}
-                    {/* <TouchableOpacity activeOpacity={.6} style={styles.bottomIcons} onPress={(e) => this._navigate('history')}>
-                            <Image style={styles.bottomIcon} source={require('../../Assets/Images/history.png')} />
-                        </TouchableOpacity> */}
-                    {/* </View > */}
+                   
 
                 </View>
 

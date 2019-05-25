@@ -8,11 +8,12 @@ import {
     ImageBackground,
     TouchableOpacity,
     BackHandler,
-    ToastAndroid
+    ToastAndroid,
+    KeyboardAvoidingView
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Actions } from 'react-native-router-flux';
-import InputScrollView from 'react-native-input-scroll-view';
+
 
 
 
@@ -52,7 +53,11 @@ export default class Profile extends Component {
     render() {
 
         return (
-            <InputScrollView style={styles.ISV} >
+            <KeyboardAvoidingView style={{
+                width: '100%',
+                justifyContent: 'center',
+                alignItems: 'center',
+            }} behavior="position">
 
                 <View style={styles.Profile}>
                     <View style={styles.icon_parent} >
@@ -114,7 +119,7 @@ export default class Profile extends Component {
 
 
                 </View>
-            </InputScrollView>
+            </KeyboardAvoidingView>
 
 
 
@@ -124,9 +129,7 @@ export default class Profile extends Component {
 
 const styles = ({
 
-    ISV: {
-        flex: 1
-    },
+
     Profile: {
         width: Dimensions.get('window').width,
         height: Dimensions.get('window').height - 70,

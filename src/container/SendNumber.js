@@ -1,7 +1,21 @@
 import React, { Component } from 'react';
-import { ImageBackground, Image, Text, View, Dimensions, TouchableOpacity, TextInput, Platform } from 'react-native';
+import {
+    UIManager,
+    ImageBackground,
+    Image,
+    Text,
+    View,
+    Dimensions,
+    Keyboard,
+    TouchableOpacity,
+    TextInput,
+    Platform,
+    ScrollViewComponent,
+    KeyboardAvoidingView
+} from 'react-native';
+
 import { Actions } from 'react-native-router-flux';
-import InputScrollView from 'react-native-input-scroll-view';
+
 
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -18,11 +32,24 @@ export default class SendNumber extends Component {
         }
     }
 
+    componentWillMount() {
+        this.keyboardDidHideListener = Keyboard.addListener(
+            'keyboardWillHide',
+            this.keyboardDidHide.bind(this)
+        )
+    }
 
+    componentWillUnmount() {
+        this.keyboardDidHideListener.remove()
+    }
+
+    keyboardDidHide(e) {
+        this.refs.scrollView.scrollTo({ y: 0 });
+    }
 
     componentDidMount() {
         // focus number input
-        this.refs['NUMBER'].focus()
+        // this.refs['NUMBER'].focus()
 
 
         console.log(window)
@@ -67,24 +94,58 @@ export default class SendNumber extends Component {
     }
 
 
+    scrolldown(ref) {
+        const self = this;
+        // this.refs[ref].measure((ox, oy, width, height, px, py) => {
+        //     self.refs.scrollView.scrollTo({y: oy - 200});
+        // });
+
+        // this.scrollView.getNode().scrollTo({y:100})
+
+
+        const { State: TextInputState } = TextInput;
+        const currentlyFocusedField = TextInputState.currentlyFocusedField();
+
+        UIManager.measure(currentlyFocusedField, (originX, originY, width, height, pageX, pageY) => {
+            console.log(originX, originY, width, height, pageX, pageY);
+        });
+    }
+
+
     render() {
         return (
-            <InputScrollView style={{flex:1 }} >
-                <View style={styles.SendNumber}>
-                    <ImageBackground style={styles.bgImage} 
-                        imageStyle={{
-                            borderBottomRightRadius: 300,
-                        }}
-                        source={require('./../../Assets/Images/sendNumber.png')}
-                    >
-                        <View style={styles.logoBox} >
-                            <Image style={styles.logo} source={require('../../Assets/Images/logo1.png')} />
+
+
+
+
+
+            <View style={styles.SendNumber}>
+
+                <ImageBackground style={styles.bgImage}
+                    imageStyle={{ borderBottomRightRadius: 300 }}
+                    source={require('./../../Assets/Images/sendNumber.png')}
+                >
+
+                    <KeyboardAvoidingView style={{
+                        width: '100%',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }} behavior="padding">
+                        <View style={{
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
+                            <View style={styles.logoBox} >
+                                <Image style={styles.logo} source={require('../../Assets/Images/logo1.png')} />
+                            </View>
                         </View>
 
                         <View style={styles.numberInputs}>
                             <Text style={styles.numberInputsTitle} >
                                 شماره همراه خود را وارد نمایید
                             </Text>
+
+
                             <View style={styles.inputBox} >
                                 <View style={{
                                     flexDirection: 'row',
@@ -99,25 +160,36 @@ export default class SendNumber extends Component {
                                             require('../../Assets/Images/iran.png') :
                                             require('../../Assets/Images/national.png')
                                     } />
+
                                     <TextInput
                                         style={styles.inputBox1}
                                         onChangeText={(e) => this._changeCode(e)}
+
                                         value={this.state.code}
                                         keyboardType='numeric'
                                         value={this.state.code}
-                                        maxLength={4}
+                                        maxLength={4} multiline
                                     />
+
                                 </View>
+
+
+
                                 <TextInput
-                                    ref={'NUMBER'}
+                                    // ref={'NUMBER'}
                                     style={styles.inputBox2}
                                     onChangeText={(e) => this._changeNumber(e)}
+                                    onFocus={this.scrolldown.bind(this, 'NUMBER')}
                                     value={this.state.number}
                                     keyboardType='numeric'
                                     textContentType="telephoneNumber"
-                                    maxLength={10}
+                                    maxLength={10} multiline
+
                                 />
+
                             </View>
+
+
                         </View>
 
                         <TouchableOpacity style={styles.send_btn} onPress={this._enterCode} activeOpacity={.6}>
@@ -131,9 +203,14 @@ export default class SendNumber extends Component {
                                 </Text>
                             </LinearGradient>
                         </TouchableOpacity>
-                    </ImageBackground>
-                </View>
-            </InputScrollView>
+
+                    </KeyboardAvoidingView>
+
+
+                </ImageBackground>
+            </View>
+
+
 
         );
     }
@@ -141,22 +218,22 @@ export default class SendNumber extends Component {
 
 const styles = ({
 
+
     SendNumber: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#A52D53',
         height: Dimensions.get('window').height,
-
     },
     bgImage: {
-        // height: Dimensions.get('window').height,
-        height:'100%',
+        flex: 1,
+        height: Dimensions.get('window').height,
         width: Dimensions.get('window').width,
         justifyContent: 'center',
         alignItems: 'center',
-
     },
+
     logoBox: {
         width: 160,
         height: 160,
@@ -180,8 +257,8 @@ const styles = ({
         shadowOpacity: 1,
         elevation: 1,
         backgroundColor: '#fff'
-
     },
+
     inputBox1: {
         height: 45,
         // width: '30%',
