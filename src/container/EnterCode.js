@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
+
 import {
-    Text, View, Dimensions, ImageBackground,
+    Text, View,
+    Dimensions,
     TouchableOpacity,
     TextInput,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    Animated
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Actions } from 'react-native-router-flux';
@@ -11,7 +15,7 @@ import { Actions } from 'react-native-router-flux';
 
 
 
-export default class EnterCode extends Component {
+class EnterCode extends Component {
 
     constructor(props) {
         super(props)
@@ -30,17 +34,23 @@ export default class EnterCode extends Component {
             code5: '5',
             code6: '6',
 
+            wrongCode:false,
+            fadeText: new Animated.Value(1)
+
 
         }
     }
 
 
+    // resend number 
     _sendNumber = () => {
-        Actions.SendNumber()
+        Actions.pop()
     }
 
+
+    // validation and go home
     _goHome = async () => {
-        Actions.Home();
+
 
         // entered user code
         await this.setState({
@@ -53,17 +63,56 @@ export default class EnterCode extends Component {
                 this.state.code6
         })
 
+        // fetch ...
+        //..
+        //..
+        if (this.state.codeMerged == '123456') {
+            // go HOME
+            Actions.Home();
+
+            this.props.onCheckNumber(this.state.codeMerged)
+
+        } else {
+
+            // animation show permission 
+            await this.setState({
+                wrongCode: true
+            })
+
+            //text animation 
+            Animated.timing(
+                this.state.fadeText,
+                {
+                    toValue: 0,
+                    duration: 2000,
+                    delay: 3000
+                }
+            ).start()
+
+            // set text animation opacity value
+            // reset wrong number to default
+            setTimeout(() => {
+                this.setState({
+                    wrongCode: false,
+                    fadeText: new Animated.Value(1),
+                })
+            }, 5000)
+        }
+
     }
 
 
     render() {
+        let { fadeText } = this.state
+
+
         return (
             <View style={styles.EnterCode}>
-                 <KeyboardAvoidingView style={{
-                        width: '100%',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }} behavior="padding">
+                <KeyboardAvoidingView style={{
+                    width: '100%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }} behavior="padding">
                     <View style={{
                         height: Dimensions.get('window').height,
                         width: Dimensions.get('window').width,
@@ -82,7 +131,7 @@ export default class EnterCode extends Component {
                                 >
                                     <Text style={styles.ResendText}  >ارسال مجدد</Text>
                                 </TouchableOpacity>
-                                <Text style={styles.MyNumber}>+989121113600</Text>
+                                <Text style={styles.MyNumber}>{this.props.number}</Text>
                             </View>
                         </View>
 
@@ -99,7 +148,7 @@ export default class EnterCode extends Component {
                                     onBlur={() => {
                                         this.setState({ bg1: '#dfdfdf' })
                                     }} value={this.state.code1}
-                                    onChangeText={(e) => this.setState({ code1: e })}
+                                    onChangeText={(e) => this.setState({ code1: e.replace(/[^0-9]/g, '').trim() })}
                                     maxLength={1}
                                     style={{
                                         borderBottomColor: this.state.bg1,
@@ -120,7 +169,7 @@ export default class EnterCode extends Component {
                                     onBlur={() => {
                                         this.setState({ bg2: '#dfdfdf' })
                                     }} value={this.state.code2}
-                                    onChangeText={(e) => this.setState({ code2: e })}
+                                    onChangeText={(e) => this.setState({ code2: e.replace(/[^0-9]/g, '').trim() })}
                                     maxLength={1}
                                     style={{
                                         borderBottomColor: this.state.bg2,
@@ -141,7 +190,7 @@ export default class EnterCode extends Component {
                                     onBlur={() => {
                                         this.setState({ bg3: '#dfdfdf' })
                                     }} value={this.state.code3}
-                                    onChangeText={(e) => this.setState({ code3: e })}
+                                    onChangeText={(e) => this.setState({ code3: e.replace(/[^0-9]/g, '').trim() })}
                                     maxLength={1}
                                     style={{
                                         borderBottomColor: this.state.bg3,
@@ -162,7 +211,7 @@ export default class EnterCode extends Component {
                                     onBlur={() => {
                                         this.setState({ bg4: '#dfdfdf' })
                                     }} value={this.state.code4}
-                                    onChangeText={(e) => this.setState({ code4: e })}
+                                    onChangeText={(e) => this.setState({ code4: e.replace(/[^0-9]/g, '').trim() })}
                                     maxLength={1}
                                     style={{
                                         borderBottomColor: this.state.bg4,
@@ -183,7 +232,7 @@ export default class EnterCode extends Component {
                                     onBlur={() => {
                                         this.setState({ bg5: '#dfdfdf' })
                                     }} value={this.state.code5}
-                                    onChangeText={(e) => this.setState({ code5: e })}
+                                    onChangeText={(e) => this.setState({ code5: e.replace(/[^0-9]/g, '').trim() })}
                                     maxLength={1}
                                     style={{
                                         borderBottomColor: this.state.bg5,
@@ -204,7 +253,7 @@ export default class EnterCode extends Component {
                                     onBlur={() => {
                                         this.setState({ bg6: '#dfdfdf' })
                                     }} value={this.state.code6}
-                                    onChangeText={(e) => this.setState({ code6: e })}
+                                    onChangeText={(e) => this.setState({ code6: e.replace(/[^0-9]/g, '').trim() })}
                                     maxLength={1}
                                     style={{
                                         borderBottomColor: this.state.bg6,
@@ -219,6 +268,25 @@ export default class EnterCode extends Component {
                                     keyboardType='numeric'
                                 />
                             </View>
+                            {
+                                this.state.wrongCode ?
+                                    <Animated.Text style={{
+                                        height: 20,
+                                        width: Dimensions.get('window').width - 100,
+                                        fontSize: 10,
+                                        fontFamily: 'ISBold',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        color: 'red',
+                                        marginTop: 20,
+                                        opacity: fadeText,
+                                        textAlign:'center'
+                                    }} >
+                                       کد وارد شده اشتباه است
+                            </Animated.Text> :
+                                    <Text style={{ height: 20, marginTop: 20, }}></Text>
+
+                            }
                         </View>
 
 
@@ -336,7 +404,7 @@ const styles = ({
         justifyContent: 'center',
         alignItems: 'center',
         fontSize: 40,
-        borderRadius:50
+        borderRadius: 50
 
     },
     save_text: {
@@ -350,3 +418,25 @@ const styles = ({
 
 
 })
+
+
+
+const mapStateToProps = state => {
+    return {
+        number: state.number.number,
+
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onCheckNumber: (number) => dispatch(addPlace(number)),
+
+    }
+}
+
+
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(EnterCode); 

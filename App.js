@@ -41,7 +41,7 @@ export default class App extends Component {
 
   render() {
 
-    StatusBar.setBackgroundColor('#A52D53', true);
+    // StatusBar.setBackgroundColor('#A52D53', true);
 
     if (this.state.isLoading) {
       return <SplashScreen />;
