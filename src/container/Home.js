@@ -84,7 +84,7 @@ export default class Home extends Component {
     render() {
 
         const navigationView = (
-            <View style={{ flex: 1, backgroundColor: '#A52D53', alignItems: 'center' }}>
+            <View style={{ flex: 1, backgroundColor: '#fff', alignItems: 'center' }}>
                 {/* <Text style={{ margin: 10, fontSize: 15, textAlign: 'left' }}>I'm in the Drawer!</Text> */}
                 <View style={{
                     alignItems: 'center',
@@ -104,13 +104,13 @@ export default class Home extends Component {
                 </View>
                 <TouchableOpacity activeOpacity={.6} style={styles.bottomIcons} onPress={(e) => this._navigate('profile')}>
                     <Text style={styles.drawer_text}>پروفایل</Text>
-                    <Image style={styles.bottomIcon} source={require('../../Assets/Images/user.png')} />
+                    <Image style={styles.bottomIcon} source={require('../../Assets/Images/userq.png')} />
                 </TouchableOpacity>
 
                 {/* got to history */}
                 <TouchableOpacity activeOpacity={.6} style={styles.bottomIcons} onPress={(e) => this._navigate('history')}>
                     <Text style={styles.drawer_text}>تاریخچه</Text>
-                    <Image style={styles.bottomIcon} source={require('../../Assets/Images/history.png')} />
+                    <Image style={styles.bottomIcon} source={require('../../Assets/Images/userq.png')} />
                 </TouchableOpacity>
             </View>
         );
@@ -173,6 +173,9 @@ export default class Home extends Component {
                         flexDirection: 'column',
                         justifyContent: 'center',
                         alignItems: 'center',
+                        shadowColor: "black",
+                        shadowOpacity: .5,
+                        elevation: 10,
                     }}
                         onPress={() => {
                             this.setModalVisible(true);
@@ -510,16 +513,15 @@ const styles = ({
         alignItems: 'center',
         justifyContent: 'flex-end',
         flexDirection: 'row',
-        borderBottomColor: '#ffffff82',
+        borderBottomColor: '#333',
         borderBottomWidth: 1,
-        width: '95%'
+        width: '100%'
     },
     drawer_text: {
         fontSize: 16,
         color: '#333',
         fontFamily: 'ISBold',
         marginRight: 10,
-        color: '#fff'
     },
     bottomIcon: {
         width: 30,
