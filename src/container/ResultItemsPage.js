@@ -3,12 +3,8 @@ import {
     Text,
     View,
     Dimensions,
-    TextInput,
     Image,
-    ImageBackground,
     TouchableOpacity,
-    BackHandler,
-    ToastAndroid,
     ScrollView
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
