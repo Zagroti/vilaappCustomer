@@ -6,22 +6,22 @@ import {
     Text,
     View,
     Dimensions,
-    Keyboard,
-    TouchableOpacity,
     TextInput,
     Platform,
-    ScrollViewComponent,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    Animated
 } from 'react-native';
+
 
 import { Actions } from 'react-native-router-flux';
 
+//components
+import GradientButton from '../components/GradientButton';
 
-import LinearGradient from 'react-native-linear-gradient';
 
 
 
-export default class SendNumber extends Component {
+class SendNumber extends Component {
 
     constructor(props) {
         super(props)
@@ -29,68 +29,86 @@ export default class SendNumber extends Component {
             iranIcon: true,
             code: '+98',
             number: '',
+            fadeText: new Animated.Value(1),
+            wrongNumber: false
         }
-    }
-
-    componentWillMount() {
-        this.keyboardDidHideListener = Keyboard.addListener(
-            'keyboardWillHide',
-            this.keyboardDidHide.bind(this)
-        )
-    }
-
-    componentWillUnmount() {
-        this.keyboardDidHideListener.remove()
-    }
-
-    keyboardDidHide(e) {
-        this.refs.scrollView.scrollTo({ y: 0 });
     }
 
     componentDidMount() {
         // focus number input
-        // this.refs['NUMBER'].focus()
-
-
-        console.log(window)
+        this.refs['NUMBER'].focus()
     }
+
 
 
     // country code onchange 
     _changeCode = (e) => {
 
+        //just numbers and (+) have permission
         if (e.trim() === '+98') {
             this.setState({
                 iranIcon: true,
-                code: e.trim()
+                code: e.replace(/[^0-9\+]/g, '').trim()
             })
         } else {
             this.setState({
                 iranIcon: false,
-                code: e.trim()
+                code: e.replace(/[^0-9\+]/g, '').trim()
             })
         }
     }
 
+
+
     // mobile number onchange
     _changeNumber = (e) => {
-
+        // just number has permission
         this.setState({
-            number: e.trim()
+            number: e.replace(/[^0-9]/g, '').trim()
         })
     }
 
 
     // send code function
     _enterCode = async () => {
-        Actions.EnterCode();
 
+        if (this.state.number.length === 10) {
+            // go to enter code page 
+            Actions.EnterCode();
 
-        // merge code and user number 
-        let sentNumber = this.state.code + this.state.number
-        await this.setState({
-            sentNumber: sentNumber.trim()
-        })
+            // merge code and user number 
+            let sentNumber = this.state.code + this.state.number
+            await this.setState({
+                sentNumber: sentNumber.trim()
+            })
+            this.props.onSendNumber(sentNumber)
+
+        }else {
+
+            // animation show permission 
+            await this.setState({
+                wrongNumber: true
+            })
+
+            //text animation 
+            Animated.timing(
+                this.state.fadeText,
+                {
+                    toValue: 0,
+                    duration: 2000,
+                    delay: 3000
+                }
+            ).start()
+
+            // set text animation opacity value
+            // reset wrong number to default
+            setTimeout(() => {
+                this.setState({
+                    wrongNumber: false,
+                    fadeText: new Animated.Value(1),
+                })
+            }, 5000)
+        }
     }
 
 
@@ -113,15 +131,18 @@ export default class SendNumber extends Component {
 
 
     render() {
+
+        let { fadeText } = this.state
+
         return (
 
 
 
 
 
-            <View style={styles.SendNumber}>
+            <View style={styles.send_number}>
 
-                <ImageBackground style={styles.bgImage}
+                <ImageBackground style={styles.bg_image}
                     imageStyle={{ borderBottomRightRadius: 300 }}
                     source={require('./../../Assets/Images/sendNumber.png')}
                 >
@@ -130,23 +151,23 @@ export default class SendNumber extends Component {
                         width: '100%',
                         justifyContent: 'center',
                         alignItems: 'center',
-                    }} behavior="padding">
+                    }} behavior="position">
                         <View style={{
                             justifyContent: 'center',
                             alignItems: 'center'
                         }}>
-                            <View style={styles.logoBox} >
+                            <View style={styles.logo_box} >
                                 <Image style={styles.logo} source={require('../../Assets/Images/logo1.png')} />
                             </View>
                         </View>
 
-                        <View style={styles.numberInputs}>
-                            <Text style={styles.numberInputsTitle} >
+                        <View style={styles.number_inputs}>
+                            <Text style={styles.number_inputs_title} >
                                 شماره همراه خود را وارد نمایید
                             </Text>
 
 
-                            <View style={styles.inputBox} >
+                            <View style={styles.input_box} >
                                 <View style={{
                                     flexDirection: 'row',
                                     width: '30%',
@@ -162,7 +183,7 @@ export default class SendNumber extends Component {
                                     } />
 
                                     <TextInput
-                                        style={styles.inputBox1}
+                                        style={styles.input_box_1}
                                         onChangeText={(e) => this._changeCode(e)}
 
                                         value={this.state.code}
@@ -175,9 +196,11 @@ export default class SendNumber extends Component {
 
 
 
+
+
                                 <TextInput
-                                    // ref={'NUMBER'}
-                                    style={styles.inputBox2}
+                                    ref={'NUMBER'}
+                                    style={styles.input_box_2}
                                     onChangeText={(e) => this._changeNumber(e)}
                                     onFocus={this.scrolldown.bind(this, 'NUMBER')}
                                     value={this.state.number}
@@ -192,17 +215,43 @@ export default class SendNumber extends Component {
 
                         </View>
 
-                        <TouchableOpacity style={styles.send_btn} onPress={this._enterCode} activeOpacity={.6}>
-                            <LinearGradient
-                                start={{ x: 0, y: 0 }}
-                                end={{ x: 1, y: 0 }}
-                                colors={['#18749a', '#46add8']}
-                                style={styles.linear}>
-                                <Text style={styles.send_btn_text} >
-                                    ارسال
-                                </Text>
-                            </LinearGradient>
-                        </TouchableOpacity>
+                        {
+                            this.state.wrongNumber ?
+                                <Animated.Text style={{
+                                    height: 20,
+                                    width: Dimensions.get('window').width - 100,
+                                    fontSize: 10,
+                                    fontFamily: 'ISBold',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    color: 'red',
+                                    paddingHorizontal: 20,
+                                    marginTop: 5,
+                                    opacity: fadeText
+                                }} >
+                                    شماره همراه باید ۱۰ کارکتر باشد
+                            </Animated.Text> :
+                                <Text style={{ height: 20, paddingHorizontal: 20, marginTop: 5, }}></Text>
+
+                        }
+
+
+
+                        <GradientButton
+                            width={Dimensions.get('window').width - 100}
+                            press={this._enterCode}
+                            activeOpacity={.6}
+                            color_1="#18749a"
+                            color_2="#46add8"
+                            height={50}
+                            borderRadius={50}
+                            textColor="#fff"
+                            size={16}
+                            title="ارسال"
+                            top={20}
+                            bottom={100}
+                        />
+
 
                     </KeyboardAvoidingView>
 
@@ -219,14 +268,14 @@ export default class SendNumber extends Component {
 const styles = ({
 
 
-    SendNumber: {
+    send_number: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#A52D53',
         height: Dimensions.get('window').height,
     },
-    bgImage: {
+    bg_image: {
         flex: 1,
         height: Dimensions.get('window').height,
         width: Dimensions.get('window').width,
@@ -234,7 +283,7 @@ const styles = ({
         alignItems: 'center',
     },
 
-    logoBox: {
+    logo_box: {
         width: 160,
         height: 160,
         backgroundColor: '#f5f5f5',
@@ -249,7 +298,7 @@ const styles = ({
         marginBottom: 20
     },
 
-    inputBox: {
+    input_box: {
         flexDirection: 'row',
         width: Dimensions.get('window').width - 100,
         borderRadius: 5,
@@ -259,20 +308,13 @@ const styles = ({
         backgroundColor: '#fff'
     },
 
-    inputBox1: {
+    input_box_1: {
         height: 45,
-        // width: '30%',
-
         paddingLeft: 10,
         fontSize: 12,
-        fontWeight: '900',
-        ...Platform.select({
-            android: {
-                fontFamily: 'ISFBold',
-            }
-        })
+        fontWeight: '900'
     },
-    inputBox2: {
+    input_box_2: {
         height: 45,
         width: '70%',
         paddingLeft: 10,
@@ -286,37 +328,25 @@ const styles = ({
             }
         })
     },
-    numberInputs: {
+    number_inputs: {
         marginTop: 50,
         // flexGrow:3
     },
-    numberInputsTitle: {
+    number_inputs_title: {
         color: '#999',
         fontSize: 16,
         marginBottom: 10,
         fontFamily: 'ISBold',
 
     },
-    send_btn: {
-        width: Dimensions.get('window').width - 100,
-        marginTop: 30,
-        marginBottom: 100,
 
-    },
-    linear: {
-        width: '100%',
-        height: 50,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 50
-
-    },
-
-    send_btn_text: {
-        fontFamily: 'ISBold',
-        color: '#fff',
-        fontSize: 16,
-    }
 
 
 })
+
+
+
+
+
+
+export default SendNumber;

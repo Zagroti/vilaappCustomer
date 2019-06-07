@@ -3,12 +3,9 @@ import {
     Text,
     View,
     Dimensions,
-    DrawerLayoutAndroid,
     Image,
     ImageBackground,
     TouchableOpacity,
-    BackHandler,
-    ToastAndroid,
     ScrollView,
     Modal
 } from 'react-native';
@@ -19,6 +16,8 @@ import InputScrollView from 'react-native-input-scroll-view';
 //components 
 import NoRequest from '../components/NoRequest';
 import Requestitems from '../components/RequestItems';
+import GradientButton from '../components/GradientButton';
+
 
 export default class Details extends Component {
 
@@ -40,6 +39,11 @@ export default class Details extends Component {
         Actions.ResultItemsPage()
     }
 
+
+    _saveVila = () =>{
+        this.setModalVisible(false)
+
+    }
 
     render() {
 
@@ -175,30 +179,24 @@ export default class Details extends Component {
                             this.setModalVisible(true);
                         }}
                     >
-                        <TouchableOpacity activeOpacity={.6}
-                            style={{
-                                width: '80%',
-                                justifyContent: "center"
-                            }}
-                            onPress={() => {
+
+
+                        <GradientButton
+                            width="80%"
+                            press={() => {
                                 this.setModalVisible(true);
                             }}
-                        >
-                            <ImageBackground style={styles.save_button_image}
-                                imageStyle={{
-                                    borderRadius: 50,
-                                }}
-                                source={require('./../../Assets/Images/save.png')}
-                            >
-                                <Text style={styles.save_text} >
-                                    ذخیره
-                            </Text>
-                                <View style={styles.right}>
-                                    <Image style={{ width: 8, resizeMode: "contain" }} source={require('../../Assets/Images/right.png')} />
-                                </View>
-
-                            </ImageBackground>
-                        </TouchableOpacity>
+                            activeOpacity={.6}
+                            color_1="#36a35b"
+                            color_2="#6fcf97"
+                            height={50}
+                            borderRadius={50}
+                            textColor="#fff"
+                            size={16}
+                            title="ذخیره"
+                            top={0}
+                            bottom={0}
+                        />
                     </View>
 
 
@@ -297,7 +295,7 @@ export default class Details extends Component {
                                 <Image style={{ width: 25, resizeMode: 'contain', margin: 20 }}
                                     source={require('../../Assets/Images/checkblue.png')}
                                 />
-                                <Text style={{ fontSize: 12, fontFamily: 'ISBold',marginRight:10 }} >پذیرفته شده توسط صاحب ویلا</Text>
+                                <Text style={{ fontSize: 12, fontFamily: 'ISBold', marginRight: 10 }} >پذیرفته شده توسط صاحب ویلا</Text>
                                 <View style={{
                                     width: 70,
                                     height: 70,
@@ -326,26 +324,23 @@ export default class Details extends Component {
                                 alignItems: 'center',
                                 justifyContent: 'center',
                             }}>
+
                                 
-                                <TouchableOpacity style={{ width: Dimensions.get('window').width - 100, backgroundColor: 'transparent'}}
-                                    onPress={this._enterCode} activeOpacity={.6}>
-                                    <ImageBackground style={{
-                                        width: '100%',
-                                        height: 50,
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                    }}
-                                        imageStyle={{ borderRadius: 50 }}
-                                        source={require('./../../Assets/Images/save.png')}>
-                                        <Text style={{
-                                            fontFamily: 'ISBold',
-                                            color: '#fff',
-                                            fontSize: 16,
-                                        }} >
-                                            پرداخت
-                                        </Text>
-                                    </ImageBackground>
-                                </TouchableOpacity>
+
+                                <GradientButton
+                                    width={ Dimensions.get('window').width - 100}
+                                    press={this._saveVila}
+                                    activeOpacity={.6}
+                                    color_1="#36a35b"
+                                    color_2="#6fcf97"
+                                    height={50}
+                                    borderRadius={50}
+                                    textColor="#fff"
+                                    size={16}
+                                    title="ذخیره"
+                                    top={0}
+                                    bottom={0}
+                                />
                             </View>
                         </View>
                     </InputScrollView>
@@ -370,7 +365,7 @@ const styles = ({
         backgroundColor: "#fff",
         width: Dimensions.get('window').width,
         flex: 1,
-        marginTop:-50
+        marginTop: -50
     },
 
     header: {

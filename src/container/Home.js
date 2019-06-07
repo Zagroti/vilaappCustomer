@@ -8,7 +8,6 @@ import {
     ImageBackground,
     TouchableOpacity,
     BackHandler,
-    ToastAndroid,
     ScrollView,
     Modal,
     TextInput,
@@ -22,6 +21,7 @@ import InputScrollView from 'react-native-input-scroll-view';
 //components 
 import NoRequest from '../components/NoRequest';
 import Requestitems from '../components/RequestItems';
+import GradientButton from '../components/GradientButton';
 
 
 
@@ -84,13 +84,13 @@ export default class Home extends Component {
     render() {
 
         const navigationView = (
-            <View style={{ flex: 1, backgroundColor: '#A52D53' , alignItems:'center' }}>
+            <View style={{ flex: 1, backgroundColor: '#fff', alignItems: 'center' }}>
                 {/* <Text style={{ margin: 10, fontSize: 15, textAlign: 'left' }}>I'm in the Drawer!</Text> */}
                 <View style={{
                     alignItems: 'center',
                     paddingVertical: 20,
                     backgroundColor: '#b04267',
-                    width:'100%'
+                    width: '100%'
                 }} >
                     <View style={styles.icon_parent} >
                         <View style={styles.icon_child} >
@@ -100,17 +100,17 @@ export default class Home extends Component {
                     <View style={styles.person_desc} >
                         <Text style={styles.person_name} >جمیله باغی تبار</Text>
                     </View>
-                    
+
                 </View>
                 <TouchableOpacity activeOpacity={.6} style={styles.bottomIcons} onPress={(e) => this._navigate('profile')}>
                     <Text style={styles.drawer_text}>پروفایل</Text>
-                    <Image style={styles.bottomIcon} source={require('../../Assets/Images/user.png')} />
+                    <Image style={styles.bottomIcon} source={require('../../Assets/Images/userq.png')} />
                 </TouchableOpacity>
 
                 {/* got to history */}
                 <TouchableOpacity activeOpacity={.6} style={styles.bottomIcons} onPress={(e) => this._navigate('history')}>
                     <Text style={styles.drawer_text}>تاریخچه</Text>
-                    <Image style={styles.bottomIcon} source={require('../../Assets/Images/history.png')} />
+                    <Image style={styles.bottomIcon} source={require('../../Assets/Images/userq.png')} />
                 </TouchableOpacity>
             </View>
         );
@@ -173,6 +173,9 @@ export default class Home extends Component {
                         flexDirection: 'column',
                         justifyContent: 'center',
                         alignItems: 'center',
+                        shadowColor: "black",
+                        shadowOpacity: .5,
+                        elevation: 10,
                     }}
                         onPress={() => {
                             this.setModalVisible(true);
@@ -183,7 +186,7 @@ export default class Home extends Component {
                         </View>
                     </TouchableOpacity>
 
-                   
+
 
                 </View>
 
@@ -300,13 +303,22 @@ export default class Home extends Component {
                             {/* request btn */}
                             <View style={styles.new_request_box}>
 
-                                <TouchableOpacity style={styles.new_request_btn} onPress={this._enterCode} activeOpacity={.6}>
-                                    <ImageBackground style={styles.new_request_btn_img} imageStyle={{ borderRadius: 50 }} source={require('./../../Assets/Images/sendButton.png')}>
-                                        <Text style={styles.new_request_btn_text} >
-                                            درخواست جدید
-                                        </Text>
-                                    </ImageBackground>
-                                </TouchableOpacity>
+                                <GradientButton
+                                    width="90%"
+                                    press={this._enterCode}
+                                    activeOpacity={.6}
+                                    color_1="#18749a"
+                                    color_2="#46add8"
+                                    height={50}
+                                    borderRadius={50}
+                                    textColor="#fff"
+                                    size={16}
+                                    title="درخواست جدید"
+                                    top={0}
+                                    bottom={0}
+                                />
+
+
                             </View>
                         </View>
                     </InputScrollView>
@@ -494,23 +506,22 @@ const styles = ({
         fontSize: 18,
         fontFamily: 'ISBold',
         marginTop: 10,
-        color:'#fff'
+        color: '#fff'
     },
     bottomIcons: {
         padding: 20,
         alignItems: 'center',
         justifyContent: 'flex-end',
         flexDirection: 'row',
-        borderBottomColor:'#ffffff82',
-        borderBottomWidth:1,
-        width:'95%'
+        borderBottomColor: '#333',
+        borderBottomWidth: 1,
+        width: '100%'
     },
     drawer_text: {
         fontSize: 16,
         color: '#333',
         fontFamily: 'ISBold',
         marginRight: 10,
-        color: '#fff'
     },
     bottomIcon: {
         width: 30,
@@ -667,21 +678,7 @@ const styles = ({
         // paddingBottom: 300,
     },
 
-    new_request_btn: {
-        width: '90%',
-    },
-    new_request_btn_img: {
-        width: '100%',
-        height: 50,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
 
-    new_request_btn_text: {
-        fontFamily: 'ISBold',
-        color: '#fff',
-        fontSize: 16,
-    },
     modal_close: {
         width: 25,
         height: 25,

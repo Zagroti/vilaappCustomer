@@ -5,15 +5,13 @@ import {
     Dimensions,
     TextInput,
     Image,
-    ImageBackground,
-    TouchableOpacity,
-    BackHandler,
-    ToastAndroid,
     KeyboardAvoidingView
 } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+
 import { Actions } from 'react-native-router-flux';
 
+//components 
+import GradientButton from '../components/GradientButton';
 
 
 
@@ -100,21 +98,22 @@ export default class Profile extends Component {
 
                     </View>
 
-                    <TouchableOpacity style={styles.save_button} onPress={this._saveInfo} activeOpacity={.6}>
-                    
-                        <LinearGradient
-                            start={{ x: 0, y: 0 }}
-                            end={{ x: 1, y: 0 }}
-                            colors={['#36a35b', '#6fcf97']}
-                            style={styles.linear}>
-                            <Text style={styles.save_text} >
-                                ذخیره
-                            </Text>
-                            <View style={styles.right}>
-                                <Image style={{ width: 8, resizeMode: "contain" }} source={require('../../Assets/Images/right.png')} />
-                            </View>
-                        </LinearGradient>
-                    </TouchableOpacity>
+ 
+
+                    <GradientButton
+                            width={Dimensions.get('window').width - 100}
+                            press={this._saveInfo}
+                            activeOpacity={.6}
+                            color_1="#36a35b"
+                            color_2="#6fcf97"
+                            height={50}
+                            borderRadius={50}
+                            textColor="#fff"
+                            size={16}
+                            title="ذخیره"
+                            top={40}
+                            bottom={0}
+                        />
 
 
 
@@ -212,37 +211,6 @@ const styles = ({
         elevation: 1,
 
     },
-    save_button: {
-        width: Dimensions.get('window').width - 100,
-        marginTop: 40,
-        // flexGrow: 2,
-        justifyContent: "flex-start",
-        height: 50,
-        marginBottom: 50
-
-    },
-    linear: {
-        width: '100%',
-        height: 50,
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        borderRadius:50
-
-    },
-    save_text: {
-        fontFamily: "ISBold",
-        color: '#fff',
-        fontSize: 16,
-        width: '50%'
-    },
-    right: {
-        width: '40%',
-        alignItems: 'flex-end'
-    }
-
 
 
 
