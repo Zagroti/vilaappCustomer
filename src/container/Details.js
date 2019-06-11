@@ -256,7 +256,6 @@ export default class Details extends Component {
                         {/* Modal modal modal modal  */}
                         <View style={styles.Modal}>
                             <View style={styles.modal_title} >
-
                                 <View style={styles.icon_parent} >
                                     <View style={styles.icon_child} >
                                         <Image style={styles.icon} source={require('../../Assets/Images/natalie.jpeg')} />
@@ -318,12 +317,7 @@ export default class Details extends Component {
 
 
                             {/* request btn */}
-                            <View style={{
-                                width: '100%',
-                                height: 100,
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                            }}>
+                           
 
 
 
@@ -339,10 +333,10 @@ export default class Details extends Component {
                                     size={16}
                                     title="پرداخت"
                                     top={0}
-                                    bottom={0}
+                                    bottom={100}
                                 />
                             </View>
-                        </View>
+                    
                   
 
 
@@ -579,12 +573,14 @@ const styles = ({
 
 
     Modal: {
-        justifyContent: 'center',
+        justifyContent: 'space-around',
         alignItems: 'center',
-        backgroundColor: '#f6f6f6'
+        backgroundColor: '#f6f6f6',
+        height:Dimensions.get('window').height ,
     },
     modal_title: {
         alignItems: 'center',
+        marginTop:-50
     },
 
     icon_parent: {
@@ -635,7 +631,7 @@ const styles = ({
     person_name: {
         fontSize: 18,
         fontFamily: 'ISBold',
-        marginTop: 10
+        marginTop: 5
     },
     person_number: {
         fontSize: 15,
@@ -657,7 +653,7 @@ const styles = ({
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: 10,
-        marginVertical: 5,
+        marginVertical: 2,
     },
     rent_text: {
         fontSize: 13,
@@ -699,7 +695,7 @@ const styles = ({
         backgroundColor: '#fff',
         height: 60,
         borderRadius: 30,
-        marginVertical: 30
+        marginVertical: 10
     }
 
 
