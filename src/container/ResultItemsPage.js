@@ -35,7 +35,7 @@ export default class ResultItemsPage extends Component {
             tab1:true,
             tab2:false
         }
-    }
+    } 
 
 
 

@@ -11,7 +11,8 @@ import {
     ScrollView,
     Modal,
     TextInput,
-    Platform
+    Platform,
+    KeyboardAvoidingView
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import InputScrollView from 'react-native-input-scroll-view';
@@ -204,7 +205,7 @@ export default class Home extends Component {
                     }}
 
                 >
-                    <InputScrollView >
+                    <KeyboardAvoidingView behavior="position" >
                         {/* Close modal  */}
                         <View
                             style={{
@@ -321,7 +322,7 @@ export default class Home extends Component {
 
                             </View>
                         </View>
-                    </InputScrollView>
+                    </KeyboardAvoidingView>
 
 
 
@@ -529,10 +530,10 @@ const styles = ({
     },
     Modal: {
         flexDirection: 'column',
-        justifyContent: 'center',
+        justifyContent: 'space-around',
         alignItems: 'center',
         backgroundColor: '#f7f7f7',
-        // height: Dimensions.get('window').height ,
+        height: Dimensions.get('window').height - 50 ,
         width: Dimensions.get('window').width,
     },
     modal_description: {
@@ -547,13 +548,13 @@ const styles = ({
         shadowColor: "#f7f7f7",
         shadowOpacity: 1,
         elevation: 1,
-        height: 120,
+        height: 100,
         padding: 10,
         marginTop: 50,
     },
 
     home_icon_marker: {
-        width: 100,
+        width: 50,
         resizeMode: "contain",
         top: -40,
     },
@@ -574,8 +575,7 @@ const styles = ({
     modal_price: {
         width: '90%',
         flexDirection: 'column',
-        marginVertical: 20,
-        paddingVertical: 20,
+        marginVertical: 5,
         borderRadius: 5
     },
     modal_details: {
@@ -627,7 +627,7 @@ const styles = ({
     },
     start_date: {
         width: '90%',
-        height: 100
+        marginVertical:5
     },
     select_time: {
         textAlign: 'center',
@@ -647,7 +647,7 @@ const styles = ({
     },
     nights: {
         width: '90%',
-        height: 100
+       marginVertical:5
     },
     select_nights: {
         textAlign: 'center',
@@ -668,14 +668,12 @@ const styles = ({
 
     new_request_box: {
         width: '100%',
-        height: 140,
-        backgroundColor: 'red',
+        height: 80,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#ebebeb',
-        marginTop: 40,
-        // paddingTop: 50,
-        // paddingBottom: 300,
+        // backgroundColor: '#ebebeb',
+        marginTop: 10,
+        marginBottom: 30,
     },
 
 
