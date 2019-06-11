@@ -40,7 +40,7 @@ export default class Details extends Component {
     }
 
 
-    _saveVila = () =>{
+    _saveVila = () => {
         this.setModalVisible(false)
 
     }
@@ -226,7 +226,7 @@ export default class Details extends Component {
                     }}
 
                 >
-                    <InputScrollView>
+                    
                         {/* Close modal  */}
                         <View
                             style={{
@@ -325,25 +325,25 @@ export default class Details extends Component {
                                 justifyContent: 'center',
                             }}>
 
-                                
+
 
                                 <GradientButton
-                                    width={ Dimensions.get('window').width - 100}
+                                    width={Dimensions.get('window').width - 100}
                                     press={this._saveVila}
                                     activeOpacity={.6}
-                                    color_1="#36a35b"
-                                    color_2="#6fcf97"
+                                    color_1="#18749a"
+                                    color_2="#46add8"
                                     height={50}
                                     borderRadius={50}
                                     textColor="#fff"
                                     size={16}
-                                    title="ذخیره"
+                                    title="پرداخت"
                                     top={0}
                                     bottom={0}
                                 />
                             </View>
                         </View>
-                    </InputScrollView>
+                  
 
 
 
