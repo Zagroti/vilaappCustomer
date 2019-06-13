@@ -17,6 +17,7 @@ import {
 import { Actions } from 'react-native-router-flux';
 import InputScrollView from 'react-native-input-scroll-view';
 // import PersianCalendarPicker from 'react-native-jalali-date-picker-rtl';
+import DatePicker from 'react-native-jalaali-date-picker'
 
 
 //components 
@@ -271,7 +272,24 @@ export default class Home extends Component {
                                     <Text style={styles.modal_titles}>تاریخ شروع</Text>
                                     <Image style={styles.modal_icons} source={require('../../Assets/Images/calendergrey.png')} />
                                 </View>
-                                <Text style={styles.select_time} >1398 / 11 / 15</Text>
+                                <DatePicker
+                                    onChangeDate={(date) => {
+                                        console.log(date)
+                                    }}
+                                    dateBoxStyle={{
+                                        height: 14
+                                    }}
+                                    dateStyle={{
+                                        fontSize: 12,
+                                        fontFamily: 'ISBold',
+                                    }}
+                                    btnStyle={{
+                                        height: 25,
+                                        backgroundColor: '#ddd',
+                                    }}
+                                    arrowTintColor="#777"
+                                    btnUnderlayColor="#eee"
+                                />
                                 {/* <View style={styles.container}>
                                     <PersianCalendarPicker
                                         selectedDate={date}
@@ -533,7 +551,7 @@ const styles = ({
         justifyContent: 'space-around',
         alignItems: 'center',
         backgroundColor: '#f7f7f7',
-        height: Dimensions.get('window').height - 50 ,
+        height: Dimensions.get('window').height - 50,
         width: Dimensions.get('window').width,
     },
     modal_description: {
@@ -627,7 +645,7 @@ const styles = ({
     },
     start_date: {
         width: '90%',
-        marginVertical:5
+        marginVertical: 5
     },
     select_time: {
         textAlign: 'center',
@@ -647,7 +665,7 @@ const styles = ({
     },
     nights: {
         width: '90%',
-       marginVertical:5
+        marginVertical: 5
     },
     select_nights: {
         textAlign: 'center',
