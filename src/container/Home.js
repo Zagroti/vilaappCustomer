@@ -248,22 +248,22 @@ export default class Home extends Component {
                     }}
 
                 >
-                    {/* {
+                    {
                         this.state.date ?
-                            <View style={{
+                            <Text style={{
                                 width: Dimensions.get('window').width,
                                 height: Dimensions.get('window').height,
-                                backgroundColor: 'rgba(0,0,0,.3)', position: 'absolute', top: 0, right: 0, left: 0, bottom: 0,
-                                zIndex: 1
-                            }} >
-                            </View> :
-                            <View style={{
-                                width: 0,
-                                height: 0,
-                            }} >
-                            </View>
+                                backgroundColor: 'rgba(0,0,0,.7)', position: 'absolute', top: 0, right: 0, left: 0, bottom: 0,
+                                zIndex: 20000
+                            }}
+                            onPress={()=> {
+                                this.setState({  date: false })
+                                this.refs['PICKER'].hidePicker()
+                            }}
+                            >
+                            </Text> : null
 
-                    } */}
+                    }
                     <KeyboardAvoidingView behavior="position" >
                         {/* Close modal  */}
                         <View
@@ -368,7 +368,7 @@ export default class Home extends Component {
                                     yearCount={10}
                                     onConfirm={date => {
                                         this.setState({ selectedDate: date, date: false });
-                                        console.log(this.refs['PICKER'].isOpen());
+
                                     }}
                                     ref={'PICKER'}
                                     pickerFontFamily="ISBold"
@@ -376,9 +376,8 @@ export default class Home extends Component {
                                     pickerCancelBtnColor={[220, 53, 69, 1]}
                                     pickerTitleText="تاریخ مورد نظر خود را انتخاب کن"
                                     pickerTitleColor={[99, 99, 99, 1]}
-                                    onPicker={() => {
-                                        this.setState({ date: false })
-                                        console.log(this.refs['PICKER'].isOpen())
+                                    onPickerCancel={() => {
+                                        this.setState({  date: false });
                                     }}
 
                                 />
