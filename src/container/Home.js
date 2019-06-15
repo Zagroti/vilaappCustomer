@@ -16,14 +16,18 @@ import {
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import InputScrollView from 'react-native-input-scroll-view';
-// import PersianCalendarPicker from 'react-native-jalali-date-picker-rtl';
-import DatePicker from 'react-native-jalaali-date-picker'
+import PersianDatePicker from "rn-persian-date-picker";
+
 
 
 //components 
 import NoRequest from '../components/NoRequest';
 import Requestitems from '../components/RequestItems';
 import GradientButton from '../components/GradientButton';
+
+
+var moment = require('moment-jalaali')
+moment().format('jYYYY/jM/jD')
 
 
 
@@ -33,7 +37,7 @@ export default class Home extends Component {
         super(props)
         this.state = {
             modalVisible: false,
-
+            date: false
         };
     }
 
@@ -46,8 +50,11 @@ export default class Home extends Component {
     componentDidMount() {
         // for disable back btn
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+        this._dateOpen()
+
     }
 
+    
     componentWillUnmount() {
         // for disable back btn
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
@@ -59,6 +66,17 @@ export default class Home extends Component {
         // ToastAndroid.show('Back button is pressed', ToastAndroid.SHORT);
         return true;
     }
+
+
+    // if(this.refs['PICKER'].isOpen()){
+    //     this.setState({date:true})
+    //     alert(1)
+    // }else{
+    //     this.setState({date:false})
+    //     alert(0)
+    // }
+
+
 
 
     //footer actions
@@ -74,6 +92,7 @@ export default class Home extends Component {
 
     }
 
+    // got to vila cases
     _showRequestsNavigate = () => {
         Actions.ResultItemsPage()
     }
@@ -83,7 +102,29 @@ export default class Home extends Component {
         this.setState({ modalVisible: visible });
     }
 
+
+    // open date picker and set date
+    _dateOpen = async () => {
+        this.refs['PICKER'].showPicker()
+        this.setState({ date: true })
+
+        console.log(this.state.date)
+    }
+
+
+    // send nes request
+    _newRequest = () => {
+        this.setModalVisible(false)
+    }
+
+
+
+
+
     render() {
+
+
+
 
         const navigationView = (
             <View style={{ flex: 1, backgroundColor: '#fff', alignItems: 'center' }}>
@@ -117,6 +158,7 @@ export default class Home extends Component {
             </View>
         );
 
+        const { selectedDate } = this.state
 
 
         return (
@@ -206,6 +248,22 @@ export default class Home extends Component {
                     }}
 
                 >
+                    {/* {
+                        this.state.date ?
+                            <View style={{
+                                width: Dimensions.get('window').width,
+                                height: Dimensions.get('window').height,
+                                backgroundColor: 'rgba(0,0,0,.3)', position: 'absolute', top: 0, right: 0, left: 0, bottom: 0,
+                                zIndex: 1
+                            }} >
+                            </View> :
+                            <View style={{
+                                width: 0,
+                                height: 0,
+                            }} >
+                            </View>
+
+                    } */}
                     <KeyboardAvoidingView behavior="position" >
                         {/* Close modal  */}
                         <View
@@ -228,7 +286,7 @@ export default class Home extends Component {
                         </View>
 
                         {/* Modal Body */}
-                        <View style={styles.Modal}>
+                        <View style={styles.Modal} >
                             <View style={styles.modal_description} >
                                 <View style={styles.modal_description_left}>
                                     <Text style={styles.modal_description_text}>
@@ -250,54 +308,80 @@ export default class Home extends Component {
                                     </View>
                                     <Image style={styles.modal_icons} source={require('../../Assets/Images/percent.png')} />
                                 </View>
-
-
-                                <TextInput
-                                    placeholderStyle={{
-                                        fontFamily: 'ISFBold',
-                                        color: '#636363'
-                                    }}
-                                    placeholder="100,000"
-                                    style={styles.price_input}
-                                    onChangeText={(price) => this.setState({ price })}
-                                    keyboardType='numeric'
-
-                                />
+                                <View style={{ justifyContent: 'center' }}>
+                                    <TextInput
+                                        placeholderTextColor={'#999'}
+                                        placeholder="100,000"
+                                        style={styles.price_input}
+                                        onChangeText={(price) => this.setState({ price })}
+                                        keyboardType='numeric'
+                                    />
+                                </View>
 
                             </View>
 
                             {/* date */}
                             <View style={styles.start_date} >
                                 <View style={styles.modal_details} >
-                                    <Text style={styles.modal_titles}>تاریخ شروع</Text>
+                                    <Text style={styles.modal_titles} onPress={() => console.log(this.refs['PICKER'])}>تاریخ شروع</Text>
                                     <Image style={styles.modal_icons} source={require('../../Assets/Images/calendergrey.png')} />
                                 </View>
-                                <DatePicker
-                                    onChangeDate={(date) => {
-                                        console.log(date)
-                                    }}
-                                    dateBoxStyle={{
-                                        height: 14
-                                    }}
-                                    dateStyle={{
-                                        fontSize: 12,
+
+
+                                <TouchableOpacity onPress={this._dateOpen}
+                                    style={{
+                                        textAlign: 'center',
+                                        borderRadius: 5,
+                                        shadowColor: "#f7f7f7",
+                                        shadowOpacity: .3,
+                                        elevation: 1,
+                                        width: '100%',
+                                        height: 50,
+                                        backgroundColor: '#fff',
+                                        color: '#636363',
+                                        marginTop: 5,
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
                                         fontFamily: 'ISBold',
                                     }}
-                                    btnStyle={{
-                                        height: 25,
-                                        backgroundColor: '#ddd',
+                                >
+                                    {this.state.selectedDate ?
+                                        <Text style={{
+                                            fontSize: 15,
+                                            fontFamily: 'ISBold',
+                                            alignItems: 'center',
+                                            color: '#636363'
+                                        }}>{moment(selectedDate).format("jYYYY/jMM/jDD")}</Text> :
+                                        <Text style={{
+                                            fontSize: 15,
+                                            fontFamily: 'ISBold',
+                                            alignItems: 'center',
+                                            color: '#999'
+                                        }}> تاریخ مورد نظر خود را انتخاب کن </Text>
+                                    }
+
+                                </TouchableOpacity>
+
+
+                                <PersianDatePicker
+                                    type="Jalali"
+                                    yearCount={10}
+                                    onConfirm={date => {
+                                        this.setState({ selectedDate: date, date: false });
+                                        console.log(this.refs['PICKER'].isOpen());
                                     }}
-                                    arrowTintColor="#777"
-                                    btnUnderlayColor="#eee"
+                                    ref={'PICKER'}
+                                    pickerFontFamily="ISBold"
+                                    pickerConfirmBtnColor={[0, 123, 255, 1]}
+                                    pickerCancelBtnColor={[220, 53, 69, 1]}
+                                    pickerTitleText="تاریخ مورد نظر خود را انتخاب کن"
+                                    pickerTitleColor={[99, 99, 99, 1]}
+                                    onPicker={() => {
+                                        this.setState({ date: false })
+                                        console.log(this.refs['PICKER'].isOpen())
+                                    }}
+
                                 />
-                                {/* <View style={styles.container}>
-                                    <PersianCalendarPicker
-                                        selectedDate={date}
-                                        onDateChange={this.onDateChange}
-                                        screenWidth={Dimensions.get('window').width}
-                                    />
-                                    <Text style={styles.selectedDate}> Date: {this.state.date.toString()} </Text>
-                                </View> */}
                             </View>
 
                             {/* nights */}
@@ -306,25 +390,22 @@ export default class Home extends Component {
                                     <Text style={styles.modal_titles}>تعداد شبها</Text>
                                     <Image style={styles.modal_icons} source={require('../../Assets/Images/moon.png')} />
                                 </View>
-                                <TextInput
-                                    placeholderStyle={{
-                                        fontFamily: 'ISFBold',
-                                        color: '#636363'
-                                    }}
-                                    placeholder="2"
-                                    style={styles.price_input}
-                                    onChangeText={(price) => this.setState({ price })}
-                                    keyboardType='numeric'
-
-                                />
+                                <View style={{justifyContent:'center'}}>
+                                    <TextInput
+                                        placeholderTextColor={'#999'}
+                                        placeholder="2"
+                                        style={styles.price_input}
+                                        onChangeText={(price) => this.setState({ price })}
+                                        keyboardType='numeric'
+                                    />
+                                </View>
                             </View>
 
                             {/* request btn */}
                             <View style={styles.new_request_box}>
-
                                 <GradientButton
                                     width="90%"
-                                    press={this._enterCode}
+                                    press={this._newRequest}
                                     activeOpacity={.6}
                                     color_1="#18749a"
                                     color_2="#46add8"
@@ -336,8 +417,6 @@ export default class Home extends Component {
                                     top={0}
                                     bottom={0}
                                 />
-
-
                             </View>
                         </View>
                     </KeyboardAvoidingView>
@@ -604,7 +683,7 @@ const styles = ({
     modal_titles: {
         flexDirection: 'row',
         fontSize: 12,
-        fontFamily: 'ISBold',
+        fontFamily: 'ISFBold',
         alignItems: 'center',
         color: '#636363'
     },
@@ -630,17 +709,13 @@ const styles = ({
         shadowColor: "#f7f7f7",
         shadowOpacity: .3,
         elevation: 1,
-        width: '100%',
         height: 50,
         backgroundColor: '#fff',
         color: '#636363',
         marginTop: 5,
-        ...Platform.select({
-            android: {
-                fontFamily: 'ISFBold',
-                fontSize: 15
-            }
-        })
+        fontFamily: 'ISBold',
+        minWidth: 50,
+        fontSize:15
 
     },
     start_date: {

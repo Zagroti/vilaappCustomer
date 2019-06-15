@@ -226,125 +226,110 @@ export default class Details extends Component {
                     }}
 
                 >
-                    
+
+                    {/* Close modal  */}
+                    <View
+                        style={{
+                            backgroundColor: '#f7f7f7',
+                            width: '100%',
+                            height: 50,
+                            flexDirection: 'row',
+                            justifyContent: 'flex-end'
+                        }}>
                         {/* Close modal  */}
-                        <View
-                            style={{
-                                backgroundColor: '#f7f7f7',
-                                width: '100%',
-                                height: 50,
-                                flexDirection: 'row',
-                                justifyContent: 'flex-end'
+                        <TouchableOpacity
+                            onPress={() => {
+                                this.setModalVisible(false);
                             }}>
-                            {/* Close modal  */}
-                            <TouchableOpacity
-                                onPress={() => {
-                                    this.setModalVisible(false);
-                                }}>
-                                <Image style={{
-                                    width: 25,
-                                    height: 25,
-                                    margin: 20
-                                }}
-                                    source={require('../../Assets/Images/close.png')}
-                                />
-                            </TouchableOpacity>
+                            <Image style={{
+                                width: 25,
+                                height: 25,
+                                margin: 20
+                            }}
+                                source={require('../../Assets/Images/close.png')}
+                            />
+                        </TouchableOpacity>
+                    </View>
+
+
+
+                    {/* Modal modal modal modal  */}
+                    <View style={styles.Modal}>
+                        <View style={styles.modal_title} >
+                            <View style={styles.icon_parent} >
+                                <View style={styles.icon_child} >
+                                    <Image style={styles.icon} source={require('../../Assets/Images/natalie.jpeg')} />
+                                </View>
+                            </View>
+                            <View style={styles.person_desc} >
+                                <Text style={styles.person_name} >جمیله باغی تبار</Text>
+                                <Text style={styles.person_number} >0912 100 8900</Text>
+                            </View>
                         </View>
 
-
-
-                        {/* Modal modal modal modal  */}
-                        <View style={styles.Modal}>
-                            <View style={styles.modal_title} >
-                                <View style={styles.icon_parent} >
-                                    <View style={styles.icon_child} >
-                                        <Image style={styles.icon} source={require('../../Assets/Images/natalie.jpeg')} />
-                                    </View>
-                                </View>
-                                <View style={styles.person_desc} >
-                                    <Text style={styles.person_name} >جمیله باغی تبار</Text>
-                                    <Text style={styles.person_number} >0912 100 8900</Text>
-                                </View>
+                        <View style={styles.rent_detail} >
+                            <View style={styles.rent_items} >
+                                <Text style={styles.rent_text} >شروع تاریخ</Text>
+                                <Text style={styles.rent_number} >1398 / 11 / 10</Text>
                             </View>
-
-                            <View style={styles.rent_detail} >
-                                <View style={styles.rent_items} >
-                                    <Text style={styles.rent_text} >شروع تاریخ</Text>
-                                    <Text style={styles.rent_number} >1398 / 11 / 10</Text>
-                                </View>
-                                <View style={styles.rent_items} >
-                                    <Text style={styles.rent_text} >تعداد شبها</Text>
-                                    <Text style={styles.rent_number} >5</Text>
-                                </View>
-                                <View style={styles.rent_items} >
-                                    <Text style={styles.rent_text} >نفرات</Text>
-                                    <Text style={styles.rent_number} >2</Text>
-                                </View>
-                                <View style={styles.rent_items} >
-                                    <Text style={styles.rent_text} >هزینه هرشب</Text>
-                                    <Text style={styles.rent_number} >100,000</Text>
-                                </View>
-                                <View style={styles.totalـprice} >
-                                    <Text style={styles.total_text} >هزینه کل</Text>
-                                    <Text style={styles.total_number} >500,000 ت</Text>
-                                </View>
+                            <View style={styles.rent_items} >
+                                <Text style={styles.rent_text} >تعداد شبها</Text>
+                                <Text style={styles.rent_number} >5</Text>
                             </View>
+                            <View style={styles.rent_items} >
+                                <Text style={styles.rent_text} >نفرات</Text>
+                                <Text style={styles.rent_number} >2</Text>
+                            </View>
+                            <View style={styles.rent_items} >
+                                <Text style={styles.rent_text} >هزینه هرشب</Text>
+                                <Text style={styles.rent_number} >100,000</Text>
+                            </View>
+                            <View style={styles.totalـprice} >
+                                <Text style={styles.total_text} >هزینه کل</Text>
+                                <Text style={styles.total_number} >500,000 ت</Text>
+                            </View>
+                        </View>
 
-                            <View style={styles.accept_from_owner} >
+                        <View style={styles.accept_from_owner} >
+                            <Image style={{ width: 25, resizeMode: 'contain', margin: 20 }}
+                                source={require('../../Assets/Images/checkblue.png')}
+                            />
+                            <Text style={{ fontSize: 12, fontFamily: 'ISBold', marginRight: 10 }} >پذیرفته شده توسط صاحب ویلا</Text>
+                            <View style={{
+                                width: 70,
+                                height: 70,
+                                borderRadius: 35,
+                                backgroundColor: '#f5f5f5',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                shadowColor: "#f7f7f7",
+                                shadowOpacity: 1,
+                                elevation: 1,
+                            }} >
                                 <Image style={{ width: 25, resizeMode: 'contain', margin: 20 }}
-                                    source={require('../../Assets/Images/checkblue.png')}
-                                />
-                                <Text style={{ fontSize: 12, fontFamily: 'ISBold', marginRight: 10 }} >پذیرفته شده توسط صاحب ویلا</Text>
-                                <View style={{
-                                    width: 70,
-                                    height: 70,
-                                    borderRadius: 35,
-                                    backgroundColor: '#f5f5f5',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    shadowColor: "#f7f7f7",
-                                    shadowOpacity: 1,
-                                    elevation: 1,
-                                }} >
-                                    <Image style={{ width: 25, resizeMode: 'contain', margin: 20 }}
-                                        source={require('../../Assets/Images/usergrey.png')}
-                                    />
-                                </View>
-                            </View>
-
-
-
-
-
-                            {/* request btn */}
-                           
-
-
-
-                                <GradientButton
-                                    width={Dimensions.get('window').width - 100}
-                                    press={this._saveVila}
-                                    activeOpacity={.6}
-                                    color_1="#18749a"
-                                    color_2="#46add8"
-                                    height={50}
-                                    borderRadius={50}
-                                    textColor="#fff"
-                                    size={16}
-                                    title="پرداخت"
-                                    top={0}
-                                    bottom={100}
+                                    source={require('../../Assets/Images/usergrey.png')}
                                 />
                             </View>
-                    
-                  
+                        </View>
 
+                        {/* request btn */}
 
-
+                        <GradientButton
+                            width={Dimensions.get('window').width - 100}
+                            press={this._saveVila}
+                            activeOpacity={.6}
+                            color_1="#18749a"
+                            color_2="#46add8"
+                            height={50}
+                            borderRadius={50}
+                            textColor="#fff"
+                            size={16}
+                            title="پرداخت"
+                            top={0}
+                            bottom={100}
+                        />
+                    </View>
                 </Modal >
-
-
-
             </ScrollView >
 
 
@@ -576,11 +561,11 @@ const styles = ({
         justifyContent: 'space-around',
         alignItems: 'center',
         backgroundColor: '#f6f6f6',
-        height:Dimensions.get('window').height ,
+        height: Dimensions.get('window').height,
     },
     modal_title: {
         alignItems: 'center',
-        marginTop:-50
+        marginTop: -50
     },
 
     icon_parent: {
