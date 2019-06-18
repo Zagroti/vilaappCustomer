@@ -33,7 +33,7 @@ const styles = ({
         alignItems: 'center',
         borderBottomRightRadius: 150,
         height: Dimensions.get('window').height,
-        width: Dimensions.get('window').width + 1,
+        width: Dimensions.get('window').width ,
     },
     SplashImage: {
         height: Dimensions.get('window').height,
