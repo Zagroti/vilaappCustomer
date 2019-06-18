@@ -23,7 +23,7 @@ export default class ResultItems extends Component {
                     padding: 5,
                     borderRadius: 10,
                     height: 100,
-                    marginTop: 10,
+                    marginBottom: 10,
                     zIndex: 10,
                     backgroundColor: this.state.touchColor
                 }}

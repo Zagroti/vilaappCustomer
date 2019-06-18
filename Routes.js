@@ -18,7 +18,7 @@ import Details from './src/container/Details'
 const backButton = () => (
     <TouchableOpacity
         onPress={() => Actions.pop()}
-        style={{ width: 30, height: 20, marginLeft: 20 }}
+        style={{ width: 30, height: 20, marginRight: 20 }}
     >
         <View style={{ alignItems: 'center' }}>
             <Image
@@ -32,6 +32,11 @@ const backButton = () => (
     </TouchableOpacity>
 );
 
+const nothing = () => (
+    null
+);
+
+
 const backButtonDetail = () => (
     <TouchableOpacity
         style={{
@@ -43,7 +48,7 @@ const backButtonDetail = () => (
             justifyContent: 'center',
             alignItems: 'center',
             top: 10,
-            start: 10,
+            end: 10,
 
         }} onPress={() => Actions.pop()} >
         <Image style={{
@@ -68,14 +73,15 @@ const Routes = () => (
                     component={SendNumber}
                     title="Send Number"
                     hideNavBar={true}
-                    
+                    initial={true}
 
 
                 />
                 <Scene key="EnterCode" component={EnterCode}
                     title=""
                     titleStyle={{ color: 'transparent' }}
-                    renderBackButton={() => backButton()}
+                    renderRightButton={() => backButton()}
+                    renderBackButton={() => nothing }
                     navigationBarStyle={styles.login_style_bar}
                     sceneStyle={styles.login_scene_style}
 
@@ -85,13 +91,14 @@ const Routes = () => (
                     component={Home}
                     title="home"
                     hideNavBar={true}
-                    initial={true}
+                 
                 />
 
                 <Scene key="Profile" component={Profile}
                     title=""
                     titleStyle={{ color: 'transparent' }}
-                    renderBackButton={() => backButton()}
+                    renderRightButton={() => backButton()}
+                    renderBackButton={() => nothing }
                     navigationBarStyle={styles.login_style_bar}
                     sceneStyle={styles.login_scene_style}
                 />
@@ -99,12 +106,12 @@ const Routes = () => (
                 <Scene key="ResultItemsPage" component={ResultItemsPage}
                     title=""
                     titleStyle={{ color: 'transparent' }}
-                    renderBackButton={() => backButton()}
+                    // renderBackButton={() => backButton()}
                     navigationBarStyle={styles.login_style_bar}
                     sceneStyle={styles.login_scene_style}
                     onRight={() => alert('right')}
                     // rightButtonImage={require('./Assets/Images/bell.png')}
-                    renderRightButton={() => (
+                    renderLeftButton ={() => (
                         <TouchableOpacity style={styles.notification_box}
                             onPress={() => alert('توجهات')}>
                             <ImageBackground
@@ -117,12 +124,15 @@ const Routes = () => (
                             </ImageBackground>
                         </TouchableOpacity>
                     )}
+                    renderRightButton={() => backButton()}
+                    
                 />
 
                 <Scene key="Details" component={Details}
                     title=""
                     titleStyle={{ color: 'red' }}
-                    renderBackButton={() => backButtonDetail()}
+                    renderBackButton={() => nothing}
+                    renderRightButton={() => backButtonDetail()}
                     navigationBarStyle={styles.login_style_bar_detail}
                     sceneStyle={styles.login_scene_style}
 
@@ -183,7 +193,7 @@ const styles = ({
     notification_box: {
         width: 40,
         height: 40,
-        right: 20,
+        left: 20,
         justifyContent: 'center',
         alignItems: 'center',
     },

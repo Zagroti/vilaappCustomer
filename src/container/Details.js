@@ -358,7 +358,7 @@ const styles = ({
     menu: {
         backgroundColor: 'transparent',
         flexDirection: 'row',
-        justifyContent: 'flex-end',
+        justifyContent: 'flex-start',
         alignItems: 'center',
         height: 60,
         padding: 20,
