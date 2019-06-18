@@ -8,7 +8,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-
+import com.mapbox.rctmgl.RCTMGLPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 
 import java.util.Arrays;
@@ -26,8 +26,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new PickerViewPackage(),
-           new LinearGradientPackage() 
+          new PickerViewPackage(),
+          new LinearGradientPackage(),
+          new RCTMGLPackage()
       );
     }
 
