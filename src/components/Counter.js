@@ -37,15 +37,29 @@ export default class Counter extends Component {
 
         return (
             <View style={styles.Counter} counter={this.props.counter}>
-                <TouchableOpacity style={styles.box} onPress={() => this._count('minus')} >
-                    <Text style={styles.btn}  >-</Text>
+                <TouchableOpacity onPress={() => this._count('minus')} >
+                    <LinearGradient
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 0, y: 1 }}
+                        colors={['#f1f1f1', '#bbb']}
+                        style={styles.box}
+                    >
+                        <Text style={styles.btn}  >-</Text>
+                    </LinearGradient>
                 </TouchableOpacity>
                 <Text style={styles.show}>{this.state.number}</Text>
                 <TouchableOpacity style={styles.box} onPress={() => this._count('plus')}>
-                    <Text style={styles.btn} >+</Text>
+                    <LinearGradient
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 0, y: 1 }}
+                        colors={['#f1f1f1', '#bbb']}
+                        style={styles.box}
+                    >
+                        <Text style={styles.btn}  >+</Text>
+                    </LinearGradient>
                 </TouchableOpacity>
 
-                
+
             </View>
         )
     }
@@ -60,7 +74,7 @@ const styles = ({
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 4,
-        borderColor: '#aaa',
+        borderColor: '#ccc',
     },
     btn: {
         fontSize: 32,
@@ -75,8 +89,8 @@ const styles = ({
         alignItems: 'center',
         backgroundColor: '#fff',
         borderRadius: 60,
-        borderWidth:10,
-        borderColor:'#f1f1f1',
+        borderWidth: 10,
+        borderColor: '#f1f1f1',
         shadowColor: "#f7f7f7",
         shadowOpacity: .3,
         elevation: 1,
