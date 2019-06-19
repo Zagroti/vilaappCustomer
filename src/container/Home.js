@@ -164,7 +164,7 @@ export default class Home extends Component {
             };
             mapStyle = {
                 width: '45%',
-                height: 150,
+                height: 160,
             }
 
         } else {
@@ -573,14 +573,17 @@ export default class Home extends Component {
                             <View style={mapParentStyle}>
                                 <View style={{
                                     width: '45%',
-                                    height: 150,
+                                    height: 160,
                                     zIndex: this.state.otherZIndex,
                                     justifyContent: 'space-between',
                                     borderRadius: 5,
 
                                 }}>
                                     <View style={{ width: '100%' }}>
-                                        <Text style={styles.modal_titles} > نوع ویلا</Text>
+                                        <View style={styles.modal_details} >
+                                            <Text style={styles.modal_titles} >نوع وبلا</Text>
+                                            <Image style={styles.modal_icons} source={require('../../Assets/Images/vila.png')} />
+                                        </View>
                                         <View style={{
                                             borderWidth: 1,
                                             borderColor: '#eee',
@@ -610,9 +613,10 @@ export default class Home extends Component {
                                         </View>
                                     </View>
                                     <View style={{ width: '100%' }}>
-                                        <Text style={styles.modal_titles} >
-                                            ظرفیت
-                                        </Text>
+                                    <View style={styles.modal_details} >
+                                            <Text style={styles.modal_titles} >ظرفیت</Text>
+                                            <Image style={styles.modal_icons} source={require('../../Assets/Images/multiuser.png')} />
+                                        </View>
                                         <Counter counter={(e) => this._personCounter(e)} />
                                     </View>
                                 </View>
@@ -692,7 +696,7 @@ let mapParentStyle = {
 };
 let mapStyle = {
     width: '45%',
-    height: 150,
+    height: 160,
     borderWidth: 1,
     borderRadius: 5,
     borderColor: '#fff'
