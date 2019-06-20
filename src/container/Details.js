@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import InputScrollView from 'react-native-input-scroll-view';
+import Mapir from 'mapir-react-native-sdk'
 
 
 //components 
@@ -220,7 +221,7 @@ export default class Details extends Component {
                                             <Text style={styles.avilibiy_text} >الکتریکی</Text>
                                             <Image style={styles.avilibiy_icon} source={require('./../../Assets/Images/check.png')}></Image>
                                         </View>
-                                      
+
                                     </View> : null
 
                             }
@@ -255,12 +256,23 @@ export default class Details extends Component {
 
                     </View>
 
-                    <ImageBackground
+                    <View
                         style={{ width: '100%', height: 250, marginTop: 20 }}
-                        source={require('./../../Assets/Images/map.png')}
                     >
-
-                    </ImageBackground>
+                        <Mapir
+                            logoEnabled={true}
+                            accessToken={'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjM5ZjlmMWZhNDA4YzM0ODI2ZjcxZGI5YTdlM2U2ZmVjNDEzMzNmMDU0MjVhM2MzOTM0NmMwNTlkMzBiMzcyYjA5YzU1OGZjOGU4NTJmNWJhIn0.eyJhdWQiOiJteWF3ZXNvbWVhcHAiLCJqdGkiOiIzOWY5ZjFmYTQwOGMzNDgyNmY3MWRiOWE3ZTNlNmZlYzQxMzMzZjA1NDI1YTNjMzkzNDZjMDU5ZDMwYjM3MmIwOWM1NThmYzhlODUyZjViYSIsImlhdCI6MTU1OTQ1NTIzMiwibmJmIjoxNTU5NDU1MjMyLCJleHAiOjE1NTk0NTg4MzIsInN1YiI6IiIsInNjb3BlcyI6WyJiYXNpYyIsImVtYWlsIl19.JNowwSPWaoVoJ1Omirk9OTtkDySsNL91nP00GcCARdM-YHoTQYw3NZy3SaVlAsbafO9oPPvlVfhNIxPIHESACZATutE3tb7RBEmQGEXX-8G7GOSu8IzyyLBmHaQe75LtisgdKi-zPTGsx8zFv0Acn6HrDDxFrKFNtmI85L3jos_GVxvYYhHWKAez8mbJRHcH1b15DrwgWAhCjO2p_HqpuGLdRF1l03J6HsOnJLMid2997g7iAVTOa8mt2oaEPvmwA_f6pwFZSURqw-RJzdN_R8IEmtqWQq5ZNTEppVaV82yuwfnSmrb0_Sak2hfBIiLwQeCMsnfhU_CvUbE_1rukmQ'}
+                            zoomLevel={13}
+                            centerCoordinate={[51.422548, 35.732573]}
+                            style={{ flex: 1 }}
+                            logoEnabled={false}
+                        >
+                            <Mapir.Marker
+                                id={'1'}
+                                coordinate={[51.422548, 35.732573]}
+                            />
+                        </Mapir>
+                    </View>
 
                     <View style={styles.save_button}
                         onPress={() => {
@@ -580,7 +592,7 @@ const styles = ({
     avilibiy_first: {
         flexWrap: 'wrap',
         flexDirection: 'row',
-        justifyContent:'flex-end'
+        justifyContent: 'flex-end'
     },
 
     avilibiy_item: {
