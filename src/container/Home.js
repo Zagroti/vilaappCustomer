@@ -128,11 +128,11 @@ export default class Home extends Component {
 
     // open date picker and set date
     _startDateOpen = async () => {
-        this.refs['PICKERSTART'].showPicker()
+        this.refs['STARTPICKER'].showPicker()
         this.setState({ selectStart: true })
     }
     _endDateOpen = async () => {
-        this.refs['PICKEREND'].showPicker()
+        this.refs['ENDPICKER'].showPicker()
         this.setState({ selectEnd: true })
     }
 
@@ -510,11 +510,13 @@ export default class Home extends Component {
                                             onConfirm={date => {
                                                 this.setState({ endDate: date, selectEnd: false });
                                             }}
-                                            ref={'PICKEREND'}
+                                            pickerFontSize={24}
+                                            minDate={'1398/08/08'}
+                                            ref={'ENDPICKER'}
                                             pickerFontFamily="ISBold"
                                             pickerConfirmBtnColor={[0, 123, 255, 1]}
                                             pickerCancelBtnColor={[220, 53, 69, 1]}
-                                            pickerTitleText="از تاریخ"
+                                            pickerTitleText="تا تاریخ"
                                             pickerTitleColor={[99, 99, 99, 1]}
                                             onPickerCancel={() => {
                                                 this.setState({ selectEnd: false });
@@ -549,11 +551,13 @@ export default class Home extends Component {
                                             onConfirm={date => {
                                                 this.setState({ startDate: date, selectStart: false });
                                             }}
-                                            ref={'PICKERSTART'}
+                                            ref={'STARTPICKER'}
+                                            pickerFontSize={24}
+                                            pickerToolBarFontSize={15}
                                             pickerFontFamily="ISBold"
                                             pickerConfirmBtnColor={[0, 123, 255, 1]}
                                             pickerCancelBtnColor={[220, 53, 69, 1]}
-                                            pickerTitleText="تا تاریخ"
+                                            pickerTitleText=" از تاریخ"
                                             pickerTitleColor={[99, 99, 99, 1]}
                                             onPickerCancel={() => {
                                                 this.setState({ selectStart: false });

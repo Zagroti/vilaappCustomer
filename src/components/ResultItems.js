@@ -149,7 +149,9 @@ const styles = ({
     person_text: {
         fontSize: 10,
         fontFamily: 'ISFMedium',
-        color: '#888'
+        color: '#888',
+        marginBottom:2
+
     },
     location: {
         flexDirection: 'row',
@@ -160,12 +162,14 @@ const styles = ({
     location_text: {
         fontSize: 10,
         fontFamily: 'ISFMedium',
-        color: '#aaa'
+        color: '#aaa',
     },
     available: {
         flexDirection: 'row',
         justifyContent: 'flex-end',
         alignItems: 'center',
+        marginBottom:2
+
     },
     available_text: {
         fontSize: 10,
@@ -191,12 +195,12 @@ const styles = ({
     icon: {
         width: 12,
         height: 12,
-        marginLeft: 4,
+        marginLeft: 8,
     },
     location_icon: {
         width: 12,
         height: 15,
-        marginLeft: 4,
+        marginLeft: 8,
     }
 
 
