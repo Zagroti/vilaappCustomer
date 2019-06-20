@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { Router, Scene, Actions } from 'react-native-router-flux';
-import { Text, View, Image, TouchableOpacity, ImageBackground, StatusBar } from 'react-native';
-
+import { Text, View, Image, TouchableOpacity, ImageBackground, StatusBar , ActivityIndicator} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import SendNumber from './src/container/SendNumber';
 import EnterCode from './src/container/EnterCode';
@@ -61,97 +61,128 @@ const backButtonDetail = () => (
 
 
 
-const Routes = () => (
-  
+class Routes extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            logged: false,
+            loading: true,
+        };
+    }
 
 
+    componentWillMount() {
+        self = this;
+        AsyncStorage.getItem('login')
+            .then((value) => {
+                if (value != null) {
+                    this.setState({
+                        logged: true,
+                        loading: false,
+                    });
+                } else {
+                    this.setState({
+                        loading: false,
+                    })
+                }
+            }
+            );
+    };
 
-        <Router >
-            <Scene key="root" >
+    render() {
+        if (this.state.loading) {
+            return <View style={{
+                flex: 1,
+                justifyContent: 'center',
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                padding: 10
+            }}>
+                <ActivityIndicator size="large" color="#A52D53" />
+            </View>;
+        }
+        return (
+            < Router >
+                <Scene key="root" >
 
-                <Scene key="SendNumber"
-                    component={SendNumber}
-                    title="Send Number"
-                    hideNavBar={true}
-                    initial={true}
+                    <Scene key="SendNumber"
+                        component={SendNumber}
+                        title="Send Number"
+                        hideNavBar={true}
+                        initial={true}
+                        initial={!this.state.logged}
+
+                    />
+                    <Scene key="EnterCode" component={EnterCode}
+                        title=""
+                        titleStyle={{ color: 'transparent' }}
+                        renderRightButton={() => backButton()}
+                        renderBackButton={() => nothing}
+                        navigationBarStyle={styles.login_style_bar}
+                        sceneStyle={styles.login_scene_style}
+
+                    />
+
+                    <Scene key="Home"
+                        component={Home}
+                        title="home"
+                        hideNavBar={true}
+                        initial={this.state.logged}
+                    />
+
+                    <Scene key="Profile" component={Profile}
+                        title=""
+                        titleStyle={{ color: 'transparent' }}
+                        renderRightButton={() => backButton()}
+                        renderBackButton={() => nothing}
+                        navigationBarStyle={styles.login_style_bar}
+                        sceneStyle={styles.login_scene_style}
+                    />
+
+                    <Scene key="ResultItemsPage" component={ResultItemsPage}
+                        title=""
+                        titleStyle={{ color: 'transparent' }}
+                        // renderBackButton={() => backButton()}
+                        navigationBarStyle={styles.login_style_bar}
+                        sceneStyle={styles.login_scene_style}
+                        onRight={() => alert('right')}
+                        // rightButtonImage={require('./Assets/Images/bell.png')}
+                        renderLeftButton={() => (
+                            <TouchableOpacity style={styles.notification_box}
+                                onPress={() => alert('توجهات')}>
+                                <ImageBackground
+                                    style={styles.bell}
+                                    source={require('./Assets/Images/bell.png')}
+                                >
+                                    <View style={styles.notification} >
+                                        <Text style={styles.notification_text} >3</Text>
+                                    </View>
+                                </ImageBackground>
+                            </TouchableOpacity>
+                        )}
+                        renderRightButton={() => backButton()}
+
+                    />
+
+                    <Scene key="Details" component={Details}
+                        title=""
+                        titleStyle={{ color: 'red' }}
+                        renderBackButton={() => nothing}
+                        renderRightButton={() => backButtonDetail()}
+                        navigationBarStyle={styles.login_style_bar_detail}
+                        sceneStyle={styles.login_scene_style}
+
+                    />
 
 
-                />
-                <Scene key="EnterCode" component={EnterCode}
-                    title=""
-                    titleStyle={{ color: 'transparent' }}
-                    renderRightButton={() => backButton()}
-                    renderBackButton={() => nothing }
-                    navigationBarStyle={styles.login_style_bar}
-                    sceneStyle={styles.login_scene_style}
+                </Scene>
+            </Router >
+        )
 
-                />
+    }
 
-                <Scene key="Home"
-                    component={Home}
-                    title="home"
-                    hideNavBar={true}
-                 
-                />
-
-                <Scene key="Profile" component={Profile}
-                    title=""
-                    titleStyle={{ color: 'transparent' }}
-                    renderRightButton={() => backButton()}
-                    renderBackButton={() => nothing }
-                    navigationBarStyle={styles.login_style_bar}
-                    sceneStyle={styles.login_scene_style}
-                />
-
-                <Scene key="ResultItemsPage" component={ResultItemsPage}
-                    title=""
-                    titleStyle={{ color: 'transparent' }}
-                    // renderBackButton={() => backButton()}
-                    navigationBarStyle={styles.login_style_bar}
-                    sceneStyle={styles.login_scene_style}
-                    onRight={() => alert('right')}
-                    // rightButtonImage={require('./Assets/Images/bell.png')}
-                    renderLeftButton ={() => (
-                        <TouchableOpacity style={styles.notification_box}
-                            onPress={() => alert('توجهات')}>
-                            <ImageBackground
-                                style={styles.bell}
-                                source={require('./Assets/Images/bell.png')}
-                            >
-                                <View style={styles.notification} >
-                                    <Text style={styles.notification_text} >3</Text>
-                                </View>
-                            </ImageBackground>
-                        </TouchableOpacity>
-                    )}
-                    renderRightButton={() => backButton()}
-                    
-                />
-
-                <Scene key="Details" component={Details}
-                    title=""
-                    titleStyle={{ color: 'red' }}
-                    renderBackButton={() => nothing}
-                    renderRightButton={() => backButtonDetail()}
-                    navigationBarStyle={styles.login_style_bar_detail}
-                    sceneStyle={styles.login_scene_style}
-
-                />
-
-
-
-
-
-
-
-
-
-
-
-            </Scene>
-        </Router>
-    
-)
+}
 
 export default Routes;
 

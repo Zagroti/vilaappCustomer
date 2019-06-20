@@ -7,9 +7,10 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.5.0",
+    "mapir-react-native-sdk": "^1.6.1",
     "moment-jalaali": "^0.8.3",
     "native-base": "^2.12.1",
-    "mapir-react-native-sdk": "^1.6.1",
     "react": "16.6.3",
     "react-native": "0.57.8",
     "react-native-input-scroll-view": "^1.9.2",
