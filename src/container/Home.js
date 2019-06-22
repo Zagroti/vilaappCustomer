@@ -551,7 +551,6 @@ export default class Home extends Component {
                                             yearCount={10}
                                             onConfirm={date => {
                                                 this.setState({ startDate: date, selectStart: false });
-                                                alert(moment(this.state.startDate).format("jYYYY/jMM/jDD"))
                                             }}
                                             ref={'STARTPICKER'}
                                             pickerFontSize={24}
