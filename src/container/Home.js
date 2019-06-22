@@ -511,6 +511,7 @@ export default class Home extends Component {
                                                 this.setState({ endDate: date, selectEnd: false });
                                             }}
                                             pickerFontSize={24}
+                                            pickerToolBarFontSize={15}
                                             minDate={this.state.startDate ? moment(this.state.startDate).format("jYYYY/jMM/jDD") : null}
                                             ref={'ENDPICKER'}
                                             pickerFontFamily="ISBold"
