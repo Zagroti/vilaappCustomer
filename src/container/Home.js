@@ -11,18 +11,26 @@ import {
     ScrollView,
     Modal,
     TextInput,
-    Platform,
-    KeyboardAvoidingView
+    Picker,
+    KeyboardAvoidingView,
+    PermissionsAndroid
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import InputScrollView from 'react-native-input-scroll-view';
-// import PersianCalendarPicker from 'react-native-jalali-date-picker-rtl';
+import PersianDatePicker from "rn-persian-date-picker";
+import Mapir from 'mapir-react-native-sdk'
 
 
 //components 
 import NoRequest from '../components/NoRequest';
 import Requestitems from '../components/RequestItems';
 import GradientButton from '../components/GradientButton';
+import Counter from '../components/Counter';
+
+
+
+var moment = require('moment-jalaali')
+moment().format('jYYYY/jM/jD')
 
 
 
@@ -32,9 +40,21 @@ export default class Home extends Component {
         super(props)
         this.state = {
             modalVisible: false,
-
+            selectStart: false,
+            selectEnd: false,
+            mapFull: false,
+            otherZIndex: null,
+            mapStatusIcon: require('./../../Assets/Images/fullscreen.png'),
+            mapIconTop: 10,
+            mapIconLeft: 10,
+            markers: [
+                { latitude: 51.422548, longitude: 35.732573 },
+            ],
+            modalHeight: Dimensions.get('window').height - 50
         };
     }
+
+
 
     //click humberger menu to open drawer
     _openDrawer = () => {
@@ -45,7 +65,28 @@ export default class Home extends Component {
     componentDidMount() {
         // for disable back btn
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+
+
+        // for map
+        {
+            PermissionsAndroid.requestMultiple(
+                [PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+                PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION],
+                {
+                    title: 'Give Location Permission',
+                    message: 'App needs location permission to find your position.'
+                }
+            ).then(granted => {
+                console.log(granted);
+                resolve();
+            }).catch(err => {
+                console.warn(err);
+                reject(err);
+            });
+        }
+
     }
+
 
     componentWillUnmount() {
         // for disable back btn
@@ -58,6 +99,7 @@ export default class Home extends Component {
         // ToastAndroid.show('Back button is pressed', ToastAndroid.SHORT);
         return true;
     }
+
 
 
     //footer actions
@@ -73,6 +115,7 @@ export default class Home extends Component {
 
     }
 
+    // got to vila cases
     _showRequestsNavigate = () => {
         Actions.ResultItemsPage()
     }
@@ -82,8 +125,105 @@ export default class Home extends Component {
         this.setState({ modalVisible: visible });
     }
 
+
+    // open date picker and set date
+    _startDateOpen = async () => {
+        this.refs['STARTPICKER'].showPicker()
+        this.setState({ selectStart: true })
+    }
+    _endDateOpen = async () => {
+        this.refs['ENDPICKER'].showPicker()
+        this.setState({ selectEnd: true })
+    }
+
+
+    // send nes request
+    _newRequest = () => {
+        this.setModalVisible(false)
+    }
+
+
+
+    // change map size and arrow 
+    _mapFullScreen = () => {
+
+        // when map is small
+        if (this.state.mapFull) {
+            this.setState({
+                otherZIndex: -10,
+                mapFull: false,
+                mapStatusIcon: require('./../../Assets/Images/fullscreen.png'),
+                mapIconTop: 10,
+                mapIconLeft: 10,
+                modalHeight: Dimensions.get('window').height - 50
+            });
+            mapParentStyle = {
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                width: '90%'
+            };
+            mapStyle = {
+                width: '45%',
+                height: 160,
+            }
+
+        } else {
+            this.setState({
+                otherZIndex: null,
+                mapFull: true,
+                mapStatusIcon: require('./../../Assets/Images/resize.png'),
+                mapIconTop: 70,
+                mapIconLeft: 20,
+                modalHeight: Dimensions.get('window').height
+            });
+            mapParentStyle = {
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                width: Dimensions.get('window').width,
+                height: Dimensions.get('window').height + 50,
+                position: "absolute",
+                zIndex: 999,
+                marginTop: -100
+
+            };
+            mapStyle = {
+                width: Dimensions.get('window').width,
+                height: Dimensions.get('window').height + 50,
+                position: 'absolute',
+                zIndex: 999
+            }
+
+        }
+
+    }
+
+    // map marker select
+    // select location 
+    addMarker = async (coordinates) => {
+        await this.setState({
+            markers: [{ latitude: coordinates[0], longitude: coordinates[1] }]
+        });
+
+    }
+
+    _personCounter = async (e) => {
+        await this.setState({ persons: e })
+    }
+
+
     render() {
 
+        // map marker
+        const mark = this.state.markers.map(markers =>
+            (<Mapir.Marker
+                id={'2'}
+                key={markers.latitude}
+                coordinate={[markers.latitude, markers.longitude]}
+            />))
+
+
+
+        // drawer menu 
         const navigationView = (
             <View style={{ flex: 1, backgroundColor: '#fff', alignItems: 'center' }}>
                 {/* <Text style={{ margin: 10, fontSize: 15, textAlign: 'left' }}>I'm in the Drawer!</Text> */}
@@ -116,7 +256,7 @@ export default class Home extends Component {
             </View>
         );
 
-
+        const { startDate, endDate } = this.state
 
         return (
             <DrawerLayoutAndroid
@@ -205,40 +345,97 @@ export default class Home extends Component {
                     }}
 
                 >
-                    <KeyboardAvoidingView behavior="position" >
-                        {/* Close modal  */}
-                        <View
-                            style={{
-                                backgroundColor: '#f6f6f6',
-                                width: '100%',
-                                height: 50,
-                                flexDirection: 'row',
-                                justifyContent: 'flex-end'
-                            }}>
-                            {/* Close modal  */}
-                            <TouchableOpacity
+                    {
+                        this.state.selectStart ?
+                            <Text style={{
+                                width: Dimensions.get('window').width,
+                                height: Dimensions.get('window').height,
+                                backgroundColor: 'rgba(0,0,0,.7)', position: 'absolute', top: 0, right: 0, left: 0, bottom: 0,
+                                zIndex: 20000
+                            }}
                                 onPress={() => {
-                                    this.setModalVisible(false);
-                                }}>
-                                <Image style={styles.modal_close}
-                                    source={require('../../Assets/Images/close.png')}
-                                />
-                            </TouchableOpacity>
-                        </View>
+                                    this.setState({ selectStart: false })
+                                    this.refs['STARTPICKER'].hidePicker()
+                                }}
+                            >
+                            </Text> : null
+
+                    }
+                    {
+                        this.state.selectEnd ?
+                            <Text style={{
+                                width: Dimensions.get('window').width,
+                                height: Dimensions.get('window').height,
+                                backgroundColor: 'rgba(0,0,0,.7)', position: 'absolute', top: 0, right: 0, left: 0, bottom: 0,
+                                zIndex: 20000
+                            }}
+                                onPress={() => {
+                                    this.setState({ selectEnd: false })
+                                    this.refs['ENDPICKER'].hidePicker()
+                                }}
+                            >
+                            </Text> : null
+
+                    }
+                    <InputScrollView >
+                        {/* Close modal  */}
+                        {
+                            this.state.mapFull ? null :
+                                <View
+                                    style={{
+                                        backgroundColor: '#f6f6f6',
+                                        width: '100%',
+                                        height: 50,
+                                        flexDirection: 'row',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                        padding: 10,
+                                    }}>
+                                    <TouchableOpacity style={{
+                                        fontSize: 20,
+                                        backgroundColor: '#A52D53',
+                                        borderWidth: 1,
+                                        borderColor: '#fff',
+                                        width: 30,
+                                        height: 30,
+                                        borderRadius: 15,
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                    }}>
+                                        <Text style={{ fontSize: 20, color: '#fff' }}>
+                                            ?
+                                        </Text>
+                                    </TouchableOpacity>
+                                    <Text style={{ fontFamily: 'IS', fontSize: 20, }}>
+                                        درخواست ویلا
+                                    </Text>
+                                    {/* Close modal  */}
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            this.setModalVisible(false);
+                                        }}>
+                                        <Image style={styles.modal_close}
+                                            source={require('../../Assets/Images/close.png')}
+                                        />
+                                    </TouchableOpacity>
+
+                                </View>
+
+                        }
 
                         {/* Modal Body */}
-                        <View style={styles.Modal}>
-                            <View style={styles.modal_description} >
-                                <View style={styles.modal_description_left}>
-                                    <Text style={styles.modal_description_text}>
-                                        برای پیدا کردن بهترین مکان دلخواه هرچه سریعتر اقدام کنید !
-                                        </Text>
-                                    <Text style={styles.modal_description_title}>
-                                        ما اینجاییم تا بهترین مکان را برای شما پیدا کنیم
-                                        </Text>
-                                </View>
-                                <Image style={styles.home_icon_marker} source={require('../../Assets/Images/homemarker.png')} />
-                            </View>
+                        <View style={{
+                            flexDirection: 'column',
+                            justifyContent: 'space-around',
+                            alignItems: 'center',
+                            backgroundColor: '#f7f7f7',
+                            height: this.state.modalHeight,
+                            width: Dimensions.get('window').width,
+                            top: 0,
+                            bottom: 0,
+                            flex: 1
+                        }} >
+
 
                             {/* price */}
                             <View style={styles.modal_price} >
@@ -249,64 +446,226 @@ export default class Home extends Component {
                                     </View>
                                     <Image style={styles.modal_icons} source={require('../../Assets/Images/percent.png')} />
                                 </View>
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+                                    <View style={{ justifyContent: 'center', width: '45%' }}>
+                                        <TextInput
+                                            placeholderTextColor={'#999'}
+                                            placeholder="تا"
+                                            style={styles.price_input}
+                                            onChangeText={(price) => this.setState({ price })}
+                                            keyboardType='numeric'
+                                        />
+                                    </View>
+                                    <View style={{ justifyContent: 'center', width: '45%' }}>
+                                        <TextInput
+                                            placeholderTextColor={'#999'}
+                                            placeholder="از"
+                                            style={styles.price_input}
+                                            onChangeText={(price) => this.setState({ price })}
+                                            keyboardType='numeric'
+                                        />
+                                    </View>
 
+                                </View>
 
-                                <TextInput
-                                    placeholderStyle={{
-                                        fontFamily: 'ISFBold',
-                                        color: '#636363'
-                                    }}
-                                    placeholder="100,000"
-                                    style={styles.price_input}
-                                    onChangeText={(price) => this.setState({ price })}
-                                    keyboardType='numeric'
-
-                                />
 
                             </View>
 
                             {/* date */}
                             <View style={styles.start_date} >
                                 <View style={styles.modal_details} >
-                                    <Text style={styles.modal_titles}>تاریخ شروع</Text>
+                                    <Text style={styles.modal_titles} >تاریخ شروع</Text>
                                     <Image style={styles.modal_icons} source={require('../../Assets/Images/calendergrey.png')} />
                                 </View>
-                                <Text style={styles.select_time} >1398 / 11 / 15</Text>
-                                {/* <View style={styles.container}>
-                                    <PersianCalendarPicker
-                                        selectedDate={date}
-                                        onDateChange={this.onDateChange}
-                                        screenWidth={Dimensions.get('window').width}
-                                    />
-                                    <Text style={styles.selectedDate}> Date: {this.state.date.toString()} </Text>
-                                </View> */}
+
+
+
+                                {/* date picker date picker  */}
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', zIndex: -10 }}>
+
+                                    {/* end date */}
+                                    <View style={{ width: '45%' }}>
+                                        <TouchableOpacity style={styles.select_date} onPress={this._endDateOpen}>
+                                            {this.state.endDate ?
+                                                <Text style={{
+                                                    fontSize: 15,
+                                                    fontFamily: 'ISBold',
+                                                    alignItems: 'center',
+                                                    color: '#636363'
+                                                }}>{moment(endDate).format("jYYYY/jMM/jDD")}</Text> :
+                                                <Text style={{
+                                                    fontSize: 15,
+                                                    fontFamily: 'ISBold',
+                                                    alignItems: 'center',
+                                                    color: '#999'
+                                                }}> تا تاریخ </Text>
+                                            }
+
+                                        </TouchableOpacity>
+
+
+                                        <PersianDatePicker
+                                            type="Jalali"
+                                            yearCount={10}
+                                            onConfirm={date => {
+                                                this.setState({ endDate: date, selectEnd: false });
+                                            }}
+                                            pickerFontSize={24}
+                                            pickerToolBarFontSize={15}
+                                            minDate={this.state.startDate ? moment(this.state.startDate).format("jYYYY/jMM/jDD") : null}
+                                            ref={'ENDPICKER'}
+                                            pickerFontFamily="ISBold"
+                                            pickerConfirmBtnColor={[0, 123, 255, 1]}
+                                            pickerCancelBtnColor={[220, 53, 69, 1]}
+                                            pickerTitleText="تا تاریخ"
+                                            pickerTitleColor={[99, 99, 99, 1]}
+                                            onPickerCancel={() => {
+                                                this.setState({ selectEnd: false });
+                                            }}
+
+                                        />
+                                    </View>
+                                    {/* start date */}
+                                    <View style={{ width: '45%' }}>
+                                        <TouchableOpacity style={styles.select_date} onPress={this._startDateOpen} >
+                                            {this.state.startDate ?
+                                                <Text style={{
+                                                    fontSize: 15,
+                                                    fontFamily: 'ISBold',
+                                                    alignItems: 'center',
+                                                    color: '#636363'
+                                                }}>{moment(startDate).format("jYYYY/jMM/jDD")}</Text> :
+                                                <Text style={{
+                                                    fontSize: 15,
+                                                    fontFamily: 'ISBold',
+                                                    alignItems: 'center',
+                                                    color: '#999'
+                                                }}> از تاریخ </Text>
+                                            }
+
+                                        </TouchableOpacity>
+
+
+                                        <PersianDatePicker
+                                            type="Jalali"
+                                            yearCount={10}
+                                            onConfirm={date => {
+                                                this.setState({ startDate: date, selectStart: false });
+                                                alert(moment(this.state.startDate).format("jYYYY/jMM/jDD"))
+                                            }}
+                                            ref={'STARTPICKER'}
+                                            pickerFontSize={24}
+                                            pickerToolBarFontSize={15}
+                                            pickerFontFamily="ISBold"
+                                            pickerConfirmBtnColor={[0, 123, 255, 1]}
+                                            pickerCancelBtnColor={[220, 53, 69, 1]}
+                                            pickerTitleText=" از تاریخ"
+                                            pickerTitleColor={[99, 99, 99, 1]}
+                                            onPickerCancel={() => {
+                                                this.setState({ selectStart: false });
+                                            }}
+                                        />
+                                    </View>
+
+
+
+                                </View>
+
+
+
                             </View>
 
-                            {/* nights */}
-                            <View style={styles.nights} >
-                                <View style={styles.modal_details} >
-                                    <Text style={styles.modal_titles}>تعداد شبها</Text>
-                                    <Image style={styles.modal_icons} source={require('../../Assets/Images/moon.png')} />
-                                </View>
-                                <TextInput
-                                    placeholderStyle={{
-                                        fontFamily: 'ISFBold',
-                                        color: '#636363'
-                                    }}
-                                    placeholder="2"
-                                    style={styles.price_input}
-                                    onChangeText={(price) => this.setState({ price })}
-                                    keyboardType='numeric'
+                            {/* map map map  */}
+                            <View style={mapParentStyle}>
+                                <View style={{
+                                    width: '45%',
+                                    height: 160,
+                                    zIndex: this.state.otherZIndex,
+                                    justifyContent: 'space-between',
+                                    borderRadius: 5,
 
-                                />
+                                }}>
+                                    <View style={{ width: '100%' }}>
+                                        <View style={styles.modal_details} >
+                                            <Text style={styles.modal_titles} >نوع وبلا</Text>
+                                            <Image style={styles.modal_icons} source={require('../../Assets/Images/vila.png')} />
+                                        </View>
+                                        <View style={{
+                                            borderWidth: 1,
+                                            borderColor: '#eee',
+                                            shadowColor: "#f7f7f7",
+                                            shadowOpacity: .3,
+                                            elevation: 1,
+                                            backgroundColor: '#fff',
+                                            borderRadius: 5,
+
+                                        }}>
+
+                                            <Picker
+                                                textStyle={{
+                                                    fontFamily: 'ISBold'
+                                                }}
+                                                itemTextStyle={{
+                                                    fontFamily: 'ISBold'
+                                                }}
+                                                selectedValue={this.state.language}
+                                                style={{ height: 40, width: '100%' }}
+                                                onValueChange={(itemValue) =>
+                                                    this.setState({ language: itemValue })
+                                                }>
+                                                <Picker.Item label="جنگلی" value="1" />
+                                                <Picker.Item label="ویلایی" value="2" />
+                                            </Picker>
+                                        </View>
+                                    </View>
+                                    <View style={{ width: '100%' }}>
+                                    <View style={styles.modal_details} >
+                                            <Text style={styles.modal_titles} >ظرفیت</Text>
+                                            <Image style={styles.modal_icons} source={require('../../Assets/Images/multiuser.png')} />
+                                        </View>
+                                        <Counter counter={(e) => this._personCounter(e)} />
+                                    </View>
+                                </View>
+
+                                <View style={mapStyle}>
+                                    <TouchableOpacity style={{
+                                        padding: 5,
+                                        zIndex: 999,
+                                        position: 'absolute',
+                                        backgroundColor: 'rgba(255,255,255,.9)',
+                                        borderRadius: 5,
+                                        top: this.state.mapIconTop,
+                                        left: this.state.mapIconLeft
+                                    }} >
+                                        <ImageBackground style={{ width: 30, height: 30, }}
+                                            source={this.state.mapStatusIcon}
+                                        >
+                                            <Text style={{ width: 30, height: 30 }} onPress={this._mapFullScreen}>
+                                            </Text>
+                                        </ImageBackground>
+                                    </TouchableOpacity>
+
+                                    <Mapir
+                                        accessToken={'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjM5ZjlmMWZhNDA4YzM0ODI2ZjcxZGI5YTdlM2U2ZmVjNDEzMzNmMDU0MjVhM2MzOTM0NmMwNTlkMzBiMzcyYjA5YzU1OGZjOGU4NTJmNWJhIn0.eyJhdWQiOiJteWF3ZXNvbWVhcHAiLCJqdGkiOiIzOWY5ZjFmYTQwOGMzNDgyNmY3MWRiOWE3ZTNlNmZlYzQxMzMzZjA1NDI1YTNjMzkzNDZjMDU5ZDMwYjM3MmIwOWM1NThmYzhlODUyZjViYSIsImlhdCI6MTU1OTQ1NTIzMiwibmJmIjoxNTU5NDU1MjMyLCJleHAiOjE1NTk0NTg4MzIsInN1YiI6IiIsInNjb3BlcyI6WyJiYXNpYyIsImVtYWlsIl19.JNowwSPWaoVoJ1Omirk9OTtkDySsNL91nP00GcCARdM-YHoTQYw3NZy3SaVlAsbafO9oPPvlVfhNIxPIHESACZATutE3tb7RBEmQGEXX-8G7GOSu8IzyyLBmHaQe75LtisgdKi-zPTGsx8zFv0Acn6HrDDxFrKFNtmI85L3jos_GVxvYYhHWKAez8mbJRHcH1b15DrwgWAhCjO2p_HqpuGLdRF1l03J6HsOnJLMid2997g7iAVTOa8mt2oaEPvmwA_f6pwFZSURqw-RJzdN_R8IEmtqWQq5ZNTEppVaV82yuwfnSmrb0_Sak2hfBIiLwQeCMsnfhU_CvUbE_1rukmQ'}
+                                        zoomLevel={13}
+                                        showUserLocation={true}
+                                        centerCoordinate={[51.422548, 35.732573]}
+                                        onLongPress={e => this.addMarker(e.geometry.coordinates)}
+                                        style={{ flex: 1 }}
+                                    >
+                                        {mark}
+
+                                    </Mapir>
+
+                                </View>
+
                             </View>
 
                             {/* request btn */}
                             <View style={styles.new_request_box}>
-
                                 <GradientButton
                                     width="90%"
-                                    press={this._enterCode}
+                                    press={this._newRequest}
                                     activeOpacity={.6}
                                     color_1="#18749a"
                                     color_2="#46add8"
@@ -318,11 +677,9 @@ export default class Home extends Component {
                                     top={0}
                                     bottom={0}
                                 />
-
-
                             </View>
                         </View>
-                    </KeyboardAvoidingView>
+                    </InputScrollView>
 
 
 
@@ -337,6 +694,18 @@ export default class Home extends Component {
 
         );
     }
+}
+let mapParentStyle = {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '90%',
+};
+let mapStyle = {
+    width: '45%',
+    height: 160,
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: '#fff'
 }
 
 const styles = ({
@@ -528,14 +897,7 @@ const styles = ({
         width: 30,
         height: 30
     },
-    Modal: {
-        flexDirection: 'column',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        backgroundColor: '#f7f7f7',
-        height: Dimensions.get('window').height - 50 ,
-        width: Dimensions.get('window').width,
-    },
+
     modal_description: {
         backgroundColor: '#eee',
         borderBottomRightRadius: 20,
@@ -576,17 +938,19 @@ const styles = ({
         width: '90%',
         flexDirection: 'column',
         marginVertical: 5,
-        borderRadius: 5
+        borderRadius: 5,
+        zIndex: -10
+
     },
     modal_details: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
     },
     modal_titles: {
         flexDirection: 'row',
         fontSize: 12,
-        fontFamily: 'ISBold',
+        fontFamily: 'ISFBold',
         alignItems: 'center',
         color: '#636363'
     },
@@ -612,22 +976,18 @@ const styles = ({
         shadowColor: "#f7f7f7",
         shadowOpacity: .3,
         elevation: 1,
-        width: '100%',
-        height: 50,
+        height: 40,
         backgroundColor: '#fff',
         color: '#636363',
         marginTop: 5,
-        ...Platform.select({
-            android: {
-                fontFamily: 'ISFBold',
-                fontSize: 15
-            }
-        })
+        fontFamily: 'ISBold',
+        minWidth: 50,
+        fontSize: 15
 
     },
     start_date: {
         width: '90%',
-        marginVertical:5
+        marginVertical: 5
     },
     select_time: {
         textAlign: 'center',
@@ -647,7 +1007,7 @@ const styles = ({
     },
     nights: {
         width: '90%',
-       marginVertical:5
+        marginVertical: 5
     },
     select_nights: {
         textAlign: 'center',
@@ -680,10 +1040,23 @@ const styles = ({
     modal_close: {
         width: 25,
         height: 25,
-        margin: 20
+    },
+
+    select_date: {
+        textAlign: 'center',
+        borderRadius: 5,
+        shadowColor: "#f7f7f7",
+        shadowOpacity: .3,
+        elevation: 1,
+        width: '100%',
+        height: 40,
+        backgroundColor: '#fff',
+        color: '#636363',
+        marginTop: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontFamily: 'ISBold',
     }
-
-
 
 
 
