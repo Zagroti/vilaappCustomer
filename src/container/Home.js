@@ -511,7 +511,7 @@ export default class Home extends Component {
                                                 this.setState({ endDate: date, selectEnd: false });
                                             }}
                                             pickerFontSize={24}
-                                            minDate={'1398/08/08'}
+                                            minDate={this.state.startDate ? moment(this.state.startDate).format("jYYYY/jMM/jDD") : null}
                                             ref={'ENDPICKER'}
                                             pickerFontFamily="ISBold"
                                             pickerConfirmBtnColor={[0, 123, 255, 1]}
@@ -550,6 +550,7 @@ export default class Home extends Component {
                                             yearCount={10}
                                             onConfirm={date => {
                                                 this.setState({ startDate: date, selectStart: false });
+                                                alert(moment(this.state.startDate).format("jYYYY/jMM/jDD"))
                                             }}
                                             ref={'STARTPICKER'}
                                             pickerFontSize={24}
