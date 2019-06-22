@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import InputScrollView from 'react-native-input-scroll-view';
+import Mapir from 'mapir-react-native-sdk'
 
 
 //components 
@@ -19,12 +20,19 @@ import Requestitems from '../components/RequestItems';
 import GradientButton from '../components/GradientButton';
 
 
+const arrowDown = require('./../../Assets/Images/arrow-down.png')
+const arrowUp = require('./../../Assets/Images/arrow-up.png')
+
 export default class Details extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
             modalVisible: false,
+            avilibiyText: 'بیشتر',
+            avilibiy: false,
+            aboutvilaText: 'بیشتر',
+            aboutvila: false
         }
     }
 
@@ -42,6 +50,38 @@ export default class Details extends Component {
 
     _saveVila = () => {
         this.setModalVisible(false)
+
+    }
+
+
+    // more funcion 
+    _mapHeightChanger = (item) => {
+        if (item === 'avilibiy') {
+            if (!this.state.avilibiy) {
+                this.setState({
+                    avilibiyText: 'کمتر',
+                    avilibiy: true,
+                })
+            } else {
+                this.setState({
+                    avilibiyText: 'بیشتر',
+                    avilibiy: false,
+                })
+            }
+        } else if (item === 'aboutvila') {
+            if (!this.state.aboutvila) {
+                this.setState({
+                    aboutvilaText: 'کمتر',
+                    aboutvila: true,
+                })
+            } else {
+                this.setState({
+                    aboutvilaText: 'بیشتر',
+                    aboutvila: false,
+                })
+            }
+
+        }
 
     }
 
@@ -109,10 +149,24 @@ export default class Details extends Component {
                         <View style={styles.about_vila_first}>
                             <Text style={styles.about_vila_title} >در مورد ویلا</Text>
                             <Text style={styles.about_vila_text} >لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</Text>
+                            {
+                                this.state.aboutvila ?
+                                    <Text style={styles.about_vila_text} >لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</Text>
+                                    : null
+                            }
+
                         </View>
-                        <TouchableOpacity style={styles.see_more}>
-                            <Text style={styles.see_more_text}>بیشتر</Text>
-                            <Image style={styles.see_more_icon} source={require('./../../Assets/Images/arrow-down.png')} />
+                        <TouchableOpacity
+                            style={{ marginVertical: 10, alignItems: 'center' }}
+                            onPress={() => this._mapHeightChanger('aboutvila')}
+                        >
+                            <Text style={{
+                                fontSize: 13,
+                                fontFamily: 'ISBold',
+                                color: '#ccc',
+                                marginVertical: 2
+                            }} >{this.state.aboutvilaText}</Text>
+                            <Image source={this.state.aboutvila ? arrowUp : arrowDown} />
                         </TouchableOpacity>
                     </View>
 
@@ -144,11 +198,46 @@ export default class Details extends Component {
                                 <Text style={styles.avilibiy_text} >استخر</Text>
                                 <Image style={styles.avilibiy_icon} source={require('./../../Assets/Images/check.png')}></Image>
                             </View>
+                            {
+                                this.state.avilibiy ?
+                                    <View style={styles.avilibiy_first}>
+                                        <View style={styles.avilibiy_item} >
+                                            <Text style={styles.avilibiy_text} >پارکینگ</Text>
+                                            <Image style={styles.avilibiy_icon} source={require('./../../Assets/Images/check.png')}></Image>
+                                        </View>
+                                        <View style={styles.avilibiy_item} >
+                                            <Text style={styles.avilibiy_text} >WiFi</Text>
+                                            <Image style={styles.avilibiy_icon} source={require('./../../Assets/Images/check.png')}></Image>
+                                        </View>
+                                        <View style={styles.avilibiy_item} >
+                                            <Text style={styles.avilibiy_text} >لباسشویی</Text>
+                                            <Image style={styles.avilibiy_icon} source={require('./../../Assets/Images/checkgrey.png')}></Image>
+                                        </View>
+                                        <View style={styles.avilibiy_item} >
+                                            <Text style={styles.avilibiy_text} >سیستم گرمایشی</Text>
+                                            <Image style={styles.avilibiy_icon} source={require('./../../Assets/Images/check.png')}></Image>
+                                        </View>
+                                        <View style={styles.avilibiy_item} >
+                                            <Text style={styles.avilibiy_text} >الکتریکی</Text>
+                                            <Image style={styles.avilibiy_icon} source={require('./../../Assets/Images/check.png')}></Image>
+                                        </View>
+
+                                    </View> : null
+
+                            }
                         </View>
 
-                        <TouchableOpacity style={styles.see_more}>
-                            <Text style={styles.see_more_text}>بیشتر</Text>
-                            <Image style={styles.see_more_icon} source={require('./../../Assets/Images/arrow-down.png')} />
+                        <TouchableOpacity
+                            style={{ marginVertical: 10, alignItems: 'center' }}
+                            onPress={() => this._mapHeightChanger('avilibiy')}
+                        >
+                            <Text style={{
+                                fontSize: 13,
+                                fontFamily: 'ISBold',
+                                color: '#ccc',
+                                marginVertical: 2
+                            }} >{this.state.avilibiyText}</Text>
+                            <Image source={this.state.avilibiy ? arrowUp : arrowDown} />
                         </TouchableOpacity>
                     </View>
 
@@ -167,12 +256,23 @@ export default class Details extends Component {
 
                     </View>
 
-                    <ImageBackground
+                    <View
                         style={{ width: '100%', height: 250, marginTop: 20 }}
-                        source={require('./../../Assets/Images/map.png')}
                     >
-
-                    </ImageBackground>
+                        <Mapir
+                            logoEnabled={true}
+                            accessToken={'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjM5ZjlmMWZhNDA4YzM0ODI2ZjcxZGI5YTdlM2U2ZmVjNDEzMzNmMDU0MjVhM2MzOTM0NmMwNTlkMzBiMzcyYjA5YzU1OGZjOGU4NTJmNWJhIn0.eyJhdWQiOiJteWF3ZXNvbWVhcHAiLCJqdGkiOiIzOWY5ZjFmYTQwOGMzNDgyNmY3MWRiOWE3ZTNlNmZlYzQxMzMzZjA1NDI1YTNjMzkzNDZjMDU5ZDMwYjM3MmIwOWM1NThmYzhlODUyZjViYSIsImlhdCI6MTU1OTQ1NTIzMiwibmJmIjoxNTU5NDU1MjMyLCJleHAiOjE1NTk0NTg4MzIsInN1YiI6IiIsInNjb3BlcyI6WyJiYXNpYyIsImVtYWlsIl19.JNowwSPWaoVoJ1Omirk9OTtkDySsNL91nP00GcCARdM-YHoTQYw3NZy3SaVlAsbafO9oPPvlVfhNIxPIHESACZATutE3tb7RBEmQGEXX-8G7GOSu8IzyyLBmHaQe75LtisgdKi-zPTGsx8zFv0Acn6HrDDxFrKFNtmI85L3jos_GVxvYYhHWKAez8mbJRHcH1b15DrwgWAhCjO2p_HqpuGLdRF1l03J6HsOnJLMid2997g7iAVTOa8mt2oaEPvmwA_f6pwFZSURqw-RJzdN_R8IEmtqWQq5ZNTEppVaV82yuwfnSmrb0_Sak2hfBIiLwQeCMsnfhU_CvUbE_1rukmQ'}
+                            zoomLevel={13}
+                            centerCoordinate={[51.422548, 35.732573]}
+                            style={{ flex: 1 }}
+                            logoEnabled={false}
+                        >
+                            <Mapir.Marker
+                                id={'1'}
+                                coordinate={[51.422548, 35.732573]}
+                            />
+                        </Mapir>
+                    </View>
 
                     <View style={styles.save_button}
                         onPress={() => {
@@ -226,125 +326,110 @@ export default class Details extends Component {
                     }}
 
                 >
-                    
+
+                    {/* Close modal  */}
+                    <View
+                        style={{
+                            backgroundColor: '#f7f7f7',
+                            width: '100%',
+                            height: 50,
+                            flexDirection: 'row',
+                            justifyContent: 'flex-end'
+                        }}>
                         {/* Close modal  */}
-                        <View
-                            style={{
-                                backgroundColor: '#f7f7f7',
-                                width: '100%',
-                                height: 50,
-                                flexDirection: 'row',
-                                justifyContent: 'flex-end'
+                        <TouchableOpacity
+                            onPress={() => {
+                                this.setModalVisible(false);
                             }}>
-                            {/* Close modal  */}
-                            <TouchableOpacity
-                                onPress={() => {
-                                    this.setModalVisible(false);
-                                }}>
-                                <Image style={{
-                                    width: 25,
-                                    height: 25,
-                                    margin: 20
-                                }}
-                                    source={require('../../Assets/Images/close.png')}
-                                />
-                            </TouchableOpacity>
+                            <Image style={{
+                                width: 25,
+                                height: 25,
+                                margin: 20
+                            }}
+                                source={require('../../Assets/Images/close.png')}
+                            />
+                        </TouchableOpacity>
+                    </View>
+
+
+
+                    {/* Modal modal modal modal  */}
+                    <View style={styles.Modal}>
+                        <View style={styles.modal_title} >
+                            <View style={styles.icon_parent} >
+                                <View style={styles.icon_child} >
+                                    <Image style={styles.icon} source={require('../../Assets/Images/natalie.jpeg')} />
+                                </View>
+                            </View>
+                            <View style={styles.person_desc} >
+                                <Text style={styles.person_name} >جمیله باغی تبار</Text>
+                                <Text style={styles.person_number} >0912 100 8900</Text>
+                            </View>
                         </View>
 
-
-
-                        {/* Modal modal modal modal  */}
-                        <View style={styles.Modal}>
-                            <View style={styles.modal_title} >
-                                <View style={styles.icon_parent} >
-                                    <View style={styles.icon_child} >
-                                        <Image style={styles.icon} source={require('../../Assets/Images/natalie.jpeg')} />
-                                    </View>
-                                </View>
-                                <View style={styles.person_desc} >
-                                    <Text style={styles.person_name} >جمیله باغی تبار</Text>
-                                    <Text style={styles.person_number} >0912 100 8900</Text>
-                                </View>
+                        <View style={styles.rent_detail} >
+                            <View style={styles.rent_items} >
+                                <Text style={styles.rent_text} >شروع تاریخ</Text>
+                                <Text style={styles.rent_number} >1398 / 11 / 10</Text>
                             </View>
-
-                            <View style={styles.rent_detail} >
-                                <View style={styles.rent_items} >
-                                    <Text style={styles.rent_text} >شروع تاریخ</Text>
-                                    <Text style={styles.rent_number} >1398 / 11 / 10</Text>
-                                </View>
-                                <View style={styles.rent_items} >
-                                    <Text style={styles.rent_text} >تعداد شبها</Text>
-                                    <Text style={styles.rent_number} >5</Text>
-                                </View>
-                                <View style={styles.rent_items} >
-                                    <Text style={styles.rent_text} >نفرات</Text>
-                                    <Text style={styles.rent_number} >2</Text>
-                                </View>
-                                <View style={styles.rent_items} >
-                                    <Text style={styles.rent_text} >هزینه هرشب</Text>
-                                    <Text style={styles.rent_number} >100,000</Text>
-                                </View>
-                                <View style={styles.totalـprice} >
-                                    <Text style={styles.total_text} >هزینه کل</Text>
-                                    <Text style={styles.total_number} >500,000 ت</Text>
-                                </View>
+                            <View style={styles.rent_items} >
+                                <Text style={styles.rent_text} >تعداد شبها</Text>
+                                <Text style={styles.rent_number} >5</Text>
                             </View>
+                            <View style={styles.rent_items} >
+                                <Text style={styles.rent_text} >نفرات</Text>
+                                <Text style={styles.rent_number} >2</Text>
+                            </View>
+                            <View style={styles.rent_items} >
+                                <Text style={styles.rent_text} >هزینه هرشب</Text>
+                                <Text style={styles.rent_number} >100,000</Text>
+                            </View>
+                            <View style={styles.totalـprice} >
+                                <Text style={styles.total_text} >هزینه کل</Text>
+                                <Text style={styles.total_number} >500,000 ت</Text>
+                            </View>
+                        </View>
 
-                            <View style={styles.accept_from_owner} >
+                        <View style={styles.accept_from_owner} >
+                            <Image style={{ width: 25, resizeMode: 'contain', margin: 20 }}
+                                source={require('../../Assets/Images/checkblue.png')}
+                            />
+                            <Text style={{ fontSize: 12, fontFamily: 'ISBold', marginRight: 10 }} >پذیرفته شده توسط صاحب ویلا</Text>
+                            <View style={{
+                                width: 70,
+                                height: 70,
+                                borderRadius: 35,
+                                backgroundColor: '#f5f5f5',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                shadowColor: "#f7f7f7",
+                                shadowOpacity: 1,
+                                elevation: 1,
+                            }} >
                                 <Image style={{ width: 25, resizeMode: 'contain', margin: 20 }}
-                                    source={require('../../Assets/Images/checkblue.png')}
-                                />
-                                <Text style={{ fontSize: 12, fontFamily: 'ISBold', marginRight: 10 }} >پذیرفته شده توسط صاحب ویلا</Text>
-                                <View style={{
-                                    width: 70,
-                                    height: 70,
-                                    borderRadius: 35,
-                                    backgroundColor: '#f5f5f5',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    shadowColor: "#f7f7f7",
-                                    shadowOpacity: 1,
-                                    elevation: 1,
-                                }} >
-                                    <Image style={{ width: 25, resizeMode: 'contain', margin: 20 }}
-                                        source={require('../../Assets/Images/usergrey.png')}
-                                    />
-                                </View>
-                            </View>
-
-
-
-
-
-                            {/* request btn */}
-                           
-
-
-
-                                <GradientButton
-                                    width={Dimensions.get('window').width - 100}
-                                    press={this._saveVila}
-                                    activeOpacity={.6}
-                                    color_1="#18749a"
-                                    color_2="#46add8"
-                                    height={50}
-                                    borderRadius={50}
-                                    textColor="#fff"
-                                    size={16}
-                                    title="پرداخت"
-                                    top={0}
-                                    bottom={100}
+                                    source={require('../../Assets/Images/usergrey.png')}
                                 />
                             </View>
-                    
-                  
+                        </View>
 
+                        {/* request btn */}
 
-
+                        <GradientButton
+                            width={Dimensions.get('window').width - 100}
+                            press={this._saveVila}
+                            activeOpacity={.6}
+                            color_1="#18749a"
+                            color_2="#46add8"
+                            height={50}
+                            borderRadius={50}
+                            textColor="#fff"
+                            size={16}
+                            title="پرداخت"
+                            top={0}
+                            bottom={100}
+                        />
+                    </View>
                 </Modal >
-
-
-
             </ScrollView >
 
 
@@ -373,7 +458,7 @@ const styles = ({
     menu: {
         backgroundColor: 'transparent',
         flexDirection: 'row',
-        justifyContent: 'flex-end',
+        justifyContent: 'flex-start',
         alignItems: 'center',
         height: 60,
         padding: 20,
@@ -507,6 +592,7 @@ const styles = ({
     avilibiy_first: {
         flexWrap: 'wrap',
         flexDirection: 'row',
+        justifyContent: 'flex-end'
     },
 
     avilibiy_item: {
@@ -576,11 +662,11 @@ const styles = ({
         justifyContent: 'space-around',
         alignItems: 'center',
         backgroundColor: '#f6f6f6',
-        height:Dimensions.get('window').height ,
+        height: Dimensions.get('window').height,
     },
     modal_title: {
         alignItems: 'center',
-        marginTop:-50
+        marginTop: -50
     },
 
     icon_parent: {

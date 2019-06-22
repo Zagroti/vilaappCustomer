@@ -8,7 +8,7 @@ import {
     KeyboardAvoidingView,
     Animated
 } from 'react-native';
-
+import AsyncStorage from '@react-native-community/async-storage';
 import { Actions } from 'react-native-router-flux';
 import GradientButton from '../components/GradientButton';
 
@@ -40,13 +40,16 @@ class EnterCode extends Component {
 
     // validation and go home
     _goHome = async () => {
+
+
+
         // fetch ...
         //..
         //..
         if (this.state.code == '12345') {
             // go HOME
             Actions.Home();
-
+            this._storeData()
 
         } else {
 
@@ -77,6 +80,17 @@ class EnterCode extends Component {
 
     }
 
+
+    _storeData = async () => {
+        try {
+            await AsyncStorage.setItem('login', 'true')
+            
+        } catch (e) {
+            // saving error
+        }
+        console.log('set')
+
+    }
 
     render() {
         let { fadeText } = this.state
