@@ -19,14 +19,13 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 const backButton = () => (
     <TouchableOpacity
         onPress={() => Actions.pop()}
-        style={{ width: 30, height: 20, marginRight: 20 }}
+        style={{
+            width: 60, height: 60, marginRight: 20, alignItems: 'center',
+            justifyContent: 'center',
+        }}
     >
-        <View style={{ alignItems: 'center' }}>
-            <Icon name="arrow-right" size={30} color="#B22850" />
-
-            {/*
-                <Icon name='ios-arrow-round-back' style={{ color: '#fff' }} />
-            */}
+        <View >
+            <Icon size={36} name="arrow-right" color="#A52D53" />
         </View>
     </TouchableOpacity>
 );
@@ -50,8 +49,7 @@ const backButtonDetail = () => (
             end: 10,
 
         }} onPress={() => Actions.pop()} >
-         <Icon name="arrow-right" size={30} color="#fff" />
-
+        <Icon size={36} name="arrow-right" color="#fff" />
     </TouchableOpacity>
 )
 
@@ -147,14 +145,12 @@ class Routes extends React.Component {
                         renderLeftButton={() => (
                             <TouchableOpacity style={styles.notification_box}
                                 onPress={() => alert('توجهات')}>
-                                <ImageBackground
-                                    style={styles.bell}
-                                    source={require('./Assets/Images/bell.png')}
-                                >
-                                    <View style={styles.notification} >
-                                        <Text style={styles.notification_text} >3</Text>
-                                    </View>
-                                </ImageBackground>
+
+                                <View style={styles.notification} >
+                                    <Text style={styles.notification_text} >3</Text>
+                                </View>
+                                <Icon style={{ position: 'absolute', top: 0 }} name="bell-outline" size={32} color="#B22850" />
+
                             </TouchableOpacity>
                         )}
                         renderRightButton={() => backButton()}

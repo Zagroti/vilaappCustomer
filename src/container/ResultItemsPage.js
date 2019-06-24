@@ -29,9 +29,6 @@ export default class ResultItemsPage extends Component {
         this.state = {
             source_1: require('../../Assets/Images/sort1.png'),
             source_2: require('../../Assets/Images/sort2.png'),
-            image_1: require('../../Assets/Images/sort1.png'),
-            image_2: require('../../Assets/Images/sort2.png'),
-            image_3: require('../../Assets/Images/sort2.png'),
             color_1: '#C72652',
             color_2: '#000',
             color_3: '#000',
@@ -72,9 +69,6 @@ export default class ResultItemsPage extends Component {
     _changeTab = (tab) => {
         if (tab === 'tab1') {
             this.setState({
-                image_1: this.state.source_1,
-                image_2: this.state.source_2,
-                image_3: this.state.source_2,
                 color_1: this.state.red,
                 color_2: this.state.black,
                 color_3: this.state.black,
@@ -85,9 +79,6 @@ export default class ResultItemsPage extends Component {
             })
         } else if (tab === 'tab2') {
             this.setState({
-                image_1: this.state.source_2,
-                image_3: this.state.source_2,
-                image_2: this.state.source_1,
                 color_3: this.state.black,
                 color_1: this.state.black,
                 color_2: this.state.red,
@@ -97,9 +88,6 @@ export default class ResultItemsPage extends Component {
             })
         } else if (tab === 'tab3') {
             this.setState({
-                image_1: this.state.source_2,
-                image_2: this.state.source_2,
-                image_3: this.state.source_1,
                 color_1: this.state.black,
                 color_2: this.state.black,
                 color_3: this.state.red,
@@ -285,9 +273,6 @@ const styles = ({
         fontSize: 10,
         fontFamily: 'ISBold',
         marginLeft: 5,
-    },
-    tab_image: {
-
     },
     line: {
         width: 1,
