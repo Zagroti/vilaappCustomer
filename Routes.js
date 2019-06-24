@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Router, Scene, Actions } from 'react-native-router-flux';
-import { Text, View, Image, TouchableOpacity, ImageBackground, StatusBar , ActivityIndicator} from 'react-native';
+import { Text, View, Image, TouchableOpacity, ImageBackground, StatusBar, ActivityIndicator } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import SendNumber from './src/container/SendNumber';
@@ -11,6 +11,7 @@ import Profile from './src/container/Profile';
 import ResultItemsPage from './src/container/ResultItemsPage'
 import Details from './src/container/Details'
 
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 
@@ -21,10 +22,8 @@ const backButton = () => (
         style={{ width: 30, height: 20, marginRight: 20 }}
     >
         <View style={{ alignItems: 'center' }}>
-            <Image
-                source={require('./Assets/Images/left-arrow.png')}
-                style={{ width: 30, height: 20 }}
-            />
+            <Icon name="arrow-right" size={30} color="#B22850" />
+
             {/*
                 <Icon name='ios-arrow-round-back' style={{ color: '#fff' }} />
             */}
@@ -51,11 +50,8 @@ const backButtonDetail = () => (
             end: 10,
 
         }} onPress={() => Actions.pop()} >
-        <Image style={{
-            width: 30,
-            resizeMode: 'contain'
-        }}
-            source={require('./Assets/Images/left-arrow-white.png')} />
+         <Icon name="arrow-right" size={30} color="#fff" />
+
     </TouchableOpacity>
 )
 

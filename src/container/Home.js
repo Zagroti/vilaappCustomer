@@ -19,7 +19,7 @@ import { Actions } from 'react-native-router-flux';
 import InputScrollView from 'react-native-input-scroll-view';
 import PersianDatePicker from "rn-persian-date-picker";
 import Mapir from 'mapir-react-native-sdk'
-
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 //components 
 import NoRequest from '../components/NoRequest';
@@ -245,13 +245,13 @@ export default class Home extends Component {
                 </View>
                 <TouchableOpacity activeOpacity={.6} style={styles.bottomIcons} onPress={(e) => this._navigate('profile')}>
                     <Text style={styles.drawer_text}>پروفایل</Text>
-                    <Image style={styles.bottomIcon} source={require('../../Assets/Images/userq.png')} />
+                    <Icon name="account-outline" size={30} color="#333" />
                 </TouchableOpacity>
 
                 {/* got to history */}
                 <TouchableOpacity activeOpacity={.6} style={styles.bottomIcons} onPress={(e) => this._navigate('history')}>
                     <Text style={styles.drawer_text}>تاریخچه</Text>
-                    <Image style={styles.bottomIcon} source={require('../../Assets/Images/userq.png')} />
+                    <Icon name="calendar-clock" size={30} color="#333" />
                 </TouchableOpacity>
             </View>
         );
@@ -277,17 +277,13 @@ export default class Home extends Component {
                             style={styles.humberger}
                             onPress={() => alert('توجهات')}
                         >
-                            <ImageBackground
-                                style={styles.bell}
-                                source={require('./../../Assets/Images/bell.png')}
-                            >
-                                <View style={styles.notification} >
-                                    <Text style={styles.notification_text} >3</Text>
-                                </View>
-                            </ImageBackground>
+                            <View style={styles.notification} >
+                                <Text style={styles.notification_text} >3</Text>
+                            </View>
+                            <Icon style={{ position: 'absolute', top: 0 }} name="bell-outline" size={32} color="#B22850" />
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.humberger} onPress={this._openDrawer}>
-                            <Image style={styles.humberger_icon} source={require('../../Assets/Images/menu.png')} />
+                            <Icon style={{ position: 'absolute', top: 0 }} name="menu" size={32} color="#B22850" />
                         </TouchableOpacity>
                     </View>
 
@@ -323,7 +319,7 @@ export default class Home extends Component {
                         }}
                     >
                         <View style={styles.middleInside}>
-                            <Image style={styles.middleIcon} source={require('../../Assets/Images/bluemarker.png')} />
+                            <Icon name="map-search-outline" size={50} color="#C92652" />
                         </View>
                     </TouchableOpacity>
 
@@ -414,9 +410,8 @@ export default class Home extends Component {
                                         onPress={() => {
                                             this.setModalVisible(false);
                                         }}>
-                                        <Image style={styles.modal_close}
-                                            source={require('../../Assets/Images/close.png')}
-                                        />
+                                        <Icon size={40} name="close" color="#bbb" />
+
                                     </TouchableOpacity>
 
                                 </View>
@@ -444,7 +439,7 @@ export default class Home extends Component {
                                         <Text style={styles.toman} > ( تومان ) </Text>
                                         <Text style={styles.gheymat} >قیمت</Text>
                                     </View>
-                                    <Image style={styles.modal_icons} source={require('../../Assets/Images/percent.png')} />
+                                    <Icon style={{ marginLeft: 5 }} size={22} name="brightness-percent" color="#333" />
                                 </View>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
                                     <View style={{ justifyContent: 'center', width: '45%' }}>
@@ -475,7 +470,7 @@ export default class Home extends Component {
                             <View style={styles.start_date} >
                                 <View style={styles.modal_details} >
                                     <Text style={styles.modal_titles} >تاریخ شروع</Text>
-                                    <Image style={styles.modal_icons} source={require('../../Assets/Images/calendergrey.png')} />
+                                    <Icon style={{ marginLeft: 5 }} size={22} name="calendar-range" color="#333" />
                                 </View>
 
 
@@ -587,7 +582,8 @@ export default class Home extends Component {
                                     <View style={{ width: '100%' }}>
                                         <View style={styles.modal_details} >
                                             <Text style={styles.modal_titles} >نوع وبلا</Text>
-                                            <Image style={styles.modal_icons} source={require('../../Assets/Images/vila.png')} />
+                                            <Icon style={{ marginLeft: 5 }} size={22} name="home" color="#333" />
+
                                         </View>
                                         <View style={{
                                             borderWidth: 1,
@@ -618,30 +614,33 @@ export default class Home extends Component {
                                         </View>
                                     </View>
                                     <View style={{ width: '100%' }}>
-                                    <View style={styles.modal_details} >
+                                        <View style={styles.modal_details} >
                                             <Text style={styles.modal_titles} >ظرفیت</Text>
-                                            <Image style={styles.modal_icons} source={require('../../Assets/Images/multiuser.png')} />
+                                            <Icon style={{ marginLeft: 5 }} size={22} name="account-group-outline" color="#333" />
                                         </View>
                                         <Counter counter={(e) => this._personCounter(e)} />
                                     </View>
                                 </View>
 
                                 <View style={mapStyle}>
-                                    <TouchableOpacity style={{
-                                        padding: 5,
-                                        zIndex: 999,
-                                        position: 'absolute',
-                                        backgroundColor: 'rgba(255,255,255,.9)',
-                                        borderRadius: 5,
-                                        top: this.state.mapIconTop,
-                                        left: this.state.mapIconLeft
-                                    }} >
-                                        <ImageBackground style={{ width: 30, height: 30, }}
-                                            source={this.state.mapStatusIcon}
-                                        >
-                                            <Text style={{ width: 30, height: 30 }} onPress={this._mapFullScreen}>
-                                            </Text>
-                                        </ImageBackground>
+                                    <TouchableOpacity
+                                        onPress={this._mapFullScreen}
+                                        style={{
+                                            zIndex: 999,
+                                            position: 'absolute',
+                                            backgroundColor: 'rgba(255,255,255,.9)',
+                                            borderRadius: 5,
+                                            top: this.state.mapIconTop,
+                                            left: this.state.mapIconLeft
+                                        }} >
+                                        {
+                                            this.state.mapFull ? 
+                                            <Icon size={45} name="fullscreen-exit" color="#A52D53" /> :
+                                            <Icon size={45} name="fullscreen" color="#A52D53" /> 
+
+                                        }
+
+
                                     </TouchableOpacity>
 
                                     <Mapir
@@ -735,8 +734,8 @@ const styles = ({
         height: 14,
         borderRadius: 7,
         backgroundColor: '#B22850',
-        start: 10,
-        top: -10,
+        start: 8,
+        top: 0,
         justifyContent: 'center',
         alignItems: 'center',
     },
