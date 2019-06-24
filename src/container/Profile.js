@@ -209,7 +209,7 @@ const styles = ({
         shadowColor: "#f7f7f7",
         shadowOpacity: 1,
         elevation: 1,
-
+        textAlign:'right'
     },
 
 
