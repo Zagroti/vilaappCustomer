@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, Dimensions, Image, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default class RequestItems extends Component {
 
@@ -18,7 +19,7 @@ export default class RequestItems extends Component {
             <TouchableOpacity style={styles.RequestItems} activeOpacity={.8} onPress={this.props.navigate}>
                 <View style={styles.left} >
                     <Text style={styles.price}> 300,000 ت</Text>
-                    <Image style={{ marginTop: 20 }} source={require('../../Assets/Images/left.png')} />
+                    <Icon  size={30} name="chevron-left" color="#ccc" />      
                 </View>
                 <View style={styles.right}>
                     <View style={styles.vila_info}>
