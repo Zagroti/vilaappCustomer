@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Router, Scene, Actions } from 'react-native-router-flux';
-import { Text, View, Image, TouchableOpacity, ImageBackground, StatusBar , ActivityIndicator} from 'react-native';
+import { Text, View, Image, TouchableOpacity, ImageBackground, StatusBar, ActivityIndicator } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import SendNumber from './src/container/SendNumber';
@@ -11,6 +11,7 @@ import Profile from './src/container/Profile';
 import ResultItemsPage from './src/container/ResultItemsPage'
 import Details from './src/container/Details'
 
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 
@@ -18,16 +19,13 @@ import Details from './src/container/Details'
 const backButton = () => (
     <TouchableOpacity
         onPress={() => Actions.pop()}
-        style={{ width: 30, height: 20, marginRight: 20 }}
+        style={{
+            width: 60, height: 60, marginRight: 20, alignItems: 'center',
+            justifyContent: 'center',
+        }}
     >
-        <View style={{ alignItems: 'center' }}>
-            <Image
-                source={require('./Assets/Images/left-arrow.png')}
-                style={{ width: 30, height: 20 }}
-            />
-            {/*
-                <Icon name='ios-arrow-round-back' style={{ color: '#fff' }} />
-            */}
+        <View >
+            <Icon size={36} name="arrow-right" color="#A52D53" />
         </View>
     </TouchableOpacity>
 );
@@ -51,11 +49,7 @@ const backButtonDetail = () => (
             end: 10,
 
         }} onPress={() => Actions.pop()} >
-        <Image style={{
-            width: 30,
-            resizeMode: 'contain'
-        }}
-            source={require('./Assets/Images/left-arrow-white.png')} />
+        <Icon size={36} name="arrow-right" color="#fff" />
     </TouchableOpacity>
 )
 
@@ -151,14 +145,12 @@ class Routes extends React.Component {
                         renderLeftButton={() => (
                             <TouchableOpacity style={styles.notification_box}
                                 onPress={() => alert('توجهات')}>
-                                <ImageBackground
-                                    style={styles.bell}
-                                    source={require('./Assets/Images/bell.png')}
-                                >
-                                    <View style={styles.notification} >
-                                        <Text style={styles.notification_text} >3</Text>
-                                    </View>
-                                </ImageBackground>
+
+                                <View style={styles.notification} >
+                                    <Text style={styles.notification_text} >3</Text>
+                                </View>
+                                <Icon style={{ position: 'absolute', top: 0 }} name="bell-outline" size={32} color="#B22850" />
+
                             </TouchableOpacity>
                         )}
                         renderRightButton={() => backButton()}

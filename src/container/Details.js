@@ -15,6 +15,7 @@ import { Actions } from 'react-native-router-flux';
 import InputScrollView from 'react-native-input-scroll-view';
 import Mapir from 'mapir-react-native-sdk'
 import ImageSlider from 'react-native-image-slider';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 //components 
@@ -186,25 +187,25 @@ export default class Details extends Component {
                         <View style={styles.posibility}>
                             <Text style={styles.posibility_text}>اتاق 2</Text>
                             <View style={styles.posibility_icon_box} >
-                                <Image style={styles.posibility_icon} source={require('./../../Assets/Images/door.png')} />
+                                <Icon name="door" size={15} color="#636363" />
                             </View>
                         </View>
                         <View style={styles.posibility}>
                             <Text style={styles.posibility_text}>2 تختخواب </Text>
                             <View style={styles.posibility_icon_box} >
-                                <Image style={styles.posibility_icon} source={require('./../../Assets/Images/bed.png')} />
+                                <Icon name="hotel" size={15} color="#636363" />
                             </View>
                         </View>
                         <View style={styles.posibility}>
                             <Text style={styles.posibility_text}>1 نفر</Text>
                             <View style={styles.posibility_icon_box} >
-                                <Image style={styles.posibility_icon} source={require('./../../Assets/Images/persons.png')} />
+                                <Icon name="account-group" size={15} color="#636363" />
                             </View>
                         </View>
                         <View style={styles.posibility}>
                             <Text style={styles.posibility_text}>45 متر مربع</Text>
                             <View style={styles.posibility_icon_box} >
-                                <Image style={styles.posibility_icon} source={require('./../../Assets/Images/apartment.png')} />
+                                <Icon name="home-city-outline" size={15} color="#636363" />
                             </View>
                         </View>
                     </View>
@@ -240,50 +241,50 @@ export default class Details extends Component {
                         <View style={styles.avilibiy_first}>
                             <View style={styles.avilibiy_item} >
                                 <Text style={styles.avilibiy_text} >پارکینگ</Text>
-                                <Image style={styles.avilibiy_icon} source={require('./../../Assets/Images/check.png')}></Image>
+                                <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
                             </View>
                             <View style={styles.avilibiy_item} >
                                 <Text style={styles.avilibiy_text} >WiFi</Text>
-                                <Image style={styles.avilibiy_icon} source={require('./../../Assets/Images/check.png')}></Image>
+                                <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
                             </View>
                             <View style={styles.avilibiy_item} >
                                 <Text style={styles.avilibiy_text} >لباسشویی</Text>
-                                <Image style={styles.avilibiy_icon} source={require('./../../Assets/Images/checkgrey.png')}></Image>
+                                <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#bbb" />
                             </View>
                             <View style={styles.avilibiy_item} >
                                 <Text style={styles.avilibiy_text} >سیستم گرمایشی</Text>
-                                <Image style={styles.avilibiy_icon} source={require('./../../Assets/Images/check.png')}></Image>
+                                <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
                             </View>
                             <View style={styles.avilibiy_item} >
                                 <Text style={styles.avilibiy_text} >الکتریکی</Text>
-                                <Image style={styles.avilibiy_icon} source={require('./../../Assets/Images/check.png')}></Image>
+                                <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
                             </View>
                             <View style={styles.avilibiy_item} >
                                 <Text style={styles.avilibiy_text} >استخر</Text>
-                                <Image style={styles.avilibiy_icon} source={require('./../../Assets/Images/check.png')}></Image>
+                                <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
                             </View>
                             {
                                 this.state.avilibiy ?
                                     <View style={styles.avilibiy_first}>
                                         <View style={styles.avilibiy_item} >
                                             <Text style={styles.avilibiy_text} >پارکینگ</Text>
-                                            <Image style={styles.avilibiy_icon} source={require('./../../Assets/Images/check.png')}></Image>
+                                            <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
                                         </View>
                                         <View style={styles.avilibiy_item} >
                                             <Text style={styles.avilibiy_text} >WiFi</Text>
-                                            <Image style={styles.avilibiy_icon} source={require('./../../Assets/Images/check.png')}></Image>
+                                            <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
                                         </View>
                                         <View style={styles.avilibiy_item} >
                                             <Text style={styles.avilibiy_text} >لباسشویی</Text>
-                                            <Image style={styles.avilibiy_icon} source={require('./../../Assets/Images/checkgrey.png')}></Image>
+                                            <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#bbb" />
                                         </View>
                                         <View style={styles.avilibiy_item} >
                                             <Text style={styles.avilibiy_text} >سیستم گرمایشی</Text>
-                                            <Image style={styles.avilibiy_icon} source={require('./../../Assets/Images/check.png')}></Image>
+                                            <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
                                         </View>
                                         <View style={styles.avilibiy_item} >
                                             <Text style={styles.avilibiy_text} >الکتریکی</Text>
-                                            <Image style={styles.avilibiy_icon} source={require('./../../Assets/Images/check.png')}></Image>
+                                            <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
                                         </View>
 
                                     </View> : null
@@ -398,20 +399,16 @@ export default class Details extends Component {
                             width: '100%',
                             height: 50,
                             flexDirection: 'row',
-                            justifyContent: 'flex-end'
+                            justifyContent: 'flex-end',
+                            padding:10
                         }}>
                         {/* Close modal  */}
                         <TouchableOpacity
                             onPress={() => {
                                 this.setModalVisible(false);
                             }}>
-                            <Image style={{
-                                width: 25,
-                                height: 25,
-                                margin: 20
-                            }}
-                                source={require('../../Assets/Images/close.png')}
-                            />
+                            <Icon size={45} name="close" color="#bbb" />
+
                         </TouchableOpacity>
                     </View>
 
@@ -455,9 +452,8 @@ export default class Details extends Component {
                         </View>
 
                         <View style={styles.accept_from_owner} >
-                            <Image style={{ width: 25, resizeMode: 'contain', margin: 20 }}
-                                source={require('../../Assets/Images/checkblue.png')}
-                            />
+                            <Icon style={{ paddingHorizontal: 14 }} size={30} name="check" color="#18749a" />
+
                             <Text style={{ fontSize: 12, fontFamily: 'ISBold', marginRight: 10 }} >پذیرفته شده توسط صاحب ویلا</Text>
                             <View style={{
                                 width: 70,
@@ -470,9 +466,8 @@ export default class Details extends Component {
                                 shadowOpacity: 1,
                                 elevation: 1,
                             }} >
-                                <Image style={{ width: 25, resizeMode: 'contain', margin: 20 }}
-                                    source={require('../../Assets/Images/usergrey.png')}
-                                />
+                                <Icon  size={30} name="account-outline" color="#bbb" />
+
                             </View>
                         </View>
 
@@ -601,7 +596,6 @@ const styles = ({
     },
     posibility_icon_box: {
         backgroundColor: '#eee',
-        padding: 15,
         width: 25,
         height: 25,
         borderRadius: 30,
@@ -666,6 +660,7 @@ const styles = ({
         width: '50%',
         flexDirection: 'row',
         justifyContent: 'flex-end',
+        alignItems: 'center',
         marginBottom: 5
     },
 

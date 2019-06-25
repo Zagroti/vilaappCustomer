@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Mapir from 'mapir-react-native-sdk'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 //components
@@ -28,9 +29,6 @@ export default class ResultItemsPage extends Component {
         this.state = {
             source_1: require('../../Assets/Images/sort1.png'),
             source_2: require('../../Assets/Images/sort2.png'),
-            image_1: require('../../Assets/Images/sort1.png'),
-            image_2: require('../../Assets/Images/sort2.png'),
-            image_3: require('../../Assets/Images/sort2.png'),
             color_1: '#C72652',
             color_2: '#000',
             color_3: '#000',
@@ -71,9 +69,6 @@ export default class ResultItemsPage extends Component {
     _changeTab = (tab) => {
         if (tab === 'tab1') {
             this.setState({
-                image_1: this.state.source_1,
-                image_2: this.state.source_2,
-                image_3: this.state.source_2,
                 color_1: this.state.red,
                 color_2: this.state.black,
                 color_3: this.state.black,
@@ -84,9 +79,6 @@ export default class ResultItemsPage extends Component {
             })
         } else if (tab === 'tab2') {
             this.setState({
-                image_1: this.state.source_2,
-                image_3: this.state.source_2,
-                image_2: this.state.source_1,
                 color_3: this.state.black,
                 color_1: this.state.black,
                 color_2: this.state.red,
@@ -96,9 +88,6 @@ export default class ResultItemsPage extends Component {
             })
         } else if (tab === 'tab3') {
             this.setState({
-                image_1: this.state.source_2,
-                image_2: this.state.source_2,
-                image_3: this.state.source_1,
                 color_1: this.state.black,
                 color_2: this.state.black,
                 color_3: this.state.red,
@@ -142,12 +131,12 @@ export default class ResultItemsPage extends Component {
                         <Text style={{
                             position: "absolute",
                             backgroundColor: 'rgba(100,100,100,.7)',
-                             width: '100%',
-                             color: '#fff',
-                             bottom:0,
-                             padding:5,
-                             fontFamily:'IS',
-                             textAlign:'center'
+                            width: '100%',
+                            color: '#fff',
+                            bottom: 0,
+                            padding: 5,
+                            fontFamily: 'IS',
+                            textAlign: 'center'
                         }}>شعاع 5 کیلومتری آمل</Text>
                     </View>
                     <View style={styles.details_right}>
@@ -174,17 +163,17 @@ export default class ResultItemsPage extends Component {
 
                 <View style={styles.tab}  >
                     <TouchableOpacity style={styles.tab_box} onPress={() => this._changeTab('tab1')}>
-                        <Image style={styles.tab_image} source={this.state.image_1} />
+                        <Icon name="filter-outline" size={20} color={this.state.color_1} />
                         <Text style={[styles.tab_text, { color: this.state.color_1 }]}>  قیمت</Text>
                     </TouchableOpacity>
                     <Text style={styles.line} ></Text>
                     <TouchableOpacity style={styles.tab_box} onPress={() => this._changeTab('tab2')}>
-                        <Image style={styles.tab_image} source={this.state.image_2} />
+                        <Icon name="filter-outline" size={20} color={this.state.color_2} />
                         <Text style={[styles.tab_text, { color: this.state.color_2 }]}>  افراد</Text>
                     </TouchableOpacity>
                     <Text style={styles.line} ></Text>
                     <TouchableOpacity style={styles.tab_box} onPress={() => this._changeTab('tab3')}>
-                        <Image style={styles.tab_image} source={this.state.image_3} />
+                        <Icon name="filter-outline" size={20} color={this.state.color_3} />
                         <Text style={[styles.tab_text, { color: this.state.color_3 }]}>  فاصله</Text>
                     </TouchableOpacity>
                 </View>
@@ -284,9 +273,6 @@ const styles = ({
         fontSize: 10,
         fontFamily: 'ISBold',
         marginLeft: 5,
-    },
-    tab_image: {
-
     },
     line: {
         width: 1,
