@@ -27,13 +27,11 @@ export default class ResultItemsPage extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            source_1: require('../../Assets/Images/sort1.png'),
-            source_2: require('../../Assets/Images/sort2.png'),
             color_1: '#C72652',
-            color_2: '#000',
-            color_3: '#000',
+            color_2: '#555',
+            color_3: '#555',
             red: '#C72652',
-            black: '#333',
+            black: '#555',
             tab1: true,
             tab2: false,
             tab3: false,
@@ -112,7 +110,35 @@ export default class ResultItemsPage extends Component {
 
 
             <ScrollView contentContainerStyle={styles.ResultItemsPage} >
-                <Text style={styles.title} >  نتایج جستجو - 219</Text>
+                <View style={{
+                    height: 50,
+                    width: Dimensions.get('window').width,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
+                }}>
+                    <TouchableOpacity
+                        style={styles.humberger}
+                        onPress={() => Actions.Support()}
+                    >
+                        <View style={styles.notification} >
+                            <Text style={styles.notification_text} >3</Text>
+                        </View>
+                        <Icon style={{ position: 'absolute', top: 5 }} name="bell-outline" size={32} color="#B22850" />
+                    </TouchableOpacity>
+                    <Text style={styles.title} >  نتایج جستجو - 219</Text>
+                    <TouchableOpacity
+                        style={{
+                            padding: 10,
+                            width: 50,
+                            height: 50,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }} onPress={()=>Actions.pop()} >
+                        <Icon name="arrow-right" size={28} color="#B22850" />
+                    </TouchableOpacity>
+
+                </View>
                 <View style={styles.details} >
                     <View style={styles.details_map}>
                         <Mapir
@@ -163,17 +189,17 @@ export default class ResultItemsPage extends Component {
 
                 <View style={styles.tab}  >
                     <TouchableOpacity style={styles.tab_box} onPress={() => this._changeTab('tab1')}>
-                        <Icon name="filter-outline" size={20} color={this.state.color_1} />
+                        <Icon name="cash" size={20} color={this.state.color_1} />
                         <Text style={[styles.tab_text, { color: this.state.color_1 }]}>  قیمت</Text>
                     </TouchableOpacity>
                     <Text style={styles.line} ></Text>
                     <TouchableOpacity style={styles.tab_box} onPress={() => this._changeTab('tab2')}>
-                        <Icon name="filter-outline" size={20} color={this.state.color_2} />
+                        <Icon name="account-multiple-outline" size={20} color={this.state.color_2} />
                         <Text style={[styles.tab_text, { color: this.state.color_2 }]}>  افراد</Text>
                     </TouchableOpacity>
                     <Text style={styles.line} ></Text>
                     <TouchableOpacity style={styles.tab_box} onPress={() => this._changeTab('tab3')}>
-                        <Icon name="filter-outline" size={20} color={this.state.color_3} />
+                        <Icon name="map-marker-distance" size={20} color={this.state.color_3} />
                         <Text style={[styles.tab_text, { color: this.state.color_3 }]}>  فاصله</Text>
                     </TouchableOpacity>
                 </View>
@@ -229,7 +255,6 @@ const styles = ({
         flexDirection: 'column',
         alignItems: 'center',
         // height: Dimensions.get('window').height,
-        paddingTop: 20,
         paddingBottom: 160,
 
 
@@ -248,17 +273,32 @@ const styles = ({
         marginVertical: 20,
 
     },
+    notification: {
+        width: 14,
+        height: 14,
+        borderRadius: 7,
+        backgroundColor: '#B22850',
+        start: 8,
+        top: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    notification_text: {
+        color: '#fff',
+        fontSize: 9,
+        fontFamily: 'ISFMedium',
+    },
+    humberger: {
+        width: 50,
+        height: 50,
+        alignItems: 'center',
+    },
 
     title: {
-        fontSize: 22,
+        fontSize: 18,
         fontFamily: 'IS',
         color: '#333',
-        borderBottomWidth: 1,
-        borderBottomColor: '#e7e7e7',
-        width: Dimensions.get('window').width - 50,
-        marginBottom: 10,
-
-
+        textAlign: 'center',
     },
     tab_box: {
         width: '33%',

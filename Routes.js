@@ -8,6 +8,7 @@ import SendNumber from './src/container/SendNumber';
 import EnterCode from './src/container/EnterCode';
 import Home from './src/container/Home';
 import Profile from './src/container/Profile';
+import Support from './src/container/Support';
 import ResultItemsPage from './src/container/ResultItemsPage'
 import Details from './src/container/Details'
 
@@ -35,23 +36,6 @@ const nothing = () => (
 );
 
 
-const backButtonDetail = () => (
-    <TouchableOpacity
-        style={{
-            backgroundColor: '#33333320',
-            padding: 10,
-            width: 50,
-            height: 50,
-            borderRadius: 30,
-            justifyContent: 'center',
-            alignItems: 'center',
-            top: 10,
-            end: 10,
-
-        }} onPress={() => Actions.pop()} >
-        <Icon size={36} name="arrow-right" color="#fff" />
-    </TouchableOpacity>
-)
 
 
 
@@ -122,10 +106,18 @@ class Routes extends React.Component {
                         component={Home}
                         title="home"
                         hideNavBar={true}
-                        
+                        initial={this.state.logged}                        
                     />
 
                     <Scene key="Profile" component={Profile}
+                        title=""
+                        titleStyle={{ color: 'transparent' }}
+                        renderRightButton={() => backButton()}
+                        renderBackButton={() => nothing}
+                        navigationBarStyle={styles.login_style_bar}
+                        sceneStyle={styles.login_scene_style}
+                    />
+                     <Scene key="Support" component={Support}
                         title=""
                         titleStyle={{ color: 'transparent' }}
                         renderRightButton={() => backButton()}
@@ -137,34 +129,19 @@ class Routes extends React.Component {
                     <Scene key="ResultItemsPage" component={ResultItemsPage}
                         title=""
                         titleStyle={{ color: 'transparent' }}
-                        // renderBackButton={() => backButton()}
-                        navigationBarStyle={styles.login_style_bar}
+                        renderBackButton={() => nothing}
+                        renderRightButton={() => nothing}
+                        navigationBarStyle={styles.login_style_bar_detail}
                         sceneStyle={styles.login_scene_style}
-                        onRight={() => alert('right')}
-                        // rightButtonImage={require('./Assets/Images/bell.png')}
-                        renderLeftButton={() => (
-                            <TouchableOpacity style={styles.notification_box}
-                                onPress={() => alert('توجهات')}>
-
-                                <View style={styles.notification} >
-                                    <Text style={styles.notification_text} >3</Text>
-                                </View>
-                                <Icon style={{ position: 'absolute', top: 0 }} name="bell-outline" size={32} color="#B22850" />
-
-                            </TouchableOpacity>
-                        )}
-                        renderRightButton={() => backButton()}
-
                     />
 
                     <Scene key="Details" component={Details}
                         title=""
                         titleStyle={{ color: 'red' }}
                         renderBackButton={() => nothing}
-                        renderRightButton={() => backButtonDetail()}
+                        renderRightButton={() => nothing}
                         navigationBarStyle={styles.login_style_bar_detail}
                         sceneStyle={styles.login_scene_style}
-                        initial={this.state.logged}
                     />
 
 
@@ -189,7 +166,7 @@ const styles = ({
         backgroundColor: 'transparent',
         shadowColor: "#f7f7f7",
         elevation: 0,
-        height: 50,
+        height: 0,
     },
     bell: {
         width: 30,

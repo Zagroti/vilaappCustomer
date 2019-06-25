@@ -219,7 +219,14 @@ export default class Home extends Component {
                 id={'2'}
                 key={markers.latitude}
                 coordinate={[markers.latitude, markers.longitude]}
-            />))
+            >
+                <View style={{ width: 100, height: 100 }}>
+                    <View style={{ marginLeft: 20, width: 80, height: 80, borderRadius: 50, backgroundColor: 'rgba(165, 45, 83,.3)', borderColor: 'rgb(165, 45, 83)', borderWidth: 2 }}>
+
+                    </View>
+                </View>
+            </Mapir.Marker>
+            ))
 
 
 
@@ -275,7 +282,7 @@ export default class Home extends Component {
                     <View style={styles.menu} >
                         <TouchableOpacity
                             style={styles.humberger}
-                            onPress={() => alert('توجهات')}
+                            onPress={() => Actions.Support()}
                         >
                             <View style={styles.notification} >
                                 <Text style={styles.notification_text} >3</Text>
@@ -389,16 +396,16 @@ export default class Home extends Component {
                                     }}>
                                     <TouchableOpacity style={{
                                         fontSize: 20,
-                                        backgroundColor: '#A52D53',
+                                        backgroundColor: '#ddd',
                                         borderWidth: 1,
-                                        borderColor: '#fff',
+                                        borderColor: '#bbb',
                                         width: 30,
                                         height: 30,
                                         borderRadius: 15,
                                         alignItems: 'center',
                                         justifyContent: 'center',
                                     }}>
-                                        <Text style={{ fontSize: 20, color: '#fff' }}>
+                                        <Text style={{ fontSize: 20, color: '#bbb' }}>
                                             ?
                                         </Text>
                                     </TouchableOpacity>
@@ -439,10 +446,10 @@ export default class Home extends Component {
                                         <Text style={styles.toman} > ( تومان ) </Text>
                                         <Text style={styles.gheymat} >قیمت</Text>
                                     </View>
-                                    <Icon style={{ marginLeft: 5 }} size={22} name="brightness-percent" color="#333" />
+                                    <Icon style={{ marginLeft: 5 }} size={22} name="brightness-percent" color="#555" />
                                 </View>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
-                                    <View style={{ justifyContent: 'center', width: '45%' }}>
+                                    <View style={{ justifyContent: 'center', width: '50%' }}>
                                         <TextInput
                                             placeholderTextColor={'#999'}
                                             placeholder="تا"
@@ -451,7 +458,9 @@ export default class Home extends Component {
                                             keyboardType='numeric'
                                         />
                                     </View>
-                                    <View style={{ justifyContent: 'center', width: '45%' }}>
+                                    <View style={{ width: 1, backgroundColor: '#eee' }} ></View>
+
+                                    <View style={{ justifyContent: 'center', width: '50%' }}>
                                         <TextInput
                                             placeholderTextColor={'#999'}
                                             placeholder="از"
@@ -470,7 +479,7 @@ export default class Home extends Component {
                             <View style={styles.start_date} >
                                 <View style={styles.modal_details} >
                                     <Text style={styles.modal_titles} >تاریخ شروع</Text>
-                                    <Icon style={{ marginLeft: 5 }} size={22} name="calendar-range" color="#333" />
+                                    <Icon style={{ marginLeft: 5 }} size={22} name="calendar-range" color="#555" />
                                 </View>
 
 
@@ -479,7 +488,7 @@ export default class Home extends Component {
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', zIndex: -10 }}>
 
                                     {/* end date */}
-                                    <View style={{ width: '45%' }}>
+                                    <View style={{ width: '50%' }}>
                                         <TouchableOpacity style={styles.select_date} onPress={this._endDateOpen}>
                                             {this.state.endDate ?
                                                 <Text style={{
@@ -520,8 +529,9 @@ export default class Home extends Component {
 
                                         />
                                     </View>
+                                    <View style={{ width: 1, backgroundColor: '#eee' }} ></View>
                                     {/* start date */}
-                                    <View style={{ width: '45%' }}>
+                                    <View style={{ width: '50%' }}>
                                         <TouchableOpacity style={styles.select_date} onPress={this._startDateOpen} >
                                             {this.state.startDate ?
                                                 <Text style={{
@@ -582,15 +592,10 @@ export default class Home extends Component {
                                     <View style={{ width: '100%' }}>
                                         <View style={styles.modal_details} >
                                             <Text style={styles.modal_titles} >نوع وبلا</Text>
-                                            <Icon style={{ marginLeft: 5 }} size={22} name="home" color="#333" />
+                                            <Icon style={{ marginLeft: 5 }} size={22} name="home" color="#555" />
 
                                         </View>
                                         <View style={{
-                                            borderWidth: 1,
-                                            borderColor: '#eee',
-                                            shadowColor: "#f7f7f7",
-                                            shadowOpacity: .3,
-                                            elevation: 1,
                                             backgroundColor: '#fff',
                                             borderRadius: 5,
 
@@ -616,7 +621,7 @@ export default class Home extends Component {
                                     <View style={{ width: '100%' }}>
                                         <View style={styles.modal_details} >
                                             <Text style={styles.modal_titles} >ظرفیت</Text>
-                                            <Icon style={{ marginLeft: 5 }} size={22} name="account-group-outline" color="#333" />
+                                            <Icon style={{ marginLeft: 5 }} size={22} name="account-group-outline" color="#555" />
                                         </View>
                                         <Counter counter={(e) => this._personCounter(e)} />
                                     </View>
@@ -628,19 +633,22 @@ export default class Home extends Component {
                                         style={{
                                             zIndex: 999,
                                             position: 'absolute',
-                                            backgroundColor: 'rgba(255,255,255,.9)',
+                                            backgroundColor: 'rgba(255,255,255,.6)',
                                             borderRadius: 5,
+                                            padding: 0,
+                                            width: 40,
+                                            height: 40,
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
                                             top: this.state.mapIconTop,
                                             left: this.state.mapIconLeft
                                         }} >
                                         {
-                                            this.state.mapFull ? 
-                                            <Icon size={45} name="fullscreen-exit" color="#A52D53" /> :
-                                            <Icon size={45} name="fullscreen" color="#A52D53" /> 
+                                            this.state.mapFull ?
+                                                <Icon size={40} name="fullscreen-exit" color="#A52D53" /> :
+                                                <Icon size={40} name="fullscreen" color="#A52D53" />
 
                                         }
-
-
                                     </TouchableOpacity>
 
                                     <Mapir
@@ -648,7 +656,7 @@ export default class Home extends Component {
                                         zoomLevel={13}
                                         showUserLocation={true}
                                         centerCoordinate={[51.422548, 35.732573]}
-                                        onLongPress={e => this.addMarker(e.geometry.coordinates)}
+                                        onPress={e => this.addMarker(e.geometry.coordinates)}
                                         style={{ flex: 1 }}
                                     >
                                         {mark}
@@ -722,12 +730,6 @@ const styles = ({
         justifyContent: 'space-between',
         height: 50,
         padding: 20
-    },
-    bell: {
-        width: 30,
-        height: 30,
-        justifyContent: 'center',
-        alignItems: 'center',
     },
     notification: {
         width: 14,
@@ -971,9 +973,6 @@ const styles = ({
     price_input: {
         textAlign: 'center',
         borderRadius: 5,
-        shadowColor: "#f7f7f7",
-        shadowOpacity: .3,
-        elevation: 1,
         height: 40,
         backgroundColor: '#fff',
         color: '#636363',
@@ -1043,9 +1042,6 @@ const styles = ({
     select_date: {
         textAlign: 'center',
         borderRadius: 5,
-        shadowColor: "#f7f7f7",
-        shadowOpacity: .3,
-        elevation: 1,
         width: '100%',
         height: 40,
         backgroundColor: '#fff',
