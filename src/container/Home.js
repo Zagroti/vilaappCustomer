@@ -238,7 +238,8 @@ export default class Home extends Component {
                     alignItems: 'center',
                     paddingVertical: 20,
                     backgroundColor: '#b04267',
-                    width: '100%'
+                    width: '100%',
+                    marginBottom:10
                 }} >
                     <View style={styles.icon_parent} >
                         <View style={styles.icon_child} >
@@ -252,13 +253,13 @@ export default class Home extends Component {
                 </View>
                 <TouchableOpacity activeOpacity={.6} style={styles.bottomIcons} onPress={(e) => this._navigate('profile')}>
                     <Text style={styles.drawer_text}>پروفایل</Text>
-                    <Icon name="account-outline" size={30} color="#333" />
+                    <Icon name="account-outline" size={24} color="#b04267" />
                 </TouchableOpacity>
 
                 {/* got to history */}
                 <TouchableOpacity activeOpacity={.6} style={styles.bottomIcons} onPress={(e) => this._navigate('history')}>
                     <Text style={styles.drawer_text}>تاریخچه</Text>
-                    <Icon name="calendar-clock" size={30} color="#333" />
+                    <Icon name="calendar-clock" size={24} color="#b04267" />
                 </TouchableOpacity>
             </View>
         );
@@ -828,12 +829,12 @@ const styles = ({
     },
 
     icon_parent: {
-        width: 120,
-        height: 120,
+        width: 100,
+        height: 100,
         backgroundColor: '#aaa',
         borderWidth: 10,
         borderColor: '#f5f5f5',
-        borderRadius: 60,
+        borderRadius: 50,
         justifyContent: 'center',
         alignItems: 'center',
         shadowColor: "#f7f7f7",
@@ -841,8 +842,8 @@ const styles = ({
         elevation: 1,
     },
     icon_child: {
-        width: 100,
-        height: 100,
+        width: 80,
+        height: 80,
         backgroundColor: '#fff',
         borderWidth: 10,
         borderColor: '#f8f8f8',
@@ -855,8 +856,8 @@ const styles = ({
     },
 
     icon_cover: {
-        width: 80,
-        height: 80,
+        width: 60,
+        height: 60,
         backgroundColor: '#C92652',
         borderRadius: 40,
         justifyContent: 'center',
@@ -873,23 +874,21 @@ const styles = ({
         alignItems: 'center',
     },
     person_name: {
-        fontSize: 18,
+        fontSize: 14,
         fontFamily: 'ISBold',
         marginTop: 10,
         color: '#fff'
     },
     bottomIcons: {
-        padding: 20,
+        padding: 10,
         alignItems: 'center',
         justifyContent: 'flex-end',
         flexDirection: 'row',
-        borderBottomColor: '#333',
-        borderBottomWidth: 1,
         width: '100%'
     },
     drawer_text: {
-        fontSize: 16,
-        color: '#333',
+        fontSize: 12,
+        color: '#b04267',
         fontFamily: 'ISBold',
         marginRight: 10,
     },
