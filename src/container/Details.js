@@ -7,11 +7,14 @@ import {
     ImageBackground,
     TouchableOpacity,
     ScrollView,
-    Modal
+    Modal,
+    SafeAreaView,
+    TouchableHighlight
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import InputScrollView from 'react-native-input-scroll-view';
 import Mapir from 'mapir-react-native-sdk'
+import ImageSlider from 'react-native-image-slider';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
@@ -88,32 +91,93 @@ export default class Details extends Component {
 
     render() {
 
-
+        const images = [
+            'https://placeimg.com/640/640/nature',
+            'https://placeimg.com/640/640/people',
+            'https://placeimg.com/640/640/animals',
+            'https://placeimg.com/640/640/beer',
+        ];
 
 
         return (
 
             <ScrollView style={styles.Details} >
 
-                <ImageBackground style={styles.header}
+                {/* <ImageBackground style={styles.header}
                     source={require('./../../Assets/Images/detail.jpg')} >
-
-                    {/* MENU */}
                     <View style={styles.menu} >
-                        {/* <TouchableOpacity style={styles.back_box} onPress={()=>this._backToResultImage()} >
-                            <Image style={styles.back}
-                                source={require('./../../Assets/Images/left-arrow-white.png')} />
-                        </TouchableOpacity> */}
                         <Text style={styles.owner_answer}>پذیرفته شده</Text>
                     </View>
-
                     <View style={styles.header_price} >
                         <Text style={styles.per_night}> هر شب</Text>
                         <Text style={styles.price} >150,000 ت</Text>
                     </View>
+                </ImageBackground> */}
 
 
-                </ImageBackground>
+                <SafeAreaView style={{ position: 'relative' }}>
+                    <View style={styles.menu} >
+                        <Text style={styles.owner_answer}>پذیرفته شده</Text>
+                    </View>
+                    <ImageSlider
+                        loopBothSides
+                        images={images}
+                        customSlide={({ index, item, style, width }) => (
+                            <View key={index} style={[style, styles.customSlide]}>
+                                <Image source={{ uri: item }}
+                                    style={{
+                                        width: '100%',
+                                        height: Dimensions.get('window').width,
+                                        resizeMode: 'cover'
+                                    }} />
+
+
+                            </View>
+                        )}
+                        customButtons={(position, move) => (
+                            <View style={{
+                                width: '100%',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                flexDirection: 'row',
+                                position:'absolute',
+                                bottom:0,
+                                paddingHorizontal:20,
+                                backgroundColor: 'rgba(0,0,0,0.5)',
+                                height:120,
+                                paddingBottom:40
+                            }}>
+
+                                <View style={{
+                                    // backgroundColor: 'rgba(255,255,255,0.8)',
+                                    width: 100,
+                                    textAlign: 'center',
+                                    height: 30,
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    borderRadius: 20,
+                                }}>
+                                    <Text style={{ color: '#fff', fontFamily: 'ISFBold' }}>{position + 1}  /  {images.length}</Text>
+                                </View>
+                                <View style={{
+                                     backgroundColor: 'rgba(255,255,255,1)',
+                                    textAlign: 'center',
+                                    // paddingVertical:5,
+                                    paddingHorizontal:50,
+                                    height: 30,
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    borderRadius: 20,
+                                }}>
+                                    <Text style={{ color: '#333', fontSize:20, fontFamily: 'ISFBold' }}>150,000 ت</Text>
+                                </View>
+
+                            </View>
+                        )}
+                    />
+                </SafeAreaView>
+
+
 
 
                 <View style={styles.body}>
@@ -457,7 +521,10 @@ const styles = ({
         alignItems: 'center',
         height: 60,
         padding: 20,
-        width: '100%'
+        width: '100%',
+        position: 'absolute',
+        top: 0,
+        zIndex: 99999
     },
 
     header_price: {
