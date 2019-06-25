@@ -1,5 +1,6 @@
 import React , { Component } from 'react';
 import { Text, View, Dimensions , Image } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default class NoRequest extends Component {
 
@@ -10,7 +11,7 @@ export default class NoRequest extends Component {
 
         return (
             <View style={styles.noRequest}>
-                <Image style={styles.marker} source={require('../../Assets/Images/mappin.png')} />
+                <Icon size={50} name="map-marker-radius" color="#A52D53" />
                 <Text style={styles.noRequestTitle}>چیزی برای نمایش وجود ندارد</Text>
                 <Text style={styles.noRequestText}>برای درخواست دکمه ی نشانه گر را فشار دهید</Text>
             </View>
