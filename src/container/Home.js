@@ -239,7 +239,7 @@ export default class Home extends Component {
                     paddingVertical: 20,
                     backgroundColor: '#b04267',
                     width: '100%',
-                    marginBottom:10
+                    marginBottom: 10
                 }} >
                     <View style={styles.icon_parent} >
                         <View style={styles.icon_child} >
@@ -290,6 +290,8 @@ export default class Home extends Component {
                             </View>
                             <Icon style={{ position: 'absolute', top: 0 }} name="bell-outline" size={32} color="#B22850" />
                         </TouchableOpacity>
+                        <Text style={styles.title} >درخواست های من</Text>
+
                         <TouchableOpacity style={styles.humberger} onPress={this._openDrawer}>
                             <Icon style={{ position: 'absolute', top: 0 }} name="menu" size={32} color="#B22850" />
                         </TouchableOpacity>
@@ -298,7 +300,6 @@ export default class Home extends Component {
 
                     {/* request box  */}
                     <View style={styles.up} >
-                        <Text style={styles.title} >درخواست های من</Text>
                         <ScrollView contentContainerStyle={styles.requestBox} >
                             {/* <NoRequest /> */}
                             <Requestitems navigate={this._showRequestsNavigate} />
@@ -439,147 +440,148 @@ export default class Home extends Component {
                             flex: 1
                         }} >
 
+                            <View style={{ flexDirection: 'row', width: '90%', justifyContent: 'space-between' }} >
 
-                            {/* price */}
-                            <View style={styles.modal_price} >
-                                <View style={styles.modal_details} >
-                                    <View style={styles.modal_titles}>
-                                        <Text style={styles.toman} > ( تومان ) </Text>
-                                        <Text style={styles.gheymat} >قیمت</Text>
+
+                                {/* price */}
+                                <View style={styles.modal_price} >
+                                    <View style={styles.modal_details} >
+                                        <View style={styles.modal_titles}>
+                                            <Text style={styles.toman} > ( تومان ) </Text>
+                                            <Text style={styles.gheymat} >قیمت</Text>
+                                        </View>
+                                        <Icon style={{ marginLeft: 5 }} size={22} name="brightness-percent" color="#555" />
                                     </View>
-                                    <Icon style={{ marginLeft: 5 }} size={22} name="brightness-percent" color="#555" />
+                                    <View style={{ flexDirection: 'column-reverse', justifyContent: 'space-between', width: '100%', alignItems: 'space-between', height: 100 }}>
+                                        <View style={{ justifyContent: 'center', width: '100%' }}>
+                                            <TextInput
+                                                placeholderTextColor={'#999'}
+                                                placeholder="تا"
+                                                style={styles.price_input}
+                                                onChangeText={(price) => this.setState({ price })}
+                                                keyboardType='numeric'
+                                            />
+                                        </View>
+
+                                        <View style={{ justifyContent: 'center', width: '100%' }}>
+                                            <TextInput
+                                                placeholderTextColor={'#999'}
+                                                placeholder="از"
+                                                style={styles.price_input}
+                                                onChangeText={(price) => this.setState({ price })}
+                                                keyboardType='numeric'
+                                            />
+                                        </View>
+
+                                    </View>
+
+
                                 </View>
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
-                                    <View style={{ justifyContent: 'center', width: '50%' }}>
-                                        <TextInput
-                                            placeholderTextColor={'#999'}
-                                            placeholder="تا"
-                                            style={styles.price_input}
-                                            onChangeText={(price) => this.setState({ price })}
-                                            keyboardType='numeric'
-                                        />
-                                    </View>
-                                    <View style={{ width: 1, backgroundColor: '#eee' }} ></View>
 
-                                    <View style={{ justifyContent: 'center', width: '50%' }}>
-                                        <TextInput
-                                            placeholderTextColor={'#999'}
-                                            placeholder="از"
-                                            style={styles.price_input}
-                                            onChangeText={(price) => this.setState({ price })}
-                                            keyboardType='numeric'
-                                        />
+                                {/* date */}
+                                <View style={styles.start_date} >
+                                    <View style={styles.modal_details} >
+                                        <Text style={styles.modal_titles} >تاریخ شروع</Text>
+                                        <Icon style={{ marginLeft: 5 }} size={22} name="calendar-range" color="#555" />
                                     </View>
+
+
+
+                                    {/* date picker date picker  */}
+                                    <View style={{ flexDirection: 'column-reverse', justifyContent: 'space-between', zIndex: -10, width: '100%', height: 100 }}>
+
+                                        {/* end date */}
+                                        <View style={{ width: '100%' }}>
+                                            <TouchableOpacity style={styles.select_date} onPress={this._endDateOpen}>
+                                                {this.state.endDate ?
+                                                    <Text style={{
+                                                        fontSize: 15,
+                                                        fontFamily: 'ISBold',
+                                                        alignItems: 'center',
+                                                        color: '#636363'
+                                                    }}>{moment(endDate).format("jYYYY/jMM/jDD")}</Text> :
+                                                    <Text style={{
+                                                        fontSize: 15,
+                                                        fontFamily: 'ISBold',
+                                                        alignItems: 'center',
+                                                        color: '#999'
+                                                    }}> تا تاریخ </Text>
+                                                }
+
+                                            </TouchableOpacity>
+
+
+                                            <PersianDatePicker
+                                                type="Jalali"
+                                                yearCount={10}
+                                                onConfirm={date => {
+                                                    this.setState({ endDate: date, selectEnd: false });
+                                                }}
+                                                pickerFontSize={24}
+                                                pickerToolBarFontSize={15}
+                                                minDate={this.state.startDate ? moment(this.state.startDate).format("jYYYY/jMM/jDD") : null}
+                                                ref={'ENDPICKER'}
+                                                pickerFontFamily="ISBold"
+                                                pickerConfirmBtnColor={[0, 123, 255, 1]}
+                                                pickerCancelBtnColor={[220, 53, 69, 1]}
+                                                pickerTitleText="تا تاریخ"
+                                                pickerTitleColor={[99, 99, 99, 1]}
+                                                onPickerCancel={() => {
+                                                    this.setState({ selectEnd: false });
+                                                }}
+
+                                            />
+                                        </View>
+                                        {/* start date */}
+                                        <View style={{ width: '100%' }}>
+                                            <TouchableOpacity style={styles.select_date} onPress={this._startDateOpen} >
+                                                {this.state.startDate ?
+                                                    <Text style={{
+                                                        fontSize: 15,
+                                                        fontFamily: 'ISBold',
+                                                        alignItems: 'center',
+                                                        color: '#636363'
+                                                    }}>{moment(startDate).format("jYYYY/jMM/jDD")}</Text> :
+                                                    <Text style={{
+                                                        fontSize: 15,
+                                                        fontFamily: 'ISBold',
+                                                        alignItems: 'center',
+                                                        color: '#999'
+                                                    }}> از تاریخ </Text>
+                                                }
+
+                                            </TouchableOpacity>
+
+
+                                            <PersianDatePicker
+                                                type="Jalali"
+                                                yearCount={10}
+                                                onConfirm={date => {
+                                                    this.setState({ startDate: date, selectStart: false });
+                                                }}
+                                                ref={'STARTPICKER'}
+                                                pickerFontSize={24}
+                                                pickerToolBarFontSize={15}
+                                                pickerFontFamily="ISBold"
+                                                pickerConfirmBtnColor={[0, 123, 255, 1]}
+                                                pickerCancelBtnColor={[220, 53, 69, 1]}
+                                                pickerTitleText=" از تاریخ"
+                                                pickerTitleColor={[99, 99, 99, 1]}
+                                                onPickerCancel={() => {
+                                                    this.setState({ selectStart: false });
+                                                }}
+                                            />
+                                        </View>
+
+
+
+                                    </View>
+
+
 
                                 </View>
-
 
                             </View>
-
-                            {/* date */}
-                            <View style={styles.start_date} >
-                                <View style={styles.modal_details} >
-                                    <Text style={styles.modal_titles} >تاریخ شروع</Text>
-                                    <Icon style={{ marginLeft: 5 }} size={22} name="calendar-range" color="#555" />
-                                </View>
-
-
-
-                                {/* date picker date picker  */}
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', zIndex: -10 }}>
-
-                                    {/* end date */}
-                                    <View style={{ width: '50%' }}>
-                                        <TouchableOpacity style={styles.select_date} onPress={this._endDateOpen}>
-                                            {this.state.endDate ?
-                                                <Text style={{
-                                                    fontSize: 15,
-                                                    fontFamily: 'ISBold',
-                                                    alignItems: 'center',
-                                                    color: '#636363'
-                                                }}>{moment(endDate).format("jYYYY/jMM/jDD")}</Text> :
-                                                <Text style={{
-                                                    fontSize: 15,
-                                                    fontFamily: 'ISBold',
-                                                    alignItems: 'center',
-                                                    color: '#999'
-                                                }}> تا تاریخ </Text>
-                                            }
-
-                                        </TouchableOpacity>
-
-
-                                        <PersianDatePicker
-                                            type="Jalali"
-                                            yearCount={10}
-                                            onConfirm={date => {
-                                                this.setState({ endDate: date, selectEnd: false });
-                                            }}
-                                            pickerFontSize={24}
-                                            pickerToolBarFontSize={15}
-                                            minDate={this.state.startDate ? moment(this.state.startDate).format("jYYYY/jMM/jDD") : null}
-                                            ref={'ENDPICKER'}
-                                            pickerFontFamily="ISBold"
-                                            pickerConfirmBtnColor={[0, 123, 255, 1]}
-                                            pickerCancelBtnColor={[220, 53, 69, 1]}
-                                            pickerTitleText="تا تاریخ"
-                                            pickerTitleColor={[99, 99, 99, 1]}
-                                            onPickerCancel={() => {
-                                                this.setState({ selectEnd: false });
-                                            }}
-
-                                        />
-                                    </View>
-                                    <View style={{ width: 1, backgroundColor: '#eee' }} ></View>
-                                    {/* start date */}
-                                    <View style={{ width: '50%' }}>
-                                        <TouchableOpacity style={styles.select_date} onPress={this._startDateOpen} >
-                                            {this.state.startDate ?
-                                                <Text style={{
-                                                    fontSize: 15,
-                                                    fontFamily: 'ISBold',
-                                                    alignItems: 'center',
-                                                    color: '#636363'
-                                                }}>{moment(startDate).format("jYYYY/jMM/jDD")}</Text> :
-                                                <Text style={{
-                                                    fontSize: 15,
-                                                    fontFamily: 'ISBold',
-                                                    alignItems: 'center',
-                                                    color: '#999'
-                                                }}> از تاریخ </Text>
-                                            }
-
-                                        </TouchableOpacity>
-
-
-                                        <PersianDatePicker
-                                            type="Jalali"
-                                            yearCount={10}
-                                            onConfirm={date => {
-                                                this.setState({ startDate: date, selectStart: false });
-                                            }}
-                                            ref={'STARTPICKER'}
-                                            pickerFontSize={24}
-                                            pickerToolBarFontSize={15}
-                                            pickerFontFamily="ISBold"
-                                            pickerConfirmBtnColor={[0, 123, 255, 1]}
-                                            pickerCancelBtnColor={[220, 53, 69, 1]}
-                                            pickerTitleText=" از تاریخ"
-                                            pickerTitleColor={[99, 99, 99, 1]}
-                                            onPickerCancel={() => {
-                                                this.setState({ selectStart: false });
-                                            }}
-                                        />
-                                    </View>
-
-
-
-                                </View>
-
-
-
-                            </View>
-
                             {/* map map map  */}
                             <View style={mapParentStyle}>
                                 <View style={{
@@ -588,6 +590,8 @@ export default class Home extends Component {
                                     zIndex: this.state.otherZIndex,
                                     justifyContent: 'space-between',
                                     borderRadius: 5,
+                                    backgroundColor: '#eee',
+                                    padding: 10
 
                                 }}>
                                     <View style={{ width: '100%' }}>
@@ -730,7 +734,8 @@ const styles = ({
         flexDirection: 'row',
         justifyContent: 'space-between',
         height: 50,
-        padding: 20
+        width:'100%',
+        paddingVertical:5
     },
     notification: {
         width: 14,
@@ -769,19 +774,11 @@ const styles = ({
         zIndex: 1,
 
     },
-
-
     title: {
-        fontSize: 22,
-        fontFamily: 'ISBold',
+        fontSize: 18,
+        fontFamily: 'IS',
         color: '#333',
-        borderBottomWidth: 1,
-        borderBottomColor: '#e7e7e7',
-        paddingBottom: 10,
-        marginTop: 20,
-        width: Dimensions.get('window').width - 50,
-
-
+        textAlign: 'center',
     },
     requestBox: {
         width: Dimensions.get('window').width,
@@ -934,12 +931,15 @@ const styles = ({
         fontFamily: 'IS',
     },
     modal_price: {
-        width: '90%',
+        width: '45%',
         flexDirection: 'column',
         marginVertical: 5,
         borderRadius: 5,
-        zIndex: -10
-
+        zIndex: -10,
+        height: 150,
+        justifyContent: 'space-between',
+        backgroundColor: '#eee',
+        padding: 10
     },
     modal_details: {
         flexDirection: 'row',
@@ -978,12 +978,18 @@ const styles = ({
         marginTop: 5,
         fontFamily: 'ISBold',
         minWidth: 50,
-        fontSize: 15
+        fontSize: 15,
+        borderRadius: 5
 
     },
     start_date: {
-        width: '90%',
-        marginVertical: 5
+        width: '45%',
+        marginVertical: 5,
+        height: 150,
+        backgroundColor: '#eee',
+        justifyContent: 'space-between',
+        alignItems: 'space-between',
+        padding: 10
     },
     select_time: {
         textAlign: 'center',
