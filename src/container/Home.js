@@ -20,6 +20,7 @@ import InputScrollView from 'react-native-input-scroll-view';
 import PersianDatePicker from "rn-persian-date-picker";
 import Mapir from 'mapir-react-native-sdk'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Slider from '@react-native-community/slider';
 
 //components 
 import NoRequest from '../components/NoRequest';
@@ -50,7 +51,10 @@ export default class Home extends Component {
             markers: [
                 { latitude: 51.422548, longitude: 35.732573 },
             ],
-            modalHeight: Dimensions.get('window').height - 50
+            modalHeight: Dimensions.get('window').height - 50,
+            minRangeSlider: 10,
+            maxRangeSlider: 100,
+            mapRadius: 10
         };
     }
 
@@ -165,11 +169,16 @@ export default class Home extends Component {
             mapStyle = {
                 width: '48%',
                 height: 200,
+
             };
             square = {
                 width: '100%',
                 alignItems: 'center',
                 justifyContent: 'center'
+            };
+            marker_circle = {
+                width: 100,
+                height: 100
             }
 
         } else {
@@ -202,6 +211,11 @@ export default class Home extends Component {
                 alignItems: 'center',
                 justifyContent: 'center',
                 height: Dimensions.get('window').height + 50
+            };
+            marker_circle = {
+                height: Dimensions.get('window').height,
+                width: Dimensions.get('window').width,
+
             }
 
         }
@@ -217,9 +231,15 @@ export default class Home extends Component {
 
     }
 
+    // person counter function
     _personCounter = async (e) => {
         await this.setState({ persons: e })
     }
+
+
+
+
+
 
 
     render() {
@@ -231,11 +251,17 @@ export default class Home extends Component {
                 key={markers.latitude}
                 coordinate={[markers.latitude, markers.longitude]}
             >
-                <View style={{ width: 100, height: 100 }}>
-                    <View style={{ marginLeft: 20, width: 80, height: 80, borderRadius: 50, backgroundColor: 'rgba(165, 45, 83,.3)', borderColor: 'rgb(165, 45, 83)', borderWidth: 2 }}>
-
-                    </View>
+                <View style={{
+                    marginLeft: 20,
+                    width: 80 + this.state.mapRadius,
+                    height: 80 + this.state.mapRadius,
+                    borderRadius: 80 + this.state.mapRadius,
+                    backgroundColor: 'rgba(165, 45, 83,.3)',
+                    borderColor: 'rgb(165, 45, 83)',
+                    borderWidth: 2
+                }}>
                 </View>
+
             </Mapir.Marker>
             ))
 
@@ -685,14 +711,99 @@ export default class Home extends Component {
                                         <Mapir
                                             accessToken={'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjM5ZjlmMWZhNDA4YzM0ODI2ZjcxZGI5YTdlM2U2ZmVjNDEzMzNmMDU0MjVhM2MzOTM0NmMwNTlkMzBiMzcyYjA5YzU1OGZjOGU4NTJmNWJhIn0.eyJhdWQiOiJteWF3ZXNvbWVhcHAiLCJqdGkiOiIzOWY5ZjFmYTQwOGMzNDgyNmY3MWRiOWE3ZTNlNmZlYzQxMzMzZjA1NDI1YTNjMzkzNDZjMDU5ZDMwYjM3MmIwOWM1NThmYzhlODUyZjViYSIsImlhdCI6MTU1OTQ1NTIzMiwibmJmIjoxNTU5NDU1MjMyLCJleHAiOjE1NTk0NTg4MzIsInN1YiI6IiIsInNjb3BlcyI6WyJiYXNpYyIsImVtYWlsIl19.JNowwSPWaoVoJ1Omirk9OTtkDySsNL91nP00GcCARdM-YHoTQYw3NZy3SaVlAsbafO9oPPvlVfhNIxPIHESACZATutE3tb7RBEmQGEXX-8G7GOSu8IzyyLBmHaQe75LtisgdKi-zPTGsx8zFv0Acn6HrDDxFrKFNtmI85L3jos_GVxvYYhHWKAez8mbJRHcH1b15DrwgWAhCjO2p_HqpuGLdRF1l03J6HsOnJLMid2997g7iAVTOa8mt2oaEPvmwA_f6pwFZSURqw-RJzdN_R8IEmtqWQq5ZNTEppVaV82yuwfnSmrb0_Sak2hfBIiLwQeCMsnfhU_CvUbE_1rukmQ'}
                                             zoomLevel={13}
+                                            minZoomLevel={6}
                                             showUserLocation={true}
                                             centerCoordinate={[51.422548, 35.732573]}
                                             onPress={e => this.addMarker(e.geometry.coordinates)}
                                             style={{ flex: 1 }}
+                                            ref={ref => (this.map = ref)}
                                         >
                                             {mark}
-
                                         </Mapir>
+
+                                        {/* range slide  */}
+                                        {
+                                            this.state.mapFull ?
+                                                <View style={{
+                                                    alignItems: 'center',
+                                                    borderRadius: 5,
+                                                    backgroundColor: '#eeea',
+                                                    padding: 10,
+                                                    zIndex: 999,
+                                                    position: 'absolute',
+                                                    bottom: 50,
+                                                    right: 0,
+                                                    left: 0
+                                                }}>
+
+                                                    <View style={{
+                                                        width: '100%',
+                                                        flexDirection: 'row',
+                                                        justifyContent: 'space-around',
+                                                        alignItems: 'center',
+                                                        height: 60,
+                                                        position: 'relative',
+                                                    }} >
+                                                        <Text style={{
+                                                            color: '#A52D53',
+                                                            fontFamily: 'ISFMedium',
+                                                            position: 'absolute',
+                                                            start: 0,
+                                                            bottom: -10,
+                                                        }}>{this.state.minRangeSlider} k.m</Text>
+                                                        <Slider
+                                                            thumbTintColor="#A52D53"
+                                                            style={{ width: '100%', height: 32 }}
+                                                            minimumValue={this.state.minRangeSlider}
+                                                            maximumValue={this.state.maxRangeSlider}
+                                                            step={5}
+                                                            minimumTrackTintColor="#A52D53"
+                                                            onValueChange={(value) => this.setState({
+                                                                markers: [
+                                                                    { latitude: this.state.markers[0].latitude + 0.000001, longitude: this.state.markers[0].longitude + 0.000001 },
+                                                                ],
+                                                                mapRadius: value,
+                                                            })}
+                                                            onSlidingStart={value =>
+                                                                this.setState({
+                                                                    slideStartingValue: value,
+                                                                    slideStartingCount: this.state.slideStartingCount + 1,
+                                                                })
+                                                            }
+                                                        />
+                                                        <Text style={{
+                                                            color: '#A52D53',
+                                                            fontFamily: 'ISFMedium',
+                                                            position: 'absolute',
+                                                            end: 0,
+                                                            bottom: -10
+                                                        }}>{this.state.maxRangeSlider} k.m</Text>
+                                                    </View>
+
+                                                    <View style={{
+                                                        flexDirection: 'row',
+                                                        justifyContent: 'space-around',
+                                                        marginTop: 10,
+                                                        backgroundColor: '#fbfbfb',
+                                                        borderRadius: 30,
+                                                        width: '70%',
+                                                        paddingVertical: 5
+                                                    }}>
+                                                        <Text style={{
+                                                            fontSize: 15,
+                                                            fontFamily: 'ISFMedium',
+                                                            color: '#666'
+                                                        }} >{this.state.mapRadius ? this.state.mapRadius : this.state.minRangeSlider}</Text>
+                                                        <Text style={{
+                                                            fontSize: 15,
+                                                            fontFamily: 'ISMedium',
+                                                            color: '#666'
+                                                        }} >شعاع جستجو : </Text>
+                                                    </View>
+
+                                                </View>
+                                                : null
+                                        }
 
                                     </View>
 
@@ -700,23 +811,27 @@ export default class Home extends Component {
                             </View>
 
 
+
                             {/* request btn */}
-                            <View style={styles.new_request_box}>
-                                <GradientButton
-                                    width="90%"
-                                    press={this._newRequest}
-                                    activeOpacity={.6}
-                                    color_1="#18749a"
-                                    color_2="#46add8"
-                                    height={50}
-                                    borderRadius={50}
-                                    textColor="#fff"
-                                    size={16}
-                                    title="درخواست جدید"
-                                    top={0}
-                                    bottom={0}
-                                />
-                            </View>
+                            {
+                                !this.state.mapFull ?
+                                    <View style={styles.new_request_box}>
+                                        <GradientButton
+                                            width="90%"
+                                            press={this._newRequest}
+                                            activeOpacity={.6}
+                                            color_1="#18749a"
+                                            color_2="#46add8"
+                                            height={50}
+                                            borderRadius={50}
+                                            textColor="#fff"
+                                            size={16}
+                                            title="درخواست جدید"
+                                            top={0}
+                                            bottom={0}
+                                        />
+                                    </View> : null
+                            }
                         </View>
                     </InputScrollView>
 
@@ -734,23 +849,33 @@ export default class Home extends Component {
         );
     }
 }
+
+
+
+
 let mapParentStyle = {
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '90%',
+
 };
 let mapStyle = {
     width: '48%',
     height: 200,
     borderWidth: 1,
     borderRadius: 5,
-    borderColor: '#fff'
+    borderColor: '#fff',
 }
 
 let square = {
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center'
+}
+
+let marker_circle = {
+    width: 100,
+    height: 100
 }
 
 const styles = ({
