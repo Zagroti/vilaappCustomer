@@ -107,20 +107,19 @@ export default class ResultItemsPage extends Component {
     render() {
 
         return (
+            <View style={styles.ResultItemsPage} >
 
 
-            <ScrollView contentContainerStyle={styles.ResultItemsPage} >
                 <View style={{
                     height: 50,
                     width: Dimensions.get('window').width,
                     flexDirection: 'row',
                     justifyContent: 'space-between',
-                    alignItems: 'center'
+                    alignItems: 'center',
                 }}>
                     <TouchableOpacity
                         style={styles.humberger}
-                        onPress={() => Actions.Support()}
-                    >
+                        onPress={() => Actions.Support()}>
                         <View style={styles.notification} >
                             <Text style={styles.notification_text} >3</Text>
                         </View>
@@ -134,7 +133,7 @@ export default class ResultItemsPage extends Component {
                             height: 50,
                             justifyContent: 'center',
                             alignItems: 'center',
-                        }} onPress={()=>Actions.pop()} >
+                        }} onPress={() => Actions.pop()} >
                         <Icon name="arrow-right" size={28} color="#B22850" />
                     </TouchableOpacity>
 
@@ -154,34 +153,47 @@ export default class ResultItemsPage extends Component {
                                 coordinate={[51.422548, 35.732573]}
                             />
                         </Mapir>
-                        <Text style={{
-                            position: "absolute",
-                            backgroundColor: 'rgba(100,100,100,.7)',
-                            width: '100%',
-                            color: '#fff',
-                            bottom: 0,
-                            padding: 5,
-                            fontFamily: 'IS',
-                            textAlign: 'center'
-                        }}>شعاع 5 کیلومتری آمل</Text>
+
                     </View>
                     <View style={styles.details_right}>
+                        <View style={{
+                            backgroundColor: 'rgba(100,100,100,1)',
+                            width: '100%',
+                            padding: 10,
+                            height: 40,
+                            lineHeight: 25,
+                            flexDirection: 'row',
+                            justifyContent: 'center'
+                        }}>
 
-                        <View style={styles.detail_row}>
-                            <Text style={styles.detail_view}>  1398/03/31</Text>
-                            <Text style={styles.detail_title}>  از تاریخ :</Text>
+                            <Text style={{
+                                color: '#fff',
+                                fontFamily: 'ISBold',
+                                textAlign: 'center',
+                            }}>شعاع 5 کیلومتری آمل</Text>
+                            <Icon style={{ marginLeft: 10 }} name="map" size={20} color="#fff" />
+
                         </View>
-                        <View style={styles.detail_row}>
-                            <Text style={styles.detail_view}>  1398/04/01</Text>
-                            <Text style={styles.detail_title}>  تا تاریخ :</Text>
-                        </View>
-                        <View style={styles.detail_row}>
-                            <Text style={styles.detail_view}>  440,000</Text>
-                            <Text style={styles.detail_title}>  قیمت :</Text>
-                        </View>
-                        <View style={styles.detail_row}>
-                            <Text style={styles.detail_view}>  3</Text>
-                            <Text style={styles.detail_title}>  تعداد :</Text>
+                        <View style={{ justifyContent: 'space-between', padding: 10, height: 100 }}>
+
+                            <View style={styles.detail_row}>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={styles.detail_view}>1398/04/01</Text>
+                                    <Text style={styles.detail_view}>  -  </Text>
+                                    <Text style={styles.detail_view}>1398/03/31</Text>
+                                </View>
+                                <Icon name="calendar-range" size={20} color="#444" />
+                            </View>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }} >
+                                <View style={styles.detail_row2}>
+                                    <Text style={styles.detail_view}>  3</Text>
+                                    <Icon style={{ marginLeft: 10 }} name="account-multiple-outline" size={20} color="#444" />
+                                </View>
+                                <View style={styles.detail_row2}>
+                                    <Text style={styles.detail_view}>  440,000</Text>
+                                    <Icon style={{ marginLeft: 10 }} name="cash" size={20} color="#444" />
+                                </View>
+                            </View>
                         </View>
                     </View>
 
@@ -204,42 +216,46 @@ export default class ResultItemsPage extends Component {
                     </TouchableOpacity>
                 </View>
 
-                {this.state.tab1 ?
 
-                    <View>
-                        <ResultItems navigate={this._showDetail} />
-                        <ResultItems navigate={this._showDetail} />
-                        <ResultItems navigate={this._showDetail} />
-                        <ResultItems navigate={this._showDetail} />
-                        <ResultItems navigate={this._showDetail} />
-                        <ResultItems navigate={this._showDetail} />
-                    </View>
-                    : null
+                <ScrollView>
 
-                }
+                    {this.state.tab1 ?
 
-                {this.state.tab2 ?
+                        <View>
+                            <ResultItems navigate={this._showDetail} />
+                            <ResultItems navigate={this._showDetail} />
+                            <ResultItems navigate={this._showDetail} />
+                            <ResultItems navigate={this._showDetail} />
+                            <ResultItems navigate={this._showDetail} />
+                            <ResultItems navigate={this._showDetail} />
+                        </View>
+                        : null
 
-                    <View>
-                        <ResultItems navigate={this._showDetail} />
-                        <ResultItems navigate={this._showDetail} />
-                    </View>
-                    : null
+                    }
 
-                }
+                    {this.state.tab2 ?
 
-                {this.state.tab3 ?
+                        <View>
+                            <ResultItems navigate={this._showDetail} />
+                            <ResultItems navigate={this._showDetail} />
+                        </View>
+                        : null
 
-                    <View>
-                        <ResultItems navigate={this._showDetail} />
-                        <ResultItems navigate={this._showDetail} />
-                        <ResultItems navigate={this._showDetail} />
-                    </View>
-                    : null
+                    }
 
-                }
-            </ScrollView>
+                    {this.state.tab3 ?
 
+                        <View>
+                            <ResultItems navigate={this._showDetail} />
+                            <ResultItems navigate={this._showDetail} />
+                            <ResultItems navigate={this._showDetail} />
+                        </View>
+                        : null
+
+                    }
+                </ScrollView>
+
+            </View>
 
 
 
@@ -256,11 +272,11 @@ const styles = ({
         alignItems: 'center',
         // height: Dimensions.get('window').height,
         paddingBottom: 160,
-
+        position: 'relative'
 
     },
     tab: {
-        width: Dimensions.get('window').width - 50,
+        width: Dimensions.get('window').width ,
         height: 50,
         backgroundColor: '#fff',
         borderRadius: 5,
@@ -270,7 +286,7 @@ const styles = ({
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        marginVertical: 20,
+        marginBottom: 20,
 
     },
     notification: {
@@ -322,32 +338,46 @@ const styles = ({
     details: {
         width: Dimensions.get('window').width,
         flexDirection: 'row',
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
     },
     details_right: {
-        width: '50%',
-        height: 150,
+        width: '60%',
+        height: 140,
         justifyContent: 'space-between',
-        padding: 5,
+        backgroundColor: '#fff'
+
     },
     details_map: {
-        width: '50%',
-        height: 150
-
+        width: '40%',
+        height: 140,
     },
     detail_row: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginVertical: 5
+        padding: 5,
+        borderWidth: 1,
+        borderRadius: 5,
+        backgroundColor: '#f1f1f1',
+        borderColor: '#eee',
+
     },
-    detail_title: {
-        fontFamily: 'ISBold',
+    detail_row2: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: 5,
+        borderWidth: 1,
+        borderRadius: 5,
+        borderColor: '#eee',
+        width: '48%',
+        backgroundColor: '#f1f1f1'
 
     },
     detail_view: {
-        fontFamily: 'ISF',
-
+        fontFamily: 'ISFBold',
+        fontSize: 14,
+        color: '#636363'
     }
 
 
