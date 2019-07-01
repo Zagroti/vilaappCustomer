@@ -25,7 +25,7 @@ export default class ResultItems extends Component {
                     padding: 5,
                     borderRadius: 10,
                     height: 100,
-                    marginBottom: 10,
+                    marginBottom: 25,
                     zIndex: 10,
                     backgroundColor: this.state.touchColor
                 }}
@@ -90,12 +90,7 @@ export default class ResultItems extends Component {
 }
 
 const styles = ({
-    ResultItems: {
 
-    },
-    detailes: {
-
-    },
     image_box: {
         width: 90,
         height: 90,

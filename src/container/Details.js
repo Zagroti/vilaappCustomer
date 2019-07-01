@@ -7,11 +7,14 @@ import {
     ImageBackground,
     TouchableOpacity,
     ScrollView,
-    Modal
+    Modal,
+    SafeAreaView,
+    TouchableHighlight
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import InputScrollView from 'react-native-input-scroll-view';
 import Mapir from 'mapir-react-native-sdk'
+import ImageSlider from 'react-native-image-slider';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
@@ -21,8 +24,45 @@ import Requestitems from '../components/RequestItems';
 import GradientButton from '../components/GradientButton';
 
 
-const arrowDown = require('./../../Assets/Images/arrow-down.png')
-const arrowUp = require('./../../Assets/Images/arrow-up.png')
+const arrowDown = <Icon style={{ top: -10 }} name="chevron-down" size={36} color="#ccc" />
+const arrowUp = <Icon style={{ top: -10 }} name="chevron-up" size={36} color="#ccc" />
+
+
+let parent_slider = {
+    position: 'relative'
+}
+let image_slider_parent = {
+
+}
+let image_slider = {
+    width: '100%',
+    height: Dimensions.get('window').width,
+    resizeMode: 'cover'
+}
+
+let body = {
+    top: -50,
+    borderTopRightRadius: 40,
+    borderTopLeftRadius: 40,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+}
+
+let image_footer = {
+    width: '100%',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
+    position: 'absolute',
+    bottom: 0,
+    paddingHorizontal: 20,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    height: 120,
+    paddingBottom: 50
+}
+
+
+
 
 export default class Details extends Component {
 
@@ -30,10 +70,13 @@ export default class Details extends Component {
         super(props)
         this.state = {
             modalVisible: false,
-            avilibiyText: 'بیشتر',
-            avilibiy: false,
+            availabilityText: 'بیشتر',
+            availability: false,
             aboutvilaText: 'بیشتر',
-            aboutvila: false
+            aboutvila: false,
+            conditionsText: 'بیشتر',
+            conditions: false,
+            sliderFullScreen: false
         }
     }
 
@@ -57,16 +100,16 @@ export default class Details extends Component {
 
     // more funcion 
     _mapHeightChanger = (item) => {
-        if (item === 'avilibiy') {
-            if (!this.state.avilibiy) {
+        if (item === 'availability') {
+            if (!this.state.availability) {
                 this.setState({
-                    avilibiyText: 'کمتر',
-                    avilibiy: true,
+                    availabilityText: 'کمتر',
+                    availability: true,
                 })
             } else {
                 this.setState({
-                    avilibiyText: 'بیشتر',
-                    avilibiy: false,
+                    availabilityText: 'بیشتر',
+                    availability: false,
                 })
             }
         } else if (item === 'aboutvila') {
@@ -82,41 +125,218 @@ export default class Details extends Component {
                 })
             }
 
+        } else if (item === 'conditions') {
+            if (!this.state.conditions) {
+                this.setState({
+                    conditionsText: 'کمتر',
+                    conditions: true,
+                })
+            } else {
+                this.setState({
+                    conditionsText: 'بیشتر',
+                    conditions: false,
+                })
+            }
+
         }
 
     }
 
+    // slide full screen
+    _sliderFullScreen = () => {
+        // full size
+        if (this.state.sliderFullScreen) {
+            this.setState({ sliderFullScreen: false })
+            parent_slider = {
+                position: 'relative',
+            }
+
+            image_slider_parent = {
+            }
+            image_slider = {
+                width: '100%',
+                height: Dimensions.get('window').width,
+                resizeMode: 'cover'
+            }
+            body = {
+
+                top: -50,
+                borderTopRightRadius: 40,
+                borderTopLeftRadius: 40,
+                backgroundColor: '#fff',
+                alignItems: 'center',
+            }
+            image_footer = {
+                width: '100%',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                flexDirection: 'row',
+                position: 'absolute',
+                bottom: 0,
+                paddingHorizontal: 20,
+                backgroundColor: 'rgba(0,0,0,0.5)',
+                height: 120,
+                paddingBottom: 50
+            }
+
+        } else {
+            this.setState({ sliderFullScreen: true })
+            parent_slider = {
+                position: 'relative',
+                backgroundColor: 'red',
+                height: Dimensions.get('window').height,
+                width: Dimensions.get('window').width,
+                zIndex: 9999,
+                top: 0,
+                bottom: 0,
+                right: 0,
+                left: 0
+            }
+            image_slider_parent = {
+                backgroundColor: '#000',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '100%'
+            }
+            image_slider = {
+                width: '100%',
+                height: '100%',
+                resizeMode: 'contain'
+            }
+            body = {
+                width: 0,
+                height: 0,
+            }
+            image_footer = {
+                width: '100%',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                flexDirection: 'row',
+                position: 'absolute',
+                bottom: 0,
+                paddingHorizontal: 20,
+                backgroundColor: 'rgba(0,0,0,0.5)',
+                height: 100,
+                paddingBottom: 40
+            }
+
+        }
+    }
+
     render() {
 
-
+        const images = [
+            'https://placeimg.com/640/640/nature',
+            'https://placeimg.com/640/640/people',
+            'https://placeimg.com/640/640/animals',
+            'https://placeimg.com/640/640/beer',
+        ];
 
 
         return (
 
             <ScrollView style={styles.Details} >
 
-                <ImageBackground style={styles.header}
-                    source={require('./../../Assets/Images/detail.jpg')} >
-
-                    {/* MENU */}
-                    <View style={styles.menu} >
-                        {/* <TouchableOpacity style={styles.back_box} onPress={()=>this._backToResultImage()} >
-                            <Image style={styles.back}
-                                source={require('./../../Assets/Images/left-arrow-white.png')} />
-                        </TouchableOpacity> */}
-                        <Text style={styles.owner_answer}>پذیرفته شده</Text>
-                    </View>
-
-                    <View style={styles.header_price} >
-                        <Text style={styles.per_night}> هر شب</Text>
-                        <Text style={styles.price} >150,000 ت</Text>
-                    </View>
 
 
-                </ImageBackground>
+
+                <SafeAreaView style={parent_slider}>
+                    {!this.state.sliderFullScreen ?
+                        <View style={{
+                            backgroundColor: 'transparent',
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            height: 60,
+                            padding: 20,
+                            width: '100%',
+                            position: 'absolute',
+                            top: 0,
+                            zIndex: 99999,
+                            width: '100%'
+                        }} >
+                            <Text style={styles.owner_answer}>پذیرفته شده</Text>
+                            <TouchableOpacity
+                                style={{
+                                    backgroundColor: '#33333320',
+                                    padding: 10,
+                                    width: 50,
+                                    height: 50,
+                                    borderRadius: 30,
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    top: 10,
+                                    end: 10,
+
+                                }} onPress={() => Actions.pop()} >
+                                <Icon name="arrow-right" size={28} color="#fff" />
+
+                            </TouchableOpacity>
+                        </View> : null
+
+                    }
+                    <ImageSlider
+                        loopBothSides
+                        images={images}
+                        customSlide={({ index, item, style, width }) => (
+                            <TouchableOpacity key={index}
+                                activeOpacity={1}
+                                style={[style, image_slider_parent]}
+                                onPress={this._sliderFullScreen}>
+                                <Image source={{ uri: item }}
+                                    style={image_slider} />
+                            </TouchableOpacity>
+                        )}
+                        customButtons={(position, move) => (
+                            <View style={image_footer}>
+                                <View style={{
+                                    width: 100,
+                                    textAlign: 'center',
+                                    height: 30,
+                                    flexDirection: 'row',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    borderRadius: 20,
+                                }}>
+                                    <Text style={{ color: '#fff', fontFamily: 'ISFBold' }}>{position + 1}  /  {images.length}</Text>
+                                    <Icon name="image-area" style={{ marginLeft: 8 }} size={30} color="#fff" />
+                                </View>
+                                {
+                                    !this.state.sliderFullScreen ?
+                                        <View style={{
+                                            backgroundColor: 'rgba(255,255,255,1)',
+                                            textAlign: 'center',
+                                            paddingHorizontal: 50,
+                                            height: 30,
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            borderRadius: 20,
+                                        }}>
+                                            <Text style={{ color: '#333', fontSize: 20, fontFamily: 'ISFBold' }}>150,000 ت</Text>
+                                        </View> :
+                                        <TouchableOpacity
+                                            style={{
+                                                backgroundColor: '#33333320',
+                                                padding: 10,
+                                                width: 50,
+                                                height: 50,
+                                                borderRadius: 30,
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                            }} onPress={this._sliderFullScreen} >
+                                            <Icon name="arrow-right" size={28} color="#fff" />
+                                        </TouchableOpacity>
+                                }
+
+                            </View>
+                        )}
+                    />
+                </SafeAreaView>
 
 
-                <View style={styles.body}>
+
+
+                <View style={body}>
 
                     {/* icons */}
                     <View style={styles.vila_posibilities}>
@@ -158,68 +378,67 @@ export default class Details extends Component {
 
                         </View>
                         <TouchableOpacity
-                            style={{ marginVertical: 10, alignItems: 'center' }}
+                            style={{ marginTop: 10, alignItems: 'center' }}
                             onPress={() => this._mapHeightChanger('aboutvila')}
                         >
                             <Text style={{
                                 fontSize: 13,
                                 fontFamily: 'ISBold',
                                 color: '#ccc',
-                                marginVertical: 2
                             }} >{this.state.aboutvilaText}</Text>
-                            <Image source={this.state.aboutvila ? arrowUp : arrowDown} />
+                            {this.state.aboutvila ? arrowUp : arrowDown}
                         </TouchableOpacity>
                     </View>
 
 
-                    <View style={styles.avilibiy} >
-                        <Text style={styles.about_vila_title} >دسترسی </Text>
-                        <View style={styles.avilibiy_first}>
-                            <View style={styles.avilibiy_item} >
-                                <Text style={styles.avilibiy_text} >پارکینگ</Text>
+                    <View style={styles.availability} >
+                        <Text style={styles.about_vila_title} >امکانات </Text>
+                        <View style={styles.availability_first}>
+                            <View style={styles.availability_item} >
+                                <Text style={styles.availability_text} >پارکینگ</Text>
                                 <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
                             </View>
-                            <View style={styles.avilibiy_item} >
-                                <Text style={styles.avilibiy_text} >WiFi</Text>
+                            <View style={styles.availability_item} >
+                                <Text style={styles.availability_text} >WiFi</Text>
                                 <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
                             </View>
-                            <View style={styles.avilibiy_item} >
-                                <Text style={styles.avilibiy_text} >لباسشویی</Text>
+                            <View style={styles.availability_item} >
+                                <Text style={styles.availability_text} >لباسشویی</Text>
                                 <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#bbb" />
                             </View>
-                            <View style={styles.avilibiy_item} >
-                                <Text style={styles.avilibiy_text} >سیستم گرمایشی</Text>
+                            <View style={styles.availability_item} >
+                                <Text style={styles.availability_text} >سیستم گرمایشی</Text>
                                 <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
                             </View>
-                            <View style={styles.avilibiy_item} >
-                                <Text style={styles.avilibiy_text} >الکتریکی</Text>
+                            <View style={styles.availability_item} >
+                                <Text style={styles.availability_text} >الکتریکی</Text>
                                 <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
                             </View>
-                            <View style={styles.avilibiy_item} >
-                                <Text style={styles.avilibiy_text} >استخر</Text>
+                            <View style={styles.availability_item} >
+                                <Text style={styles.availability_text} >استخر</Text>
                                 <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
                             </View>
                             {
-                                this.state.avilibiy ?
-                                    <View style={styles.avilibiy_first}>
-                                        <View style={styles.avilibiy_item} >
-                                            <Text style={styles.avilibiy_text} >پارکینگ</Text>
+                                this.state.availability ?
+                                    <View style={styles.availability_first}>
+                                        <View style={styles.availability_item} >
+                                            <Text style={styles.availability_text} >پارکینگ</Text>
                                             <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
                                         </View>
-                                        <View style={styles.avilibiy_item} >
-                                            <Text style={styles.avilibiy_text} >WiFi</Text>
+                                        <View style={styles.availability_item} >
+                                            <Text style={styles.availability_text} >WiFi</Text>
                                             <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
                                         </View>
-                                        <View style={styles.avilibiy_item} >
-                                            <Text style={styles.avilibiy_text} >لباسشویی</Text>
+                                        <View style={styles.availability_item} >
+                                            <Text style={styles.availability_text} >لباسشویی</Text>
                                             <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#bbb" />
                                         </View>
-                                        <View style={styles.avilibiy_item} >
-                                            <Text style={styles.avilibiy_text} >سیستم گرمایشی</Text>
+                                        <View style={styles.availability_item} >
+                                            <Text style={styles.availability_text} >سیستم گرمایشی</Text>
                                             <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
                                         </View>
-                                        <View style={styles.avilibiy_item} >
-                                            <Text style={styles.avilibiy_text} >الکتریکی</Text>
+                                        <View style={styles.availability_item} >
+                                            <Text style={styles.availability_text} >الکتریکی</Text>
                                             <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
                                         </View>
 
@@ -229,16 +448,15 @@ export default class Details extends Component {
                         </View>
 
                         <TouchableOpacity
-                            style={{ marginVertical: 10, alignItems: 'center' }}
-                            onPress={() => this._mapHeightChanger('avilibiy')}
+                            style={{ marginTop: 10, alignItems: 'center' }}
+                            onPress={() => this._mapHeightChanger('availability')}
                         >
                             <Text style={{
                                 fontSize: 13,
                                 fontFamily: 'ISBold',
                                 color: '#ccc',
-                                marginVertical: 2
-                            }} >{this.state.avilibiyText}</Text>
-                            <Image source={this.state.avilibiy ? arrowUp : arrowDown} />
+                            }} >{this.state.availabilityText}</Text>
+                            {this.state.availability ? arrowUp : arrowDown}
                         </TouchableOpacity>
                     </View>
 
@@ -249,16 +467,33 @@ export default class Details extends Component {
                         <Text style={{ color: '#DC3053', fontSize: 12, fontFamily: 'ISMedium' }}>2. عاشق خودتان باشید .</Text>
                         <Text style={styles.conditions_text}>3. اتاق را کثیف نکنید </Text>
                         <Text style={styles.conditions_text}>4. اتاق را تمیز نکنید . </Text>
-                        <Text style={styles.conditions_text}>5. خانوم بازی نکنید </Text>
-                        <Text style={styles.conditions_text}>6. داخل اتاق سیگار نکشید . </Text>
-                        <Text style={styles.conditions_text}>7. دقت کنید </Text>
-                        <Text style={styles.conditions_text}>8. نماز اول وقت را فراموش نکنید </Text>
-                        <Text style={styles.conditions_text} >9. خدا را ناظر بر اعمال خود بدانید </Text>
+
+                        
+                        {this.state.conditions ?
+                            <View>
+
+                                <Text style={styles.conditions_text}>5. خانوم بازی نکنید </Text>
+                                <Text style={styles.conditions_text}>6. داخل اتاق سیگار نکشید . </Text>
+                                <Text style={styles.conditions_text}>7. دقت کنید </Text>
+                                <Text style={styles.conditions_text}>8. نماز اول وقت را فراموش نکنید </Text>
+                                <Text style={styles.conditions_text} >9. خدا را ناظر بر اعمال خود بدانید </Text>
+                            </View> : null}
+                            <TouchableOpacity
+                            style={{ marginTop: 10, alignItems: 'center' }}
+                            onPress={() => this._mapHeightChanger('conditions')}
+                        >
+                            <Text style={{
+                                fontSize: 13,
+                                fontFamily: 'ISBold',
+                                color: '#ccc',
+                            }} >{this.state.aboutvilaText}</Text>
+                            {this.state.aboutvila ? arrowUp : arrowDown}
+                        </TouchableOpacity>
 
                     </View>
 
                     <View
-                        style={{ width: '100%', height: 250, marginTop: 20 }}
+                        style={{ width: Dimensions.get('window').width, height: Dimensions.get('window').width, marginTop: 20 }}
                     >
                         <Mapir
                             logoEnabled={true}
@@ -271,7 +506,13 @@ export default class Details extends Component {
                             <Mapir.Marker
                                 id={'1'}
                                 coordinate={[51.422548, 35.732573]}
-                            />
+                            >
+                                <View style={{ width: 100, height: 100 }}>
+                                    <View style={{ marginLeft: 20, width: 80, height: 80, borderRadius: 50, backgroundColor: 'rgba(165, 45, 83,.3)', borderColor: 'rgb(165, 45, 83)', borderWidth: 2 }}>
+
+                                    </View>
+                                </View>
+                            </Mapir.Marker>
                         </Mapir>
                     </View>
 
@@ -294,7 +535,7 @@ export default class Details extends Component {
                             borderRadius={50}
                             textColor="#fff"
                             size={16}
-                            title="ذخیره"
+                            title="رزرو"
                             top={0}
                             bottom={0}
                         />
@@ -336,7 +577,7 @@ export default class Details extends Component {
                             height: 50,
                             flexDirection: 'row',
                             justifyContent: 'flex-end',
-                            padding:10
+                            padding: 10
                         }}>
                         {/* Close modal  */}
                         <TouchableOpacity
@@ -402,7 +643,7 @@ export default class Details extends Component {
                                 shadowOpacity: 1,
                                 elevation: 1,
                             }} >
-                                <Icon  size={30} name="account-outline" color="#bbb" />
+                                <Icon size={30} name="account-outline" color="#bbb" />
 
                             </View>
                         </View>
@@ -433,13 +674,17 @@ export default class Details extends Component {
     }
 }
 
+
+
+
+
+
 const styles = ({
 
     Details: {
         backgroundColor: "#fff",
         width: Dimensions.get('window').width,
         flex: 1,
-        marginTop: -50
     },
 
     header: {
@@ -457,7 +702,10 @@ const styles = ({
         alignItems: 'center',
         height: 60,
         padding: 20,
-        width: '100%'
+        width: '100%',
+        position: 'absolute',
+        top: 0,
+        zIndex: 99999
     },
 
     header_price: {
@@ -543,7 +791,9 @@ const styles = ({
         backgroundColor: '#f6f6f6',
         width: '90%',
         marginTop: 20,
-        padding: 20,
+        paddingTop: 20,
+        paddingBottom: 10,
+        paddingHorizontal: 20,
         borderRadius: 10
     },
     about_vila_first: {
@@ -576,20 +826,22 @@ const styles = ({
     },
 
 
-    avilibiy: {
+    availability: {
         backgroundColor: '#f6f6f6',
         width: '90%',
         marginTop: 20,
-        padding: 20,
+        paddingTop: 20,
+        paddingBottom: 10,
+        paddingHorizontal: 20,
         borderRadius: 10,
     },
-    avilibiy_first: {
+    availability_first: {
         flexWrap: 'wrap',
         flexDirection: 'row',
         justifyContent: 'flex-end'
     },
 
-    avilibiy_item: {
+    availability_item: {
         width: '50%',
         flexDirection: 'row',
         justifyContent: 'flex-end',
@@ -598,20 +850,22 @@ const styles = ({
     },
 
 
-    avilibiy_text: {
+    availability_text: {
         fontSize: 12,
         fontFamily: 'ISMedium',
         color: '#333',
     },
 
-    avilibiy_icon: {
+    availability_icon: {
         marginLeft: 5
     },
     conditions: {
         backgroundColor: '#f6f6f6',
         width: '90%',
         marginTop: 20,
-        padding: 20,
+        paddingTop: 20,
+        paddingBottom: 10,
+        paddingHorizontal: 20,
         borderRadius: 10,
     },
     conditions_text: {
