@@ -81,13 +81,15 @@ export default class Home extends Component {
                     message: 'App needs location permission to find your position.'
                 }
             ).then(granted => {
-                console.log(granted);
+                // console.log(granted);
                 resolve();
             }).catch(err => {
-                console.warn(err);
+                // console.warn(err);
                 reject(err);
             });
         }
+
+        // this._fetch()
 
     }
 
@@ -112,7 +114,7 @@ export default class Home extends Component {
             Actions.Profile()
         }
         if (path === 'history') {
-            return false;
+            Actions.History()
         }
 
         this.refs['DRAWER_REF'].closeDrawer();
@@ -238,6 +240,36 @@ export default class Home extends Component {
 
 
 
+    _fetch = async () => {
+        const url = 'https://map.ir/search';
+        let data = new FormData();
+        data.append("text","میدان آزادی");
+        data.append("$select","roads,poi");
+        data.append("$filter","province eq تهران");
+        data.append("location","000000");
+        data.append("type","Point");
+        data.append("coordinates",  [
+              51.3361930847168,
+              35.7006311416626
+            ]
+           ); 
+
+       
+        await fetch(url , {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'multipart/form-data',
+                'x-api-key' : 'WsLdHK46I5Wfr5xgI0ynjjyiw9Fyhydu'
+            },
+            body : data
+        }).then((response) => {
+            console.log(response)
+            error.message
+        }).catch((error) => {
+            console.error(error);
+        })
+    }
 
 
 
@@ -710,18 +742,24 @@ export default class Home extends Component {
 
                                         <Mapir
                                             accessToken={'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjM5ZjlmMWZhNDA4YzM0ODI2ZjcxZGI5YTdlM2U2ZmVjNDEzMzNmMDU0MjVhM2MzOTM0NmMwNTlkMzBiMzcyYjA5YzU1OGZjOGU4NTJmNWJhIn0.eyJhdWQiOiJteWF3ZXNvbWVhcHAiLCJqdGkiOiIzOWY5ZjFmYTQwOGMzNDgyNmY3MWRiOWE3ZTNlNmZlYzQxMzMzZjA1NDI1YTNjMzkzNDZjMDU5ZDMwYjM3MmIwOWM1NThmYzhlODUyZjViYSIsImlhdCI6MTU1OTQ1NTIzMiwibmJmIjoxNTU5NDU1MjMyLCJleHAiOjE1NTk0NTg4MzIsInN1YiI6IiIsInNjb3BlcyI6WyJiYXNpYyIsImVtYWlsIl19.JNowwSPWaoVoJ1Omirk9OTtkDySsNL91nP00GcCARdM-YHoTQYw3NZy3SaVlAsbafO9oPPvlVfhNIxPIHESACZATutE3tb7RBEmQGEXX-8G7GOSu8IzyyLBmHaQe75LtisgdKi-zPTGsx8zFv0Acn6HrDDxFrKFNtmI85L3jos_GVxvYYhHWKAez8mbJRHcH1b15DrwgWAhCjO2p_HqpuGLdRF1l03J6HsOnJLMid2997g7iAVTOa8mt2oaEPvmwA_f6pwFZSURqw-RJzdN_R8IEmtqWQq5ZNTEppVaV82yuwfnSmrb0_Sak2hfBIiLwQeCMsnfhU_CvUbE_1rukmQ'}
-                                            zoomLevel={13}
                                             minZoomLevel={6}
+                                            maxZoomLevel={20}
+                                            zoomLevel={13}
                                             showUserLocation={true}
-                                            centerCoordinate={[51.422548, 35.732573]}
+                                            centerCoordinate={[this.state.markers[0].latitude, this.state.markers[0].longitude]}
                                             onPress={e => this.addMarker(e.geometry.coordinates)}
                                             style={{ flex: 1 }}
                                             ref={ref => (this.map = ref)}
+                                            pitchEnabled={false}
                                         >
                                             {mark}
                                         </Mapir>
 
-                                        {/* range slide  */}
+
+
+
+
+                                        {/* range slider */}
                                         {
                                             this.state.mapFull ?
                                                 <View style={{
@@ -805,12 +843,19 @@ export default class Home extends Component {
                                                 : null
                                         }
 
+
                                     </View>
+
 
                                 </View>
                             </View>
 
-
+                            {/* <TextInput
+                                placeholderTextColor={'#999'}
+                                placeholder="جستجو"
+                                style={styles.price_input}
+                                onChangeText={(e) => this._fetch(e)}
+                            /> */}
 
                             {/* request btn */}
                             {
