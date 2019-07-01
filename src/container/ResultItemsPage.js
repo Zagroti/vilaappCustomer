@@ -138,90 +138,92 @@ export default class ResultItemsPage extends Component {
                     </TouchableOpacity>
 
                 </View>
-                <View style={styles.details} >
-                    <View style={styles.details_map}>
-                        <Mapir
-                            logoEnabled={true}
-                            accessToken={'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjM5ZjlmMWZhNDA4YzM0ODI2ZjcxZGI5YTdlM2U2ZmVjNDEzMzNmMDU0MjVhM2MzOTM0NmMwNTlkMzBiMzcyYjA5YzU1OGZjOGU4NTJmNWJhIn0.eyJhdWQiOiJteWF3ZXNvbWVhcHAiLCJqdGkiOiIzOWY5ZjFmYTQwOGMzNDgyNmY3MWRiOWE3ZTNlNmZlYzQxMzMzZjA1NDI1YTNjMzkzNDZjMDU5ZDMwYjM3MmIwOWM1NThmYzhlODUyZjViYSIsImlhdCI6MTU1OTQ1NTIzMiwibmJmIjoxNTU5NDU1MjMyLCJleHAiOjE1NTk0NTg4MzIsInN1YiI6IiIsInNjb3BlcyI6WyJiYXNpYyIsImVtYWlsIl19.JNowwSPWaoVoJ1Omirk9OTtkDySsNL91nP00GcCARdM-YHoTQYw3NZy3SaVlAsbafO9oPPvlVfhNIxPIHESACZATutE3tb7RBEmQGEXX-8G7GOSu8IzyyLBmHaQe75LtisgdKi-zPTGsx8zFv0Acn6HrDDxFrKFNtmI85L3jos_GVxvYYhHWKAez8mbJRHcH1b15DrwgWAhCjO2p_HqpuGLdRF1l03J6HsOnJLMid2997g7iAVTOa8mt2oaEPvmwA_f6pwFZSURqw-RJzdN_R8IEmtqWQq5ZNTEppVaV82yuwfnSmrb0_Sak2hfBIiLwQeCMsnfhU_CvUbE_1rukmQ'}
-                            zoomLevel={13}
-                            centerCoordinate={[51.422548, 35.732573]}
-                            style={{ flex: 1 }}
-                            logoEnabled={false}
-                        >
-                            <Mapir.Marker
-                                id={'1'}
-                                coordinate={[51.422548, 35.732573]}
-                            />
-                        </Mapir>
-
-                    </View>
-                    <View style={styles.details_right}>
-                        <View style={{
-                            backgroundColor: 'rgba(100,100,100,1)',
-                            width: '100%',
-                            padding: 10,
-                            height: 40,
-                            lineHeight: 25,
-                            flexDirection: 'row',
-                            justifyContent: 'center'
-                        }}>
-
-                            <Text style={{
-                                color: '#fff',
-                                fontFamily: 'ISBold',
-                                textAlign: 'center',
-                            }}>شعاع 5 کیلومتری آمل</Text>
-                            <Icon style={{ marginLeft: 10 }} name="map" size={20} color="#fff" />
+                <ScrollView contentContainerStyle={{ width: Dimensions.get('window').width , alignItems:'center' }}>
+                    <View style={styles.details} >
+                        <View style={styles.details_map}>
+                            <Mapir
+                                logoEnabled={true}
+                                accessToken={'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjM5ZjlmMWZhNDA4YzM0ODI2ZjcxZGI5YTdlM2U2ZmVjNDEzMzNmMDU0MjVhM2MzOTM0NmMwNTlkMzBiMzcyYjA5YzU1OGZjOGU4NTJmNWJhIn0.eyJhdWQiOiJteWF3ZXNvbWVhcHAiLCJqdGkiOiIzOWY5ZjFmYTQwOGMzNDgyNmY3MWRiOWE3ZTNlNmZlYzQxMzMzZjA1NDI1YTNjMzkzNDZjMDU5ZDMwYjM3MmIwOWM1NThmYzhlODUyZjViYSIsImlhdCI6MTU1OTQ1NTIzMiwibmJmIjoxNTU5NDU1MjMyLCJleHAiOjE1NTk0NTg4MzIsInN1YiI6IiIsInNjb3BlcyI6WyJiYXNpYyIsImVtYWlsIl19.JNowwSPWaoVoJ1Omirk9OTtkDySsNL91nP00GcCARdM-YHoTQYw3NZy3SaVlAsbafO9oPPvlVfhNIxPIHESACZATutE3tb7RBEmQGEXX-8G7GOSu8IzyyLBmHaQe75LtisgdKi-zPTGsx8zFv0Acn6HrDDxFrKFNtmI85L3jos_GVxvYYhHWKAez8mbJRHcH1b15DrwgWAhCjO2p_HqpuGLdRF1l03J6HsOnJLMid2997g7iAVTOa8mt2oaEPvmwA_f6pwFZSURqw-RJzdN_R8IEmtqWQq5ZNTEppVaV82yuwfnSmrb0_Sak2hfBIiLwQeCMsnfhU_CvUbE_1rukmQ'}
+                                zoomLevel={13}
+                                centerCoordinate={[51.422548, 35.732573]}
+                                style={{ flex: 1 }}
+                                logoEnabled={false}
+                            >
+                                <Mapir.Marker
+                                    id={'1'}
+                                    coordinate={[51.422548, 35.732573]}
+                                />
+                            </Mapir>
 
                         </View>
-                        <View style={{ justifyContent: 'space-between', padding: 10, height: 100 }}>
+                        <View style={styles.details_right}>
+                            
+                            <View style={{ justifyContent: 'space-between', padding: 10, height: 100 }}>
 
-                            <View style={styles.detail_row}>
-                                <View style={{ flexDirection: 'row' }}>
-                                    <Text style={styles.detail_view}>1398/04/01</Text>
-                                    <Text style={styles.detail_view}>  -  </Text>
-                                    <Text style={styles.detail_view}>1398/03/31</Text>
+                                <View style={styles.detail_row}>
+                                    <View style={{ flexDirection: 'row' }}>
+                                        <Text style={styles.detail_view}>1398/04/01</Text>
+                                        <Text style={styles.detail_view}>  -  </Text>
+                                        <Text style={styles.detail_view}>1398/03/31</Text>
+                                    </View>
+                                    <Icon name="calendar-range" size={20} color="#444" />
                                 </View>
-                                <Icon name="calendar-range" size={20} color="#444" />
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }} >
+                                    <View style={styles.detail_row2}>
+                                        <Text style={styles.detail_view}>  3</Text>
+                                        <Icon style={{ marginLeft: 10 }} name="account-multiple-outline" size={20} color="#444" />
+                                    </View>
+                                    <View style={styles.detail_row2}>
+                                        <Text style={styles.detail_view}>  440,000</Text>
+                                        <Icon style={{ marginLeft: 10 }} name="cash" size={20} color="#444" />
+                                    </View>
+                                </View>
                             </View>
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }} >
-                                <View style={styles.detail_row2}>
-                                    <Text style={styles.detail_view}>  3</Text>
-                                    <Icon style={{ marginLeft: 10 }} name="account-multiple-outline" size={20} color="#444" />
-                                </View>
-                                <View style={styles.detail_row2}>
-                                    <Text style={styles.detail_view}>  440,000</Text>
-                                    <Icon style={{ marginLeft: 10 }} name="cash" size={20} color="#444" />
-                                </View>
+                            <View style={{
+                                backgroundColor: 'rgba(100,100,100,.2)',
+                                width: '100%',
+                                padding: 10,
+                                height: 40,
+                                lineHeight: 25,
+                                flexDirection: 'row',
+                                justifyContent: 'center'
+                            }}>
+
+                                <Text style={{
+                                    color: '#636363',
+                                    fontFamily: 'ISBold',
+                                    textAlign: 'center',
+                                }}>شعاع 5 کیلومتری آمل</Text>
+                                <Icon style={{ marginLeft: 10 }} name="map" size={20} color="#444" />
+
                             </View>
                         </View>
+
                     </View>
 
-                </View>
-
-                <View style={styles.tab}  >
-                    <TouchableOpacity style={styles.tab_box} onPress={() => this._changeTab('tab1')}>
-                        <Icon name="cash" size={20} color={this.state.color_1} />
-                        <Text style={[styles.tab_text, { color: this.state.color_1 }]}>  قیمت</Text>
-                    </TouchableOpacity>
-                    <Text style={styles.line} ></Text>
-                    <TouchableOpacity style={styles.tab_box} onPress={() => this._changeTab('tab2')}>
-                        <Icon name="account-multiple-outline" size={20} color={this.state.color_2} />
-                        <Text style={[styles.tab_text, { color: this.state.color_2 }]}>  افراد</Text>
-                    </TouchableOpacity>
-                    <Text style={styles.line} ></Text>
-                    <TouchableOpacity style={styles.tab_box} onPress={() => this._changeTab('tab3')}>
-                        <Icon name="map-marker-distance" size={20} color={this.state.color_3} />
-                        <Text style={[styles.tab_text, { color: this.state.color_3 }]}>  فاصله</Text>
-                    </TouchableOpacity>
-                </View>
+                    <View style={styles.tab}  >
+                        <TouchableOpacity style={styles.tab_box} onPress={() => this._changeTab('tab1')}>
+                            <Icon name="cash" size={20} color={this.state.color_1} />
+                            <Text style={[styles.tab_text, { color: this.state.color_1 }]}>  قیمت</Text>
+                        </TouchableOpacity>
+                        <Text style={styles.line} ></Text>
+                        <TouchableOpacity style={styles.tab_box} onPress={() => this._changeTab('tab2')}>
+                            <Icon name="account-multiple-outline" size={20} color={this.state.color_2} />
+                            <Text style={[styles.tab_text, { color: this.state.color_2 }]}>  افراد</Text>
+                        </TouchableOpacity>
+                        <Text style={styles.line} ></Text>
+                        <TouchableOpacity style={styles.tab_box} onPress={() => this._changeTab('tab3')}>
+                            <Icon name="map-marker-distance" size={20} color={this.state.color_3} />
+                            <Text style={[styles.tab_text, { color: this.state.color_3 }]}>  فاصله</Text>
+                        </TouchableOpacity>
+                    </View>
 
 
-                <ScrollView>
+
 
                     {this.state.tab1 ?
 
-                        <View>
+                        <View style={{width:'100%', alignItems:'center'}}>
                             <ResultItems navigate={this._showDetail} />
                             <ResultItems navigate={this._showDetail} />
                             <ResultItems navigate={this._showDetail} />
@@ -235,7 +237,7 @@ export default class ResultItemsPage extends Component {
 
                     {this.state.tab2 ?
 
-                        <View>
+                        <View style={{width:'100%', alignItems:'center'}}>
                             <ResultItems navigate={this._showDetail} />
                             <ResultItems navigate={this._showDetail} />
                         </View>
@@ -245,7 +247,7 @@ export default class ResultItemsPage extends Component {
 
                     {this.state.tab3 ?
 
-                        <View>
+                        <View style={{width:'100%', alignItems:'center'}}>
                             <ResultItems navigate={this._showDetail} />
                             <ResultItems navigate={this._showDetail} />
                             <ResultItems navigate={this._showDetail} />
@@ -267,6 +269,7 @@ const styles = ({
 
 
     ResultItemsPage: {
+        width:Dimensions.get('window').width,
         backgroundColor: '#f6f6f6',
         flexDirection: 'column',
         alignItems: 'center',
@@ -276,17 +279,15 @@ const styles = ({
 
     },
     tab: {
-        width: Dimensions.get('window').width ,
+        width:'90%',
         height: 50,
         backgroundColor: '#fff',
         borderRadius: 5,
-        shadowColor: "#f7f7f7",
-        shadowOpacity: 1,
-        elevation: 1,
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        marginBottom: 20,
+        marginVertical: 20,
+
 
     },
     notification: {

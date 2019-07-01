@@ -29,7 +29,7 @@ const arrowUp = <Icon style={{ top: -10 }} name="chevron-up" size={36} color="#c
 
 
 let parent_slider = {
-    position: 'relative'
+
 }
 let image_slider_parent = {
 
@@ -148,7 +148,7 @@ export default class Details extends Component {
         if (this.state.sliderFullScreen) {
             this.setState({ sliderFullScreen: false })
             parent_slider = {
-                position: 'relative',
+                // position: 'relative',
             }
 
             image_slider_parent = {
@@ -182,7 +182,7 @@ export default class Details extends Component {
         } else {
             this.setState({ sliderFullScreen: true })
             parent_slider = {
-                position: 'relative',
+                // position: 'relative',
                 backgroundColor: 'red',
                 height: Dimensions.get('window').height,
                 width: Dimensions.get('window').width,
@@ -237,9 +237,6 @@ export default class Details extends Component {
 
             <ScrollView style={styles.Details} >
 
-
-
-
                 <SafeAreaView style={parent_slider}>
                     {!this.state.sliderFullScreen ?
                         <View style={{
@@ -267,7 +264,6 @@ export default class Details extends Component {
                                     alignItems: 'center',
                                     top: 10,
                                     end: 10,
-
                                 }} onPress={() => Actions.pop()} >
                                 <Icon name="arrow-right" size={28} color="#fff" />
 
@@ -468,7 +464,7 @@ export default class Details extends Component {
                         <Text style={styles.conditions_text}>3. اتاق را کثیف نکنید </Text>
                         <Text style={styles.conditions_text}>4. اتاق را تمیز نکنید . </Text>
 
-                        
+
                         {this.state.conditions ?
                             <View>
 
@@ -478,7 +474,7 @@ export default class Details extends Component {
                                 <Text style={styles.conditions_text}>8. نماز اول وقت را فراموش نکنید </Text>
                                 <Text style={styles.conditions_text} >9. خدا را ناظر بر اعمال خود بدانید </Text>
                             </View> : null}
-                            <TouchableOpacity
+                        <TouchableOpacity
                             style={{ marginTop: 10, alignItems: 'center' }}
                             onPress={() => this._mapHeightChanger('conditions')}
                         >
@@ -685,6 +681,7 @@ const styles = ({
         backgroundColor: "#fff",
         width: Dimensions.get('window').width,
         flex: 1,
+        position: 'relative',
     },
 
     header: {

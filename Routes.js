@@ -106,6 +106,8 @@ class Routes extends React.Component {
                         component={Home}
                         title="home"
                         hideNavBar={true}
+                        initial={this.state.logged}                        
+
                     />
 
                     <Scene key="Profile" component={Profile}
@@ -132,7 +134,6 @@ class Routes extends React.Component {
                         renderRightButton={() => nothing}
                         navigationBarStyle={styles.login_style_bar_detail}
                         sceneStyle={styles.login_scene_style}
-                        initial={this.state.logged}                        
 
                     />
 

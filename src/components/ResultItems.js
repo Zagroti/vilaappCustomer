@@ -21,7 +21,7 @@ export default class ResultItems extends Component {
                     flexDirection: 'row',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    width: Dimensions.get('window').width - 50,
+                    width: '90%',
                     padding: 5,
                     borderRadius: 10,
                     height: 100,
