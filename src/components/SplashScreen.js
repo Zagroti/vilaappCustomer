@@ -1,5 +1,5 @@
-import React , { Component } from 'react';
-import { ImageBackground, Text, View, Dimensions } from 'react-native';
+import React, { Component } from 'react';
+import { ImageBackground, Text, View, Dimensions, ActivityIndicator } from 'react-native';
 
 
 export default class SplashScreen extends Component {
@@ -7,11 +7,9 @@ export default class SplashScreen extends Component {
         return (
             <View style={styles.SplashView}>
                 <ImageBackground style={styles.SplashImage}
-                                 imageStyle={{
-                                    // borderBottomRightRadius: 300,
-                                 }}
-                                 source={require('./../../Assets/Images/splash.png')} >
+                    source={require('./../../Assets/Images/splash.png')} >
                     <View style={styles.VilaApp} >
+                        <ActivityIndicator style={{ marginBottom:50 }} size="small" color="#fff" />
                         <Text style={styles.VilaAppText} >
                             Power By VilaApp
                         </Text>
@@ -33,7 +31,7 @@ const styles = ({
         alignItems: 'center',
         borderBottomRightRadius: 150,
         height: Dimensions.get('window').height,
-        width: Dimensions.get('window').width ,
+        width: Dimensions.get('window').width,
     },
     SplashImage: {
         height: Dimensions.get('window').height,
@@ -45,6 +43,7 @@ const styles = ({
     VilaApp: {
         alignItems: 'center',
         marginBottom: 20,
+        height: 300
     },
     VilaAppText: {
         fontWeight: '900',

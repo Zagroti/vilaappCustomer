@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Dimensions, Image, TouchableOpacity } from 'react-native';
+import { Text, View, Dimensions, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default class RequestItems extends Component {
@@ -10,6 +10,7 @@ export default class RequestItems extends Component {
         this.state = {
 
         }
+
     }
 
 
@@ -18,17 +19,17 @@ export default class RequestItems extends Component {
         return (
             <TouchableOpacity style={styles.RequestItems} activeOpacity={.8} onPress={this.props.navigate}>
                 <View style={styles.left} >
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}> 
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Text style={{
                             color: '#fff',
                             fontFamily: 'IS',
                             fontSize: 10,
                         }}>(تومان)</Text>
                         <Text style={{
-                             color: '#fff',
-                             fontFamily: 'ISFBold',
-                             fontSize: 12,
-                             zIndex: 10
+                            color: '#fff',
+                            fontFamily: 'ISFBold',
+                            fontSize: 12,
+                            zIndex: 10
                         }}>  قیمت </Text>
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }} >
@@ -48,12 +49,12 @@ export default class RequestItems extends Component {
 
                             <View style={styles.times}>
                                 <View style={styles.start_time}>
-                                    <Text style={styles.time_show}>10/10/1398</Text>
+                                    <Text style={styles.time_show}>1398/10/10</Text>
                                     <Text style={styles.time_title}>تاریخ شروع</Text>
                                 </View>
 
                                 <View style={styles.end_time}>
-                                    <Text style={styles.time_show}>3 شب</Text>
+                                    <Text style={styles.time_show}>1398/10/12</Text>
                                     <Text style={styles.time_title}>تاریخ پایان</Text>
                                 </View>
                             </View>
@@ -96,6 +97,7 @@ const styles = ({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
+        height:100
     },
 
     number_box: {
@@ -108,7 +110,7 @@ const styles = ({
         height: 90,
     },
     number: {
-        fontSize: 50,
+        fontSize: 32,
         fontFamily: 'ISFBold',
         height: 50,
         color: '#333',
@@ -196,11 +198,11 @@ const styles = ({
     left: {
         backgroundColor: '#6FCF97',
         borderRadius: 5,
-        height: '100%',
+        height: 60,
         alignItems: 'center',
         justifyContent: 'center',
-        borderWidth:1,
-        borderColor:'#57a075'
+        borderWidth: 1,
+        borderColor: '#57a075'
 
     },
     price: {

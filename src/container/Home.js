@@ -32,7 +32,7 @@ import Counter from '../components/Counter';
 var moment = require('moment-jalaali')
 moment().format('jYYYY/jM/jD')
 
-
+let search = []
 
 export default class Home extends Component {
 
@@ -93,6 +93,8 @@ export default class Home extends Component {
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
     }
 
+
+   
 
     //for disable back button haedware
     handleBackButton() {

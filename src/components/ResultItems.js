@@ -8,7 +8,7 @@ export default class ResultItems extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            touchColor: '#fff'
+            touchColor: '#f6f6f6' 
         }
     }
 
@@ -19,69 +19,107 @@ export default class ResultItems extends Component {
             <TouchableOpacity
                 style={{
                     flexDirection: 'row',
-                    justifyContent: 'center',
                     alignItems: 'center',
-                    width: '90%',
-                    padding: 5,
-                    borderRadius: 10,
+                    justifyContent: 'space-between',
+                    width: Dimensions.get('window').width - 20,
+                    borderRadius: 5,
                     height: 100,
-                    marginBottom: 25,
+                    marginBottom: 10,
                     zIndex: 10,
-                    backgroundColor: this.state.touchColor
+                    backgroundColor: this.state.touchColor,
+                    overflow: 'hidden'
                 }}
                 activeOpacity={.9}
                 onPress={this.props.navigate}
-                onPressIn={() => this.setState({ touchColor: '#FFF7DE' })}
-                onPressOut={() => this.setState({ touchColor: '#fff' })}
+                onPressIn={() => this.setState({ touchColor: 'rgba(110, 29, 54, 0.1)' })}
+                onPressOut={() => this.setState({ touchColor: '#eee' })}
             >
+
                 <View
                     style={{
-                        backgroundColor: this.state.touchColor,
-                        padding: 10,
-                        borderTopLeftRadius: 10,
-                        borderBottomLeftRadius: 30,
-                        flex: 3,
-                        height: 90
+                        height: 100,
+                        flexDirection: 'row-reverse',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        width: Dimensions.get('window').width - 120,
                     }} >
-
-                    <View style={styles.up}>
-                        <Text style={styles.owner_answer}>پذیرفته شده</Text>
-                        <Text style={styles.title}>ویلای رویال </Text>
-                    </View>
-
-                    <View style={styles.down}>
-
-                        <View style={styles.left}>
-                            <View style={styles.available}>
-                                <Text style={styles.available_text}>قابل دسترس</Text>
-                                <Icon style={{marginLeft:5}} name="check-circle-outline" size={20} color="#6FCF97" />
+                    <View style={{
+                        flexDirection: 'column',
+                        alignItems: 'flex-end',
+                        justifyContent: 'space-between',
+                        height: 100,
+                        paddingVertical: 10,
+                    }}>
+                        <View style={{ flexDirection: 'row' , alignItems:'center' , position:'relative'}}>
+                            <Text style={styles.title}>ویلای رویال </Text>
+                            <Icon style={{ transform: [{ rotate: '90deg' }], end: -4 }} name="bookmark" size={30} color="#A52D53" />
+                            <Text
+                                style={{
+                                    position:'absolute',
+                                    top:8,
+                                    right: 1,
+                                    fontSize:9,
+                                    color:'#fff',
+                                    fontFamily:'ISFBold'
+                                }}
+                            >10%</Text>
+                        </View>
+                        <View style={{ marginRight: 5 }}>
+                            <View style={styles.location}>
+                                <Text style={styles.location_text}>بهشهر , منطقه ی جنگلی عباس آباد </Text>
+                                <Icon style={{ marginLeft: 5 }} name="map-marker" size={18} color="#aaa" />
                             </View>
+                        </View>
+                        <View style={{ marginRight: 5 }}>
                             <View style={styles.price}>
-                                <Text style={styles.price_small}>هر شب</Text>
-                                <Text style={styles.price_text}>320,000 ت </Text>
-                                <Icon style={{marginLeft:5}} name="cash-multiple" size={20} color="#636363" />
+                                <Text style={styles.price_small}> تومان</Text>
+                                <Text style={styles.price_number}>1,500,000</Text>
+                                <Text style={styles.price_text}>اجاره کل برای 3 شب: </Text>
+                                <Icon style={{ marginLeft: 5 }} name="cash-multiple" size={18} color="#aaa" />
                             </View>
                         </View>
 
-                        <View style={styles.right}>
-                            <View style={styles.person}>
-                                <Text style={styles.person_text}>ظرفیت 10 نفر</Text>
-                            <Icon style={{marginLeft:5}} name="account-group-outline" size={20} color="#636363" />
-                                
+                    </View>
+
+
+
+                    <View style={{
+                        flexDirection: 'column',
+                        height: 100,
+                        paddingVertical: 10,
+                        justifyContent: 'space-between',
+                        marginLeft: 10,
+                        alignItems: "flex-start",
+                    }}>
+                        <View style={{
+                            flexDirection: 'column',
+                            justifyContent: 'space-between',
+                            alignItems: "flex-start"
+                        }}>
+                            <View style={{ flexDirection: 'row' }}>
+                                <Icon name="star" size={18} color="gold" />
+                                <Icon name="star" size={18} color="gold" />
+                                <Icon name="star" size={18} color="gold" />
+                                <Icon name="star" size={18} color="gold" />
+                                <Icon name="star" size={18} color="gold" />
                             </View>
-                            <View style={styles.location}>
-                                <Text style={styles.location_text}>بابلسر</Text>
-                            <Icon style={{marginLeft:5}} name="map-marker" size={20} color="#636363" />
-                                
+                            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
+                                <Icon name="shield-check" size={18} color="#A52D53" />
+                                <Text style={{ fontSize: 10, fontFamily: 'ISBold', color: '#888' }}>آقای کریم پور</Text>
                             </View>
+                        </View>
+
+                        <View style={styles.person}>
+                            <Text style={styles.person_text}>ظرفیت <Text style={styles.price_number}>10</Text> نفر</Text>
+                            <Icon style={{ marginLeft: 5 }} name="account-group-outline" size={18} color="#aaa" />
                         </View>
 
                     </View>
                 </View>
                 <View style={styles.image_box} >
                     <Image style={styles.image} source={require('../../Assets/Images/detail.jpg')} />
-
                 </View>
+
 
 
             </TouchableOpacity>
@@ -92,31 +130,30 @@ export default class ResultItems extends Component {
 const styles = ({
 
     image_box: {
-        width: 90,
-        height: 90,
+        width: 100,
+        height: 100,
         justifyContent: 'center',
         alignItems: 'center',
-
+        borderLeftWidth: 5,
+        borderColor: '#A52D53'
     },
     image: {
-        width: 90,
-        height: 90,
+        width: 100,
+        height: 100,
         resizeMode: 'cover',
-        borderWidth: 2,
-        borderRadius: 10,
+        borderTopRightRadius: 10,
+        borderBottomRight: 10,
         borderColor: '#fff',
     },
     up: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom:2
-
     },
     down: {
-        flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
+        height: 100
     },
     right: {
         width: '50%'
@@ -127,9 +164,10 @@ const styles = ({
     },
 
     title: {
-        fontSize: 16,
+        fontSize: 12,
         fontFamily: 'ISBold',
-        color: '#333'
+        color: '#A52D53',
+
     },
     owner_answer: {
         fontSize: 8,
@@ -139,7 +177,6 @@ const styles = ({
         borderRadius: 30,
         paddingHorizontal: 10,
         textAlign: 'center',
-        start: -20
     },
     person: {
         flexDirection: 'row',
@@ -150,7 +187,7 @@ const styles = ({
         fontSize: 10,
         fontFamily: 'ISFMedium',
         color: '#888',
-        marginBottom:2
+        marginBottom: 2
 
     },
     location: {
@@ -161,18 +198,18 @@ const styles = ({
     },
     location_text: {
         fontSize: 10,
-        fontFamily: 'ISFMedium',
-        color: '#aaa',
+        fontFamily: 'ISF',
+        color: '#666',
     },
     available: {
         flexDirection: 'row',
         justifyContent: 'flex-end',
         alignItems: 'center',
-        marginBottom:2
+        marginBottom: 2
 
     },
     available_text: {
-        fontSize: 10,
+        fontSize: 12,
         fontFamily: 'ISFMedium',
         color: '#333'
     },
@@ -184,13 +221,17 @@ const styles = ({
     price_text: {
         fontSize: 10,
         fontFamily: 'ISFMedium',
-        color: '#333'
+        color: '#666'
     },
     price_small: {
-        fontSize: 6,
+        fontSize: 10,
+        fontFamily: 'ISFMedium',
+        color: '#666',
+    },
+    price_number: {
+        fontSize: 10,
         fontFamily: 'ISFBold',
-        color: '#333',
-        marginTop: 4
+        color: '#A52D53',
     },
     icon: {
         width: 12,
@@ -208,9 +249,8 @@ const styles = ({
 })
 
 
-{/* 
-
-    <ResultItems navigate={this._showDetail} /> 
 
 
-*/}
+    // <ResultItems navigate={this._showDetail} /> 
+
+
