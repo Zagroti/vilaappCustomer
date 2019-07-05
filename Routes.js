@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Router, Scene, Actions } from 'react-native-router-flux';
-import { Text, View, Image, TouchableOpacity, ImageBackground, StatusBar, ActivityIndicator } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import SendNumber from './src/container/SendNumber';
@@ -9,8 +9,10 @@ import EnterCode from './src/container/EnterCode';
 import Home from './src/container/Home';
 import Profile from './src/container/Profile';
 import Support from './src/container/Support';
-import ResultItemsPage from './src/container/ResultItemsPage'
-import Details from './src/container/Details'
+import ResultItemsPage from './src/container/ResultItemsPage';
+import Details from './src/container/Details';
+import Test from './src/container/Test';
+import Splash from './src/components/SplashScreen';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -70,21 +72,14 @@ class Routes extends React.Component {
 
     render() {
         if (this.state.loading) {
-            return <View style={{
-                flex: 1,
-                justifyContent: 'center',
-                flexDirection: 'row',
-                justifyContent: 'space-around',
-                padding: 10
-            }}>
-                <ActivityIndicator size="large" color="#A52D53" />
-            </View>;
+            return <Splash />
+
         }
         return (
             < Router >
                 <Scene key="root" >
 
-                    <Scene key="SendNumber"
+                      <Scene key="SendNumber"
                         component={SendNumber}
                         title="Send Number"
                         hideNavBar={true}
@@ -107,6 +102,7 @@ class Routes extends React.Component {
                         title="home"
                         hideNavBar={true}
                         initial={this.state.logged}                        
+
                     />
 
                     <Scene key="Profile" component={Profile}
@@ -124,7 +120,7 @@ class Routes extends React.Component {
                         renderBackButton={() => nothing}
                         navigationBarStyle={styles.login_style_bar}
                         sceneStyle={styles.login_scene_style}
-                    />
+                    />  
 
                     <Scene key="ResultItemsPage" component={ResultItemsPage}
                         title=""
@@ -133,6 +129,7 @@ class Routes extends React.Component {
                         renderRightButton={() => nothing}
                         navigationBarStyle={styles.login_style_bar_detail}
                         sceneStyle={styles.login_scene_style}
+
                     />
 
                     <Scene key="Details" component={Details}
@@ -142,7 +139,16 @@ class Routes extends React.Component {
                         renderRightButton={() => nothing}
                         navigationBarStyle={styles.login_style_bar_detail}
                         sceneStyle={styles.login_scene_style}
-                    />
+                    />  
+
+                    {/* <Scene key="Test"
+                        component={Test}
+                        title=""
+                        hideNavBar={true}
+                        initial={true}
+
+                    />  */}
+
 
 
                 </Scene>

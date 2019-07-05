@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-import { Text, View, Dimensions, Image, TouchableOpacity } from 'react-native';
+import { Text, View, Dimensions, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default class RequestItems extends Component {
 
 
-    constructor (props){
+    constructor(props) {
         super(props)
         this.state = {
 
         }
+
     }
 
 
@@ -18,23 +19,46 @@ export default class RequestItems extends Component {
         return (
             <TouchableOpacity style={styles.RequestItems} activeOpacity={.8} onPress={this.props.navigate}>
                 <View style={styles.left} >
-                    <Text style={styles.price}> 300,000 ت</Text>
-                    <Icon  size={30} name="chevron-left" color="#ccc" />      
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Text style={{
+                            color: '#fff',
+                            fontFamily: 'IS',
+                            fontSize: 10,
+                        }}>(تومان)</Text>
+                        <Text style={{
+                            color: '#fff',
+                            fontFamily: 'ISFBold',
+                            fontSize: 12,
+                            zIndex: 10
+                        }}>  قیمت </Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }} >
+                        <Text style={styles.price}> 500,000 </Text>
+                        <Text style={{ color: '#fff' }}> - </Text>
+                        <Text style={styles.price}> 100,000 </Text>
+                    </View>
                 </View>
+
                 <View style={styles.right}>
+
                     <View style={styles.vila_info}>
+
                         <Text style={styles.vila_name}>ویلای دریاکنار</Text>
+
                         <View style={styles.vila_detail}>
+
                             <View style={styles.times}>
                                 <View style={styles.start_time}>
-                                    <Text style={styles.time_show}>10/10/1398</Text>
+                                    <Text style={styles.time_show}>1398/10/10</Text>
                                     <Text style={styles.time_title}>تاریخ شروع</Text>
                                 </View>
+
                                 <View style={styles.end_time}>
-                                    <Text style={styles.time_show}>3 شب</Text>
+                                    <Text style={styles.time_show}>1398/10/12</Text>
                                     <Text style={styles.time_title}>تاریخ پایان</Text>
                                 </View>
                             </View>
+
                             <View style={styles.icon_right}>
                                 <Text style={styles.circle}></Text>
                                 <Text style={styles.line}></Text>
@@ -42,10 +66,12 @@ export default class RequestItems extends Component {
                             </View>
                         </View>
                     </View>
+
                     <View style={styles.number_box}>
                         <Text style={styles.number}>3</Text>
                         <Text style={styles.case}>مورد</Text>
                     </View>
+
                 </View>
             </TouchableOpacity>
         )
@@ -64,13 +90,14 @@ const styles = ({
         height: 100,
         marginBottom: 20,
         zIndex: 2,
-        
+        height: 90
     },
 
     right: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
+        height:100
     },
 
     number_box: {
@@ -80,9 +107,10 @@ const styles = ({
         paddingLeft: 10,
         borderLeftColor: '#f6f6f6',
         borderLeftWidth: 2,
+        height: 90,
     },
     number: {
-        fontSize: 50,
+        fontSize: 32,
         fontFamily: 'ISFBold',
         height: 50,
         color: '#333',
@@ -123,16 +151,16 @@ const styles = ({
         alignItems: 'center',
     },
     circle: {
-        backgroundColor: '#FFF2AB',
+        backgroundColor: '#6FCF97',
         width: 8,
         height: 8,
         borderRadius: 4,
-        borderColor: "#F2C94C",
+        borderColor: "#57a075",
         borderWidth: 1,
     },
     line: {
         borderStyle: 'dashed',
-        borderColor: "#F2C94C",
+        borderColor: "#57a075",
         borderWidth: 1,
         borderRadius: 2,
     },
@@ -168,19 +196,20 @@ const styles = ({
 
 
     left: {
+        backgroundColor: '#6FCF97',
+        borderRadius: 5,
+        height: 60,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: '#57a075'
 
     },
     price: {
-        backgroundColor: '#6FCF97',
-        paddingVertical: 4,
-        paddingHorizontal: 20,
-        borderRadius: 30,
-        width: 100,
+        padding: 5,
         color: '#fff',
         fontFamily: 'ISFBold',
         fontSize: 12,
-        start: -25,
-        top: -10,
         zIndex: 10
     }
 
