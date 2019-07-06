@@ -12,15 +12,15 @@ export default class Counter extends Component {
     }
 
 
-    _count = async (e) => {
+    _count =  (e) => {
         if (e === 'plus') {
-            await this.setState((prev) => {
+            this.setState((prev) => {
                 return {
                     number: prev.number + 1
                 }
             })
         } else {
-            await this.setState((prev) => {
+             this.setState((prev) => {
                 return {
                     number: prev.number - 1 < 0 ? prev.number : prev.number - 1
                 }

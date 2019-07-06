@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 
 import { Actions } from 'react-native-router-flux';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 //components 
 import GradientButton from '../components/GradientButton';
@@ -61,7 +62,7 @@ export default class Profile extends Component {
                     <View style={styles.icon_parent} >
                         <View style={styles.icon_child} >
                             <View style={styles.icon_cover} >
-                                <Image style={styles.icon} source={require('../../Assets/Images/user.png')} />
+                                <Icon name="account-outline" size={30} color="#fff" />
                             </View>
                         </View>
                     </View>
@@ -71,7 +72,7 @@ export default class Profile extends Component {
                             اطلاعات حساب
                     </Text>
                         <Text style={styles.account_text} >
-                            برای دریافت صورت حساب نیاز به پست  الکترونیک و دگیر اطلاعات شما داریم
+                            برای دریافت صورت حساب نیاز به پست  الکترونیک و دیگر اطلاعات شما داریم
                     </Text>
                     </View>
                     <View style={styles.account_form}>
@@ -180,11 +181,11 @@ const styles = ({
     account_box: {
         flexDirection: 'column',
         width: Dimensions.get('window').width - 100,
-        padding: 20,
+        paddingVertical: 20,
         borderRadius: 10,
     },
     account_title: {
-        fontSize: 16,
+        fontSize: 14,
         fontFamily: 'ISBold',
         color: '#333'
     },
@@ -192,10 +193,6 @@ const styles = ({
         fontSize: 12,
         fontFamily: 'IS',
         color: '#aaa'
-    },
-
-    account_form: {
-
     },
     form_inputs: {
         backgroundColor: '#fff',
@@ -206,9 +203,6 @@ const styles = ({
         fontSize: 10,
         fontFamily: 'ISBold',
         paddingHorizontal: 10,
-        shadowColor: "#f7f7f7",
-        shadowOpacity: 1,
-        elevation: 1,
         textAlign:'right'
     },
 

@@ -8,7 +8,7 @@ export default class ResultItems extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            touchColor: '#f6f6f6' 
+            touchColor: '#f6f6f6'
         }
     }
 
@@ -50,24 +50,24 @@ export default class ResultItems extends Component {
                         height: 100,
                         paddingVertical: 10,
                     }}>
-                        <View style={{ flexDirection: 'row' , alignItems:'center' , position:'relative'}}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', position: 'relative' }}>
                             <Text style={styles.title}>ویلای رویال </Text>
-                            <Icon style={{ transform: [{ rotate: '90deg' }], end: -4 }} name="bookmark" size={30} color="#A52D53" />
+                            <Icon style={{ transform: [{ rotate: '90deg' }], end: -5 }} name="bookmark" size={30} color="#A52D53" />
                             <Text
                                 style={{
-                                    position:'absolute',
-                                    top:8,
+                                    position: 'absolute',
+                                    top: 8,
                                     right: 1,
-                                    fontSize:9,
-                                    color:'#fff',
-                                    fontFamily:'ISFBold'
+                                    fontSize: 9,
+                                    color: '#fff',
+                                    fontFamily: 'ISFBold'
                                 }}
                             >10%</Text>
                         </View>
                         <View style={{ marginRight: 5 }}>
                             <View style={styles.location}>
                                 <Text style={styles.location_text}>بهشهر , منطقه ی جنگلی عباس آباد </Text>
-                                <Icon style={{ marginLeft: 5 }} name="map-marker" size={18} color="#aaa" />
+                                <Icon style={{ marginLeft: 5 }} name="map-marker" size={14} color="#aaa" />
                             </View>
                         </View>
                         <View style={{ marginRight: 5 }}>
@@ -75,13 +75,10 @@ export default class ResultItems extends Component {
                                 <Text style={styles.price_small}> تومان</Text>
                                 <Text style={styles.price_number}>1,500,000</Text>
                                 <Text style={styles.price_text}>اجاره کل برای 3 شب: </Text>
-                                <Icon style={{ marginLeft: 5 }} name="cash-multiple" size={18} color="#aaa" />
+                                <Icon style={{ marginLeft: 5 }} name="cash-multiple" size={14} color="#aaa" />
                             </View>
                         </View>
-
                     </View>
-
-
 
                     <View style={{
                         flexDirection: 'column',
@@ -94,24 +91,24 @@ export default class ResultItems extends Component {
                         <View style={{
                             flexDirection: 'column',
                             justifyContent: 'space-between',
-                            alignItems: "flex-start"
+                            alignItems: "center"
                         }}>
                             <View style={{ flexDirection: 'row' }}>
-                                <Icon name="star" size={18} color="gold" />
-                                <Icon name="star" size={18} color="gold" />
-                                <Icon name="star" size={18} color="gold" />
-                                <Icon name="star" size={18} color="gold" />
-                                <Icon name="star" size={18} color="gold" />
+                                <Icon name="star" size={14} color="gold" />
+                                <Icon name="star" size={14} color="gold" />
+                                <Icon name="star" size={14} color="gold" />
+                                <Icon name="star" size={14} color="gold" />
+                                <Icon name="star" size={14} color="gold" />
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
-                                <Icon name="shield-check" size={18} color="#A52D53" />
+                                <Icon name="shield-check" size={15} color="#A52D53" />
                                 <Text style={{ fontSize: 10, fontFamily: 'ISBold', color: '#888' }}>آقای کریم پور</Text>
                             </View>
                         </View>
 
                         <View style={styles.person}>
                             <Text style={styles.person_text}>ظرفیت <Text style={styles.price_number}>10</Text> نفر</Text>
-                            <Icon style={{ marginLeft: 5 }} name="account-group-outline" size={18} color="#aaa" />
+                            <Icon style={{ marginLeft: 5 }} name="account-group-outline" size={14} color="#aaa" />
                         </View>
 
                     </View>
@@ -119,9 +116,6 @@ export default class ResultItems extends Component {
                 <View style={styles.image_box} >
                     <Image style={styles.image} source={require('../../Assets/Images/detail.jpg')} />
                 </View>
-
-
-
             </TouchableOpacity>
         )
     }
@@ -142,26 +136,10 @@ const styles = ({
         height: 100,
         resizeMode: 'cover',
         borderTopRightRadius: 10,
-        borderBottomRight: 10,
+        borderBottomRightRadius: 10,
         borderColor: '#fff',
     },
-    up: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-    down: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 100
-    },
-    right: {
-        width: '50%'
-    },
-    left: {
-        width: '50%'
 
-    },
 
     title: {
         fontSize: 12,
@@ -169,15 +147,7 @@ const styles = ({
         color: '#A52D53',
 
     },
-    owner_answer: {
-        fontSize: 8,
-        fontFamily: 'ISBold',
-        color: '#fff',
-        backgroundColor: '#6FCF97',
-        borderRadius: 30,
-        paddingHorizontal: 10,
-        textAlign: 'center',
-    },
+
     person: {
         flexDirection: 'row',
         justifyContent: 'flex-end',
@@ -201,18 +171,7 @@ const styles = ({
         fontFamily: 'ISF',
         color: '#666',
     },
-    available: {
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        marginBottom: 2
 
-    },
-    available_text: {
-        fontSize: 12,
-        fontFamily: 'ISFMedium',
-        color: '#333'
-    },
     price: {
         flexDirection: 'row',
         justifyContent: 'flex-end',
@@ -232,16 +191,6 @@ const styles = ({
         fontSize: 10,
         fontFamily: 'ISFBold',
         color: '#A52D53',
-    },
-    icon: {
-        width: 12,
-        height: 12,
-        marginLeft: 8,
-    },
-    location_icon: {
-        width: 12,
-        height: 15,
-        marginLeft: 8,
     }
 
 

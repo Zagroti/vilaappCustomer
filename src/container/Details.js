@@ -4,12 +4,11 @@ import {
     View,
     Dimensions,
     Image,
-    ImageBackground,
     TouchableOpacity,
     ScrollView,
     Modal,
     SafeAreaView,
-    TouchableHighlight
+    BackHandler
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import InputScrollView from 'react-native-input-scroll-view';
@@ -80,6 +79,17 @@ export default class Details extends Component {
         }
     }
 
+    componentWillMount() {
+        //phone back btn 
+        BackHandler.addEventListener('hardwareBackPress', this._backButtonCustom);
+    }
+
+    componentWillUnmount() {
+        //phone back btn 
+        BackHandler.removeEventListener('hardwareBackPress', this._backButtonCustom);
+    }
+
+
 
 
     //close modal
@@ -99,7 +109,7 @@ export default class Details extends Component {
 
 
     // more funcion 
-    _mapHeightChanger = (item) => {
+    _seeMore = (item) => {
         if (item === 'availability') {
             if (!this.state.availability) {
                 this.setState({
@@ -140,6 +150,12 @@ export default class Details extends Component {
 
         }
 
+    }
+
+    _backButtonCustom = () => {
+        if (this.state.sliderFullScreen) {
+            return true
+        }
     }
 
     // slide full screen
@@ -220,7 +236,9 @@ export default class Details extends Component {
                 paddingBottom: 40
             }
 
+
         }
+
     }
 
     render() {
@@ -294,7 +312,7 @@ export default class Details extends Component {
                                     alignItems: 'center',
                                     borderRadius: 20,
                                 }}>
-                                    <Text style={{ color: '#fff', fontFamily: 'ISFBold' }}>{position + 1}  /  {images.length}</Text>
+                                    <Text style={{ color: '#fff', fontFamily: 'ISFBold', fontSize: 12 }}>{position + 1}  /  {images.length}</Text>
                                     <Icon name="image-area" style={{ marginLeft: 8 }} size={30} color="#fff" />
                                 </View>
                                 {
@@ -308,7 +326,7 @@ export default class Details extends Component {
                                             alignItems: 'center',
                                             borderRadius: 20,
                                         }}>
-                                            <Text style={{ color: '#333', fontSize: 20, fontFamily: 'ISFBold' }}>150,000 ت</Text>
+                                            <Text style={{ color: '#333', fontSize: 16, fontFamily: 'ISFBold' }}>150,000 ت</Text>
                                         </View> :
                                         <TouchableOpacity
                                             style={{
@@ -364,7 +382,7 @@ export default class Details extends Component {
 
                     <View style={styles.about_vila}>
                         <View style={styles.about_vila_first}>
-                            <Text style={styles.about_vila_title} >در مورد ویلا</Text>
+                            <Text style={styles.detail_title} >در مورد ویلا</Text>
                             <Text style={styles.about_vila_text} >لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</Text>
                             {
                                 this.state.aboutvila ?
@@ -375,7 +393,7 @@ export default class Details extends Component {
                         </View>
                         <TouchableOpacity
                             style={{ marginTop: 10, alignItems: 'center' }}
-                            onPress={() => this._mapHeightChanger('aboutvila')}
+                            onPress={() => this._seeMore('aboutvila')}
                         >
                             <Text style={{
                                 fontSize: 13,
@@ -388,7 +406,7 @@ export default class Details extends Component {
 
 
                     <View style={styles.availability} >
-                        <Text style={styles.about_vila_title} >امکانات </Text>
+                        <Text style={styles.detail_title} >امکانات </Text>
                         <View style={styles.availability_first}>
                             <View style={styles.availability_item} >
                                 <Text style={styles.availability_text} >پارکینگ</Text>
@@ -445,7 +463,7 @@ export default class Details extends Component {
 
                         <TouchableOpacity
                             style={{ marginTop: 10, alignItems: 'center' }}
-                            onPress={() => this._mapHeightChanger('availability')}
+                            onPress={() => this._seeMore('availability')}
                         >
                             <Text style={{
                                 fontSize: 13,
@@ -457,7 +475,7 @@ export default class Details extends Component {
                     </View>
 
                     <View style={styles.conditions}>
-                        <Text style={styles.about_vila_title}>شرایط</Text>
+                        <Text style={styles.detail_title}>شرایط</Text>
 
                         <Text style={styles.conditions_text}>1. آرام باشید و مراقب خودتان باشید.</Text>
                         <Text style={{ color: '#DC3053', fontSize: 12, fontFamily: 'ISMedium' }}>2. عاشق خودتان باشید .</Text>
@@ -476,7 +494,7 @@ export default class Details extends Component {
                             </View> : null}
                         <TouchableOpacity
                             style={{ marginTop: 10, alignItems: 'center' }}
-                            onPress={() => this._mapHeightChanger('conditions')}
+                            onPress={() => this._seeMore('conditions')}
                         >
                             <Text style={{
                                 fontSize: 13,
@@ -705,28 +723,6 @@ const styles = ({
         zIndex: 99999
     },
 
-    header_price: {
-        height: 150,
-        backgroundColor: '#00000036',
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'row'
-
-    },
-    price: {
-        fontSize: 30,
-        fontFamily: 'ISFBold',
-        color: '#fff',
-        marginBottom: 50,
-    },
-    per_night: {
-        fontSize: 10,
-        fontFamily: 'ISBold',
-        color: '#fff',
-        marginBottom: 50,
-        marginRight: 10,
-    },
 
     owner_answer: {
         fontSize: 10,
@@ -738,18 +734,6 @@ const styles = ({
         paddingVertical: 2,
         textAlign: 'center',
     },
-
-
-
-
-    body: {
-        top: -50,
-        borderTopRightRadius: 40,
-        borderTopLeftRadius: 40,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-    },
-
 
     vila_posibilities: {
         backgroundColor: '#f6f6f6',
@@ -764,7 +748,9 @@ const styles = ({
     },
     posibility: {
         alignItems: 'center',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        width: '25%',
+        justifyContent: 'center',
     },
     posibility_text: {
         fontSize: 10,
@@ -796,8 +782,8 @@ const styles = ({
     about_vila_first: {
 
     },
-    about_vila_title: {
-        fontSize: 18,
+    detail_title: {
+        fontSize: 15,
         fontFamily: 'ISFBold',
         color: '#333',
         marginBottom: 10
@@ -807,21 +793,6 @@ const styles = ({
         fontFamily: 'ISMedium',
         color: '#333',
     },
-    see_more: {
-        width: '100%',
-        alignItems: 'center',
-        marginTop: 15,
-
-    },
-    see_more_text: {
-        fontSize: 12,
-        fontFamily: 'ISMedium',
-        color: '#c7c7c7',
-    },
-    see_more_icon: {
-
-    },
-
 
     availability: {
         backgroundColor: '#f6f6f6',
@@ -881,28 +852,6 @@ const styles = ({
         top: -50,
         alignItems: 'center',
     },
-    save_button_image: {
-        width: '100%',
-        height: 50,
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        flexDirection: 'row',
-        justifyContent: 'center',
-
-    },
-    save_text: {
-        fontFamily: "ISBold",
-        color: '#fff',
-        fontSize: 16,
-        width: '50%'
-    },
-    right: {
-        width: '40%',
-        alignItems: 'flex-end'
-    },
-
-
 
     Modal: {
         justifyContent: 'space-around',

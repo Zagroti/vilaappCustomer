@@ -5,14 +5,12 @@ import {
     Dimensions,
     DrawerLayoutAndroid,
     Image,
-    ImageBackground,
     TouchableOpacity,
     BackHandler,
     ScrollView,
     Modal,
     TextInput,
     Picker,
-    KeyboardAvoidingView,
     PermissionsAndroid
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
@@ -32,7 +30,6 @@ import Counter from '../components/Counter';
 var moment = require('moment-jalaali')
 moment().format('jYYYY/jM/jD')
 
-let search = []
 
 export default class Home extends Component {
 
@@ -44,7 +41,6 @@ export default class Home extends Component {
             selectEnd: false,
             mapFull: false,
             otherZIndex: null,
-            mapStatusIcon: require('./../../Assets/Images/fullscreen.png'),
             mapIconTop: 10,
             mapIconLeft: 10,
             markers: [
@@ -64,7 +60,7 @@ export default class Home extends Component {
 
     componentDidMount() {
         // for disable back btn
-        BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+        
 
 
         // for map
@@ -77,29 +73,40 @@ export default class Home extends Component {
                     message: 'App needs location permission to find your position.'
                 }
             ).then(granted => {
-                console.log(granted);
+                // console.log(granted);
                 resolve();
             }).catch(err => {
-                console.warn(err);
+                // console.warn(err);
                 reject(err);
             });
         }
 
+       
+
+    }
+
+    componentWillMount(){
+    }
+
+    _back = () => {
+        if(this.state.modalVisible){
+            alert(0)
+
+        }
+        return true
     }
 
 
     componentWillUnmount() {
         // for disable back btn
-        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+        BackHandler.removeEventListener('hardwareBackPress', this._handleBackButton);
     }
 
 
-   
-
-    //for disable back button haedware
-    handleBackButton() {
-        // ToastAndroid.show('Back button is pressed', ToastAndroid.SHORT);
-        return true;
+    //for disable back button hardware
+    _handleBackButton() {
+        alert(0)
+        return true
     }
 
 
@@ -154,7 +161,6 @@ export default class Home extends Component {
             this.setState({
                 otherZIndex: -10,
                 mapFull: false,
-                mapStatusIcon: require('./../../Assets/Images/fullscreen.png'),
                 mapIconTop: 10,
                 mapIconLeft: 10,
                 modalHeight: Dimensions.get('window').height - 50
@@ -178,7 +184,6 @@ export default class Home extends Component {
             this.setState({
                 otherZIndex: null,
                 mapFull: true,
-                mapStatusIcon: require('./../../Assets/Images/resize.png'),
                 mapIconTop: 70,
                 mapIconLeft: 20,
                 modalHeight: Dimensions.get('window').height
@@ -219,12 +224,14 @@ export default class Home extends Component {
 
     }
 
-    _personCounter = async (e) => {
-        await this.setState({ persons: e })
+    _personCounter =  (e) => {
+         this.setState({ persons: e })
     }
 
 
     render() {
+        BackHandler.addEventListener('hardwareBackPress',this._back)
+
 
         // map marker
         const mark = this.state.markers.map(markers =>
@@ -264,13 +271,13 @@ export default class Home extends Component {
                     </View>
 
                 </View>
-                <TouchableOpacity activeOpacity={.6} style={styles.bottomIcons} onPress={(e) => this._navigate('profile')}>
+                <TouchableOpacity activeOpacity={.6} style={styles.bottom_icons} onPress={(e) => this._navigate('profile')}>
                     <Text style={styles.drawer_text}>پروفایل</Text>
                     <Icon name="account-outline" size={24} color="#b04267" />
                 </TouchableOpacity>
 
                 {/* got to history */}
-                <TouchableOpacity activeOpacity={.6} style={styles.bottomIcons} onPress={(e) => this._navigate('history')}>
+                <TouchableOpacity activeOpacity={.6} style={styles.bottom_icons} onPress={(e) => this._navigate('history')}>
                     <Text style={styles.drawer_text}>تاریخچه</Text>
                     <Icon name="calendar-clock" size={24} color="#b04267" />
                 </TouchableOpacity>
@@ -295,18 +302,14 @@ export default class Home extends Component {
                     {/* MENU */}
                     <View style={styles.menu} >
                         <TouchableOpacity
-                            style={styles.humberger}
-                            onPress={() => Actions.Support()}
-                        >
-                            <View style={styles.notification} >
-                                <Text style={styles.notification_text} >3</Text>
-                            </View>
-                            <Icon style={{ position: 'absolute', top: 0 }} name="bell-outline" size={32} color="#B22850" />
+                            style={styles.menu_icon}
+                            onPress={() => Actions.Support()}>
+                            <View style={styles.notification_circle} ></View>
+                            <Icon name="bell-outline" size={32} color="#B22850" />
                         </TouchableOpacity>
                         <Text style={styles.title} >درخواست های من</Text>
-
-                        <TouchableOpacity style={styles.humberger} onPress={this._openDrawer}>
-                            <Icon style={{ position: 'absolute', top: 0 }} name="menu" size={32} color="#B22850" />
+                        <TouchableOpacity style={styles.menu_icon} onPress={this._openDrawer}>
+                            <Icon name="menu" size={32} color="#B22850" />
                         </TouchableOpacity>
                     </View>
 
@@ -324,18 +327,7 @@ export default class Home extends Component {
                             <Requestitems navigate={this._showRequestsNavigate} />
                         </ScrollView>
                     </View>
-                    <TouchableOpacity activeOpacity={.9} style={{
-                        position: 'absolute', bottom: 140, zIndex: 10, right: 20, width: 90,
-                        height: 90,
-                        borderRadius: 50,
-                        backgroundColor: '#C92652',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        shadowColor: "black",
-                        shadowOpacity: .5,
-                        elevation: 10,
-                    }}
+                    <TouchableOpacity activeOpacity={.9} style={styles.modal_button}
                         onPress={() => {
                             this.setModalVisible(true);
                         }}
@@ -360,9 +352,7 @@ export default class Home extends Component {
                     visible={this.state.modalVisible}
                     onRequestClose={() => {
                         this.setModalVisible(false);
-                    }}
-
-                >
+                    }}>
                     {
                         this.state.selectStart ?
                             <Text style={{
@@ -722,13 +712,7 @@ export default class Home extends Component {
                         </View>
                     </InputScrollView>
 
-
-
                 </Modal>
-
-
-
-
 
             </DrawerLayoutAndroid >
 
@@ -771,31 +755,26 @@ const styles = ({
         justifyContent: 'space-between',
         height: 50,
         width: '100%',
-        paddingVertical: 5
-    },
-    notification: {
-        width: 14,
-        height: 14,
-        borderRadius: 7,
-        backgroundColor: '#B22850',
-        start: 8,
-        top: 0,
-        justifyContent: 'center',
+        paddingVertical: 5,
         alignItems: 'center',
     },
-    notification_text: {
-        color: '#fff',
-        fontSize: 9,
-        fontFamily: 'ISFMedium',
+    notification_circle: {
+        width: 10,
+        height: 10,
+        borderRadius: 7,
+        backgroundColor: '#B22850',
+        end: 13,
+        top: 15,
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute'
     },
-    humberger: {
+    menu_icon: {
         width: 50,
         height: 50,
         alignItems: 'center',
-    },
-    humberger_icon: {
-        width: 30,
-        height: 30,
+        justifyContent: 'center',
+        position: 'relative'
     },
     up: {
         flexDirection: 'column',
@@ -811,8 +790,8 @@ const styles = ({
 
     },
     title: {
-        fontSize: 18,
-        fontFamily: 'IS',
+        fontSize: 14,
+        fontFamily: 'ISBold',
         color: '#333',
         textAlign: 'center',
     },
@@ -823,27 +802,6 @@ const styles = ({
         paddingBottom: 200,
     },
 
-    footer: {
-        width: Dimensions.get('window').width,
-        height: 100,
-        backgroundColor: "#C92652",
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        zIndex: 20
-    },
-    middleBtn: {
-        bottom: 50,
-        width: 90,
-        height: 90,
-        borderRadius: 50,
-        backgroundColor: '#C92652',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        zIndex: 2,
-
-    },
     middleInside: {
         width: 80,
         height: 80,
@@ -855,12 +813,6 @@ const styles = ({
         alignItems: 'center',
         zIndex: 20
     },
-    middleIcon: {
-        width: 40,
-        height: 50,
-        zIndex: 20
-    },
-
     icon_parent: {
         width: 100,
         height: 100,
@@ -888,19 +840,10 @@ const styles = ({
         elevation: 1,
     },
 
-    icon_cover: {
-        width: 60,
-        height: 60,
-        backgroundColor: '#C92652',
-        borderRadius: 40,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
     icon: {
         width: '100%',
         height: '100%',
         borderRadius: 40,
-
     },
     person_desc: {
         flexDirection: 'column',
@@ -912,7 +855,7 @@ const styles = ({
         marginTop: 10,
         color: '#fff'
     },
-    bottomIcons: {
+    bottom_icons: {
         padding: 10,
         alignItems: 'center',
         justifyContent: 'flex-end',
@@ -925,47 +868,8 @@ const styles = ({
         fontFamily: 'ISBold',
         marginRight: 10,
     },
-    bottomIcon: {
-        width: 30,
-        height: 30
-    },
 
-    modal_description: {
-        backgroundColor: '#eee',
-        borderBottomRightRadius: 20,
-        borderBottomLeftRadius: 10,
-        borderTopLeftRadius: 50,
-        borderTopRightRadius: 20,
-        width: '90%',
-        flexDirection: 'row',
-        alignItems: 'center',
-        shadowColor: "#f7f7f7",
-        shadowOpacity: 1,
-        elevation: 1,
-        height: 100,
-        padding: 10,
-        marginTop: 50,
-    },
 
-    home_icon_marker: {
-        width: 50,
-        resizeMode: "contain",
-        top: -40,
-    },
-
-    modal_description_left: {
-        flex: 1
-    },
-    modal_description_text: {
-        fontSize: 14,
-        color: '#333',
-        fontFamily: 'ISBold',
-    },
-    modal_description_title: {
-        fontSize: 10,
-        color: '#aaa',
-        fontFamily: 'IS',
-    },
     modal_price: {
         width: '48%',
         flexDirection: 'column',
@@ -1013,11 +917,6 @@ const styles = ({
         fontFamily: 'ISBold',
         color: '#636363'
     },
-    modal_icons: {
-        width: 20,
-        resizeMode: "contain",
-        marginLeft: 10,
-    },
 
     price_input: {
         textAlign: 'center',
@@ -1041,42 +940,16 @@ const styles = ({
         alignItems: 'space-between',
         borderRadius: 5
     },
-    select_time: {
-        textAlign: 'center',
-        fontSize: 15,
-        fontFamily: 'ISFBold',
-        borderRadius: 5,
-        shadowColor: "#f7f7f7",
-        shadowOpacity: .3,
-        elevation: 1,
-        width: '100%',
-        height: 50,
-        backgroundColor: '#fff',
-        color: '#636363',
-        marginTop: 5,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    nights: {
-        width: '90%',
-        marginVertical: 5
-    },
 
     new_request_box: {
         width: '100%',
         height: 80,
         alignItems: 'center',
         justifyContent: 'center',
-        // backgroundColor: '#ebebeb',
         marginTop: 10,
         marginBottom: 30,
     },
 
-
-    modal_close: {
-        width: 25,
-        height: 25,
-    },
 
     select_date: {
         textAlign: 'center',
@@ -1089,6 +962,22 @@ const styles = ({
         justifyContent: 'center',
         alignItems: 'center',
         fontFamily: 'ISBold',
+    },
+    modal_button : {
+        position: 'absolute', 
+        bottom: 140, 
+        zIndex: 10, 
+        right: 20, 
+        width: 90,
+        height: 90,
+        borderRadius: 50,
+        backgroundColor: '#C92652',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: "black",
+        shadowOpacity: .5,
+        elevation: 10,
     }
 
 

@@ -41,6 +41,7 @@ class SendNumber extends Component {
 
 
 
+
     // country code onchange 
     _changeCode = (e) => {
 
@@ -112,22 +113,6 @@ class SendNumber extends Component {
     }
 
 
-    scrolldown(ref) {
-        const self = this;
-        // this.refs[ref].measure((ox, oy, width, height, px, py) => {
-        //     self.refs.scrollView.scrollTo({y: oy - 200});
-        // });
-
-        // this.scrollView.getNode().scrollTo({y:100})
-
-
-        const { State: TextInputState } = TextInput;
-        const currentlyFocusedField = TextInputState.currentlyFocusedField();
-
-        UIManager.measure(currentlyFocusedField, (originX, originY, width, height, pageX, pageY) => {
-            console.log(originX, originY, width, height, pageX, pageY);
-        });
-    }
 
 
     render() {
@@ -135,10 +120,6 @@ class SendNumber extends Component {
         let { fadeText } = this.state
 
         return (
-
-
-
-
 
             <View style={styles.send_number}>
 
@@ -202,7 +183,6 @@ class SendNumber extends Component {
                                     ref={'NUMBER'}
                                     style={styles.input_box_2}
                                     onChangeText={(e) => this._changeNumber(e)}
-                                    onFocus={this.scrolldown.bind(this, 'NUMBER')}
                                     value={this.state.number}
                                     keyboardType='numeric'
                                     textContentType="telephoneNumber"
@@ -312,29 +292,23 @@ const styles = ({
         height: 45,
         paddingLeft: 10,
         fontSize: 12,
-        fontWeight: '900'
+        fontWeight: '900',
+
     },
     input_box_2: {
         height: 45,
         width: '70%',
         paddingLeft: 10,
         fontSize: 18,
-        fontWeight: '900',
         letterSpacing: 5,
-        ...Platform.select({
-
-            android: {
-                fontFamily: 'ISFBold',
-            }
-        })
+        fontWeight: '900',
     },
     number_inputs: {
         marginTop: 50,
-        // flexGrow:3
     },
     number_inputs_title: {
         color: '#999',
-        fontSize: 16,
+        fontSize: 12,
         marginBottom: 10,
         fontFamily: 'ISBold',
 

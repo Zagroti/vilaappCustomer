@@ -10,9 +10,7 @@ export default class RequestItems extends Component {
         this.state = {
 
         }
-
     }
-
 
     render() {
 
@@ -42,11 +40,8 @@ export default class RequestItems extends Component {
                 <View style={styles.right}>
 
                     <View style={styles.vila_info}>
-
                         <Text style={styles.vila_name}>ویلای دریاکنار</Text>
-
                         <View style={styles.vila_detail}>
-
                             <View style={styles.times}>
                                 <View style={styles.start_time}>
                                     <Text style={styles.time_show}>1398/10/10</Text>
@@ -123,27 +118,20 @@ const styles = ({
         color: '#333'
     },
 
-
-
     vila_info: {
         justifyContent: 'center',
         paddingRight: 10,
-
     },
     vila_name: {
         fontSize: 16,
         fontFamily: 'ISBold',
         color: '#333'
-
     },
     vila_detail: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
     },
-
-
-
 
     icon_right: {
         flexDirection: 'column',

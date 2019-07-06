@@ -22,7 +22,6 @@ export default class App extends Component {
     return (
 
       <View style={{height: Dimensions.get('window').height + 100}}>
-
           <Routes />
       </View>
         
