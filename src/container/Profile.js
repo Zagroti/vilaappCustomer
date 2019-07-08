@@ -166,26 +166,38 @@ export default class Profile extends Component {
                         </Text>
                     </View>
                     <View style={styles.account_form}>
-                        <TextInput
-                            style={styles.form_inputs}
-                            onChangeText={(countryCode) => this.setState({ countryCode })}
-                            placeholder="نام و نام خانوادگی"
-                        />
-                        <TextInput
-                            style={styles.form_inputs}
-                            onChangeText={(countryCode) => this.setState({ countryCode })}
-                            placeholder="ایمیل"
-                        />
-                        <TextInput
-                            style={styles.form_inputs}
-                            onChangeText={(countryCode) => this.setState({ countryCode })}
-                            placeholder="شهر"
-                        />
-                        <TextInput
-                            style={styles.form_inputs}
-                            onChangeText={(countryCode) => this.setState({ countryCode })}
-                            placeholder="آدرس"
-                        />
+                        <View style={styles.input_box}>
+                            <TextInput
+                                style={styles.form_inputs}
+                                onChangeText={(countryCode) => this.setState({ countryCode })}
+                                placeholder="نام و نام خانوادگی"
+                            />
+                            <Icon style={{ marginLeft: 5 }} size={25} name="account-outline" color="#636363" />
+                        </View>
+                        <View style={styles.input_box}>
+                            <TextInput
+                                style={styles.form_inputs}
+                                onChangeText={(countryCode) => this.setState({ countryCode })}
+                                placeholder="ایمیل"
+                            />
+                            <Icon style={{ marginLeft: 5 }} size={25} name="email-outline" color="#636363" />
+                        </View>
+                        <View style={styles.input_box}>
+                            <TextInput
+                                style={styles.form_inputs}
+                                onChangeText={(countryCode) => this.setState({ countryCode })}
+                                placeholder="شهر"
+                            />
+                            <Icon style={{ marginLeft: 5 }} size={25} name="phone" color="#636363" />
+                        </View>
+                        <View style={styles.input_box}>
+                            <TextInput
+                                style={styles.form_inputs}
+                                onChangeText={(countryCode) => this.setState({ countryCode })}
+                                placeholder="آدرس"
+                            />
+                            <Icon style={{ marginLeft: 5 }} size={25} name="phone-classic" color="#636363" />
+                        </View>
 
                     </View>
 
@@ -275,18 +287,33 @@ const styles = ({
         fontFamily: 'IS',
         color: '#aaa'
     },
+    input_box: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#fff',
+        marginBottom: 10,
+        paddingHorizontal: 10,
+        borderRadius: 5,
+        height: 40,
+        width: Dimensions.get('window').width - 100,
+
+    },
     form_inputs: {
         backgroundColor: '#fff',
-        width: Dimensions.get('window').width - 100,
-        borderRadius: 5,
-        marginBottom: 10,
         height: 40,
         fontSize: 10,
         fontFamily: 'ISBold',
-        paddingHorizontal: 10,
-        textAlign: 'right'
-    },
+        textAlign: 'right',
+        paddingRight: 10,
+        width: '90%'
 
+    },
+    input_icon: {
+        width: 20,
+        resizeMode: 'contain'
+
+    },
 
 
 
