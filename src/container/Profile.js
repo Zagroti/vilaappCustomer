@@ -61,10 +61,8 @@ export default class Profile extends Component {
     }
 
 
-
-    pickMultiple = async () => {
-        console.log(9)
-
+    // pick image 
+    pickSingleImage = () => {
         ImagePicker.openPicker({
             width: 300,
             height: 300,
@@ -74,14 +72,8 @@ export default class Profile extends Component {
             this.setState({
                 image: imgs
             });
-            console.log(this.state.images)
-
         })
-        console.log("image : " + this.state.image)
     }
-
-
-
 
     // show selected images
     renderAsset(image) {
@@ -113,6 +105,8 @@ export default class Profile extends Component {
         });
     }
 
+
+
     render() {
 
         return (
@@ -123,10 +117,10 @@ export default class Profile extends Component {
             }} behavior="position">
 
                 <View style={styles.Profile}>
-                <View style={styles.icon_parent} >
+                    <View style={styles.icon_parent} >
                         <View style={styles.icon_cover} >
                             {this.state.image ? this.state.image.map(i =>
-                                <TouchableOpacity style={{
+                                <TouchableOpacity activeOpacity={.8} style={{
                                     justifyContent: 'center',
                                     alignItems: 'center',
                                     width: '100%',
@@ -137,10 +131,28 @@ export default class Profile extends Component {
                                     this._deleteImage(i.uri)} key={i.uri}>{this.renderAsset(i)}
                                 </TouchableOpacity>)
                                 :
-                                <TouchableOpacity style={styles.icon_box} onPress={this.pickMultiple.bind(this)} activeOpacity={.8} >
-                                    <Icon style={styles.icon} size={25} name="account-outline" color="#fff" />
+                                <TouchableOpacity  onPress={this.pickSingleImage} activeOpacity={.8} >
+                                    <Icon style={styles.icon} size={40} name="account-outline" color="#fff" />
                                 </TouchableOpacity>}
-
+                            {
+                                !this.state.image ?
+                                    <TouchableOpacity activeOpacity={.8}
+                                        style={{
+                                            backgroundColor: 'rgba(0,0,0,.3)',
+                                            padding: 2,
+                                            position: 'absolute',
+                                            bottom: 0,
+                                            right: 0,
+                                            left: 0,
+                                            alignItems: 'center',
+                                            width: '100%',
+                                            height: 20
+                                        }}
+                                        onPress={this.pickSingleImage}>
+                                        <Icon name="image-plus" size={16} color="#fff" />
+                                    </TouchableOpacity>
+                                    : null
+                            }
 
                         </View>
                     </View>
@@ -151,7 +163,7 @@ export default class Profile extends Component {
                     </Text>
                         <Text style={styles.account_text} >
                             برای دریافت صورت حساب نیاز به پست  الکترونیک و دیگر اطلاعات شما داریم
-                    </Text>
+                        </Text>
                     </View>
                     <View style={styles.account_form}>
                         <TextInput
@@ -177,22 +189,22 @@ export default class Profile extends Component {
 
                     </View>
 
- 
+
 
                     <GradientButton
-                            width={Dimensions.get('window').width - 100}
-                            press={this._saveInfo}
-                            activeOpacity={.6}
-                            color_1="#36a35b"
-                            color_2="#6fcf97"
-                            height={50}
-                            borderRadius={50}
-                            textColor="#fff"
-                            size={16}
-                            title="ذخیره"
-                            top={40}
-                            bottom={0}
-                        />
+                        width={Dimensions.get('window').width - 100}
+                        press={this._saveInfo}
+                        activeOpacity={.6}
+                        color_1="#36a35b"
+                        color_2="#6fcf97"
+                        height={50}
+                        borderRadius={50}
+                        textColor="#fff"
+                        size={16}
+                        title="ذخیره"
+                        top={40}
+                        bottom={0}
+                    />
 
 
 
@@ -233,6 +245,7 @@ const styles = ({
         borderRadius: 60,
         justifyContent: 'center',
         alignItems: 'center',
+        overflow: 'hidden',
     },
     images_box: {
         width: 60,
@@ -245,9 +258,6 @@ const styles = ({
     },
 
     icon: {
-        width: 25,
-        height: 25,
-        backgroundColor: '#C92652',
     },
     account_box: {
         flexDirection: 'column',
@@ -274,7 +284,7 @@ const styles = ({
         fontSize: 10,
         fontFamily: 'ISBold',
         paddingHorizontal: 10,
-        textAlign:'right'
+        textAlign: 'right'
     },
 
 
