@@ -12,6 +12,7 @@ import com.mapbox.rctmgl.RCTMGLPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.oblador.vectoricons.VectorIconsPackage;
+import com.reactnative.ivpusic.imagepicker.PickerPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -32,7 +33,8 @@ public class MainApplication extends Application implements ReactApplication {
           new LinearGradientPackage(),
           new RCTMGLPackage(),
           new AsyncStoragePackage(),
-          new VectorIconsPackage()
+          new VectorIconsPackage(),
+          new PickerPackage()
       );
     }
 

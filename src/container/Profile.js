@@ -4,8 +4,10 @@ import {
     View,
     Dimensions,
     TextInput,
-    Image,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    NativeModules,
+    TouchableOpacity,
+    ImageBackground
 } from 'react-native';
 
 import { Actions } from 'react-native-router-flux';
@@ -14,6 +16,15 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 //components 
 import GradientButton from '../components/GradientButton';
 
+
+
+
+
+// import ImagePicker from 'react-native-image-picker';
+var ImagePicker = NativeModules.ImageCropPicker;
+
+// images for upload
+var imgs = []
 
 
 export default class Profile extends Component {
@@ -49,6 +60,59 @@ export default class Profile extends Component {
         // return false;
     }
 
+
+
+    pickMultiple = async () => {
+        console.log(9)
+
+        ImagePicker.openPicker({
+            width: 300,
+            height: 300,
+            cropping: true
+        }).then((image) => {
+            imgs.push({ uri: image.path, width: image.width, height: image.height, mime: image.mime });
+            this.setState({
+                image: imgs
+            });
+            console.log(this.state.images)
+
+        })
+        console.log("image : " + this.state.image)
+    }
+
+
+
+
+    // show selected images
+    renderAsset(image) {
+
+        // return <Image  style={styles.images_box} source={image} />
+
+        return <ImageBackground style={styles.images_box} imageStyle={{ borderRadius: 10 }} source={image}>
+            <View style={{
+                backgroundColor: 'rgba(0,0,0,.3)',
+                padding: 2,
+                position: 'absolute',
+                bottom: 0,
+                right: 0,
+                left: 0,
+                alignItems: 'center'
+            }}>
+                <Icon name="delete" size={20} color="red" />
+
+            </View>
+        </ImageBackground>
+    }
+
+
+    // delete selected images
+    _deleteImage = (key) => {
+        imgs.splice(0, 1)
+        this.setState({
+            image: null,
+        });
+    }
+
     render() {
 
         return (
@@ -59,11 +123,25 @@ export default class Profile extends Component {
             }} behavior="position">
 
                 <View style={styles.Profile}>
-                    <View style={styles.icon_parent} >
-                        <View style={styles.icon_child} >
-                            <View style={styles.icon_cover} >
-                                <Icon name="account-outline" size={30} color="#fff" />
-                            </View>
+                <View style={styles.icon_parent} >
+                        <View style={styles.icon_cover} >
+                            {this.state.image ? this.state.image.map(i =>
+                                <TouchableOpacity style={{
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    width: '100%',
+                                    height: '100%',
+                                    borderRadius: 100,
+                                    overflow: 'hidden'
+                                }} onPress={() =>
+                                    this._deleteImage(i.uri)} key={i.uri}>{this.renderAsset(i)}
+                                </TouchableOpacity>)
+                                :
+                                <TouchableOpacity style={styles.icon_box} onPress={this.pickMultiple.bind(this)} activeOpacity={.8} >
+                                    <Icon style={styles.icon} size={25} name="account-outline" color="#fff" />
+                                </TouchableOpacity>}
+
+
                         </View>
                     </View>
 
@@ -139,40 +217,33 @@ const styles = ({
     },
 
     icon_parent: {
-        width: 90,
-        height: 90,
-        backgroundColor: '#aaa',
+        width: 80,
+        height: 80,
         borderWidth: 10,
-        borderColor: '#f5f5f5',
-        borderRadius: 45,
+        borderColor: '#f0f0f0',
+        borderRadius: 100,
         justifyContent: 'center',
         alignItems: 'center',
-        shadowColor: "#f7f7f7",
-        shadowOpacity: 1,
-        elevation: 1,
-    },
-    icon_child: {
-        width: 70,
-        height: 70,
-        backgroundColor: '#fff',
-        borderWidth: 10,
-        borderColor: '#f8f8f8',
-        borderRadius: 35,
-        justifyContent: 'center',
-        alignItems: 'center',
-        shadowColor: "#f7f7f7",
-        shadowOpacity: 1,
-        elevation: 1,
     },
 
     icon_cover: {
-        width: 50,
-        height: 50,
+        width: 60,
+        height: 60,
         backgroundColor: '#C92652',
-        borderRadius: 25,
+        borderRadius: 60,
         justifyContent: 'center',
         alignItems: 'center',
     },
+    images_box: {
+        width: 60,
+        height: 60,
+        borderRadius: 200,
+        justifyContent: 'center',
+        alignItems: 'center',
+        resizeMode: 'cover',
+        position: 'relative'
+    },
+
     icon: {
         width: 25,
         height: 25,
