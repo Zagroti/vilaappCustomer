@@ -18,6 +18,8 @@ import InputScrollView from 'react-native-input-scroll-view';
 import PersianDatePicker from "rn-persian-date-picker";
 import Mapir from 'mapir-react-native-sdk'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import AsyncStorage from '@react-native-community/async-storage';
+
 
 //components 
 import NoRequest from '../components/NoRequest';
@@ -85,13 +87,11 @@ export default class Home extends Component {
 
     }
 
-    componentWillMount(){
-    }
+
 
     _back = () => {
         if(this.state.modalVisible){
             alert(0)
-
         }
         return true
     }
@@ -109,8 +109,6 @@ export default class Home extends Component {
         return true
     }
 
-
-
     //footer actions
     _navigate = (path) => {
         if (path === 'profile') {
@@ -123,6 +121,30 @@ export default class Home extends Component {
         this.refs['DRAWER_REF'].closeDrawer();
 
     }
+
+
+
+
+
+    // log out
+    _exit = () => {
+        console.log(111)
+        this._removeData()
+        Actions.SendNumber()
+    }
+    _removeData = async () => {
+        try {
+            await AsyncStorage.removeItem('login')
+            console.log(AsyncStorage.getItem('login'))
+            return true;
+        } catch (e) {
+            return false
+        }
+    }
+
+
+
+
 
     // got to vila cases
     _showRequestsNavigate = () => {
@@ -280,6 +302,12 @@ export default class Home extends Component {
                 <TouchableOpacity activeOpacity={.6} style={styles.bottom_icons} onPress={(e) => this._navigate('history')}>
                     <Text style={styles.drawer_text}>تاریخچه</Text>
                     <Icon name="calendar-clock" size={24} color="#b04267" />
+                </TouchableOpacity>
+
+                {/* EXIT */}
+                <TouchableOpacity activeOpacity={.6} style={styles.bottom_icons} onPress={this._exit}>
+                    <Text style={styles.drawer_text}>خروج</Text>
+                    <Icon name="exit-to-app" size={24} color="#b04267" />
                 </TouchableOpacity>
             </View>
         );

@@ -96,7 +96,6 @@ class EnterCode extends Component {
         } catch (e) {
             // saving error
         }
-        console.log('set')
 
     }
 
