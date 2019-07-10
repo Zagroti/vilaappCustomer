@@ -355,11 +355,7 @@ export default class Home extends Component {
                                                     >ایران ، {this.state.city}</Text>
                                                 </TouchableOpacity>
                                             </View>
-                                            <View style={{
-                                                flexDirection: 'row',
-                                                width: '50%',
-                                                justifyContent: 'flex-end'
-                                            }}>
+                                            <View style={styles.right_icon_box}>
                                                 <Text style={{
                                                     fontSize: 12,
                                                     fontFamily: 'ISBold',
@@ -421,19 +417,10 @@ export default class Home extends Component {
                                                         alignItems: 'center',
                                                         height: 50
                                                     }}>
-                                                        <Text style={{
-                                                            backgroundColor: '#fff',
-                                                            fontSize: 18,
-                                                            color: '#555',
-                                                            fontFamily: 'SB',
-                                                            textAlign: 'left',
-                                                            justifyContent: 'center',
-                                                            alignItems: 'center',
-                                                            width: '100%'
-                                                        }}>{moment(startDate).format("jYYYY/jMM/jDD")}</Text>
+                                                        <Text style={styles.show_selected_date}>{moment(startDate).format("jYYYY/jMM/jDD")}</Text>
                                                     </View>
                                                 </TouchableOpacity>
-                                                <View style={{ flexDirection: 'row', width: '50%', justifyContent: 'flex-end' }}>
+                                                <View style={styles.right_icon_box}>
                                                     <Text style={{
                                                         fontSize: 12,
                                                         fontFamily: 'ISBold',
@@ -552,18 +539,7 @@ export default class Home extends Component {
                                     <View style={styles.new_request_box}>
                                         <TouchableOpacity activeOpacity={.7}
                                             onPress={() => this.setState({ modalVisible: false })}
-                                            style={{
-                                                backgroundColor: '#C50143',
-                                                width: 120,
-                                                height: 120,
-                                                borderRadius: 100,
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                position: 'absolute',
-                                                top: -60,
-                                                borderWidth: 10,
-                                                borderColor: '#fff'
-                                            }}>
+                                            style={styles.search_touch}>
                                             <Text style={{ color: '#fff', fontFamily: 'ISBold' }} >جستجو</Text>
                                         </TouchableOpacity>
                                     </View>
@@ -747,6 +723,22 @@ const styles = ({
         height: 50,
         width: '90%',
     },
+    show_selected_date:{
+        backgroundColor: '#fff',
+        fontSize: 18,
+        color: '#555',
+        fontFamily: 'SB',
+        textAlign: 'left',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%'
+    },
+    right_icon_box: {
+        flexDirection: 'row',
+        width: '50%',
+        justifyContent: 'flex-end',
+        alignItems: 'center'
+    },
     capacity: {
         flexDirection: 'row',
         alignItems: 'flex-end',
@@ -801,7 +793,19 @@ const styles = ({
         position: 'absolute',
         backgroundColor: '#fff'
     },
-
+    search_touch: {
+        backgroundColor: '#C50143',
+        width: 120,
+        height: 120,
+        borderRadius: 100,
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'absolute',
+        top: -60,
+        borderWidth: 10,
+        borderColor: '#fff',
+        zIndex:9999
+    },
 
     select_date: {
         borderRadius: 5,
