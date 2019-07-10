@@ -256,12 +256,9 @@ export default class Home extends Component {
                         </ScrollView>
                     </View>
                     <TouchableOpacity activeOpacity={.9} style={styles.modal_button}
-                        onPress={() => {
-                            this.setModalVisible(true);
-                        }}
-                    >
+                        onPress={() => {this.setModalVisible(true)}}>
                         <View style={styles.middleInside}>
-                            <Icon name="map-search-outline" size={50} color="#C92652" />
+                            <Icon name="filter-outline" size={36} color="#C92652" />
                         </View>
                     </TouchableOpacity>
 
@@ -542,6 +539,7 @@ export default class Home extends Component {
                                             style={styles.search_touch}>
                                             <Text style={{ color: '#fff', fontFamily: 'ISBold' }} >جستجو</Text>
                                         </TouchableOpacity>
+                                        <View style={styles.search_touch_sibling} ></View>
                                     </View>
                                 </View>
                             </View>
@@ -622,14 +620,29 @@ const styles = ({
         paddingTop: 20,
         paddingBottom: 200,
     },
-
-    middleInside: {
+    modal_button: {
+        position: 'absolute',
+        bottom: 140,
+        zIndex: 10,
+        right: 20,
         width: 80,
         height: 80,
+        borderRadius: 40,
+        backgroundColor: '#C92652',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: "black",
+        shadowOpacity: .5,
+        elevation: 10,
+    },
+    middleInside: {
+        width: 74,
+        height: 74,
         backgroundColor: '#fff',
         borderWidth: 2,
         borderColor: '#eee',
-        borderRadius: 50,
+        borderRadius: 40,
         justifyContent: 'center',
         alignItems: 'center',
         zIndex: 20
@@ -785,26 +798,39 @@ const styles = ({
 
     new_request_box: {
         width: '100%',
+        height: 200,
+        alignItems: 'center',
+        justifyContent: 'center',
+        bottom: 100,
+        borderRadius: 30,
+        position: 'absolute',
+        backgroundColor: 'transparent',
+        flexDirection:'column',
+
+    },
+    search_touch_sibling:{
+        width: '100%',
         height: 140,
         alignItems: 'center',
         justifyContent: 'center',
-        bottom: 50,
         borderRadius: 30,
-        position: 'absolute',
         backgroundColor: '#fff'
     },
     search_touch: {
         backgroundColor: '#C50143',
-        width: 120,
-        height: 120,
-        borderRadius: 100,
+        width: Dimensions.get('window').width/3,
+        height: Dimensions.get('window').width/3,
+        borderRadius: Dimensions.get('window').width/6,
         alignItems: 'center',
         justifyContent: 'center',
-        position: 'absolute',
-        top: -60,
+        // position: 'absolute',
+        top: Dimensions.get('window').width/6,
         borderWidth: 10,
         borderColor: '#fff',
-        zIndex:9999
+        shadowColor: "black",
+        shadowOpacity: .5,
+        elevation: 2,
+        zIndex:99
     },
 
     select_date: {
@@ -818,22 +844,7 @@ const styles = ({
         alignItems: 'center',
         fontFamily: 'ISBold',
     },
-    modal_button: {
-        position: 'absolute',
-        bottom: 140,
-        zIndex: 10,
-        right: 20,
-        width: 90,
-        height: 90,
-        borderRadius: 50,
-        backgroundColor: '#C92652',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        shadowColor: "black",
-        shadowOpacity: .5,
-        elevation: 10,
-    },
+   
     picker_modal: {
         position: 'absolute',
         right: 0,
