@@ -158,8 +158,15 @@ export default class Home extends Component {
 
 
 
-    _personCounter = (e) => {
-        this.setState({ persons: e })
+    _counterHandler =  (e,method) => {
+        if(method === 'night'){
+             this.setState({ nights: e })
+            console.log(this.state)
+        }else{
+             this.setState({ persons: e })
+            console.log(this.state)
+
+        }
     }
 
     _selectCity = (city) => {
@@ -256,7 +263,7 @@ export default class Home extends Component {
                         </ScrollView>
                     </View>
                     <TouchableOpacity activeOpacity={.9} style={styles.modal_button}
-                        onPress={() => {this.setModalVisible(true)}}>
+                        onPress={() => { this.setModalVisible(true) }}>
                         <View style={styles.middleInside}>
                             <Icon name="filter-outline" size={36} color="#C92652" />
                         </View>
@@ -307,7 +314,7 @@ export default class Home extends Component {
 
 
 
-                            <View style={{ flex: 1, position: 'relative', }} >
+                            <View style={{ flex: 1, position: 'relative', backgroundColor: '#f6f6f6' }} >
                                 {/* Close modal  */}
 
                                 <View
@@ -315,23 +322,29 @@ export default class Home extends Component {
                                         backgroundColor: '#f6f6f6',
                                         width: '100%',
                                         height: 50,
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        // padding: 10,
+                                    }}>
+                                    <View style={{
+                                        width: '90%', 
                                         flexDirection: 'row',
                                         justifyContent: 'space-between',
                                         alignItems: 'center',
-                                        padding: 10,
+                                        height:50
                                     }}>
+                                        <Text style={{ fontFamily: 'ISBold', fontSize: 16, color: '#333' }}>
+                                            درخواست جدید
+                                        </Text>
+                                        {/* Close modal  */}
+                                        <TouchableOpacity
+                                            onPress={() => {
+                                                this.setModalVisible(false);
+                                            }}>
+                                            <Icon size={40} name="close" color="#C50143" />
 
-                                    <Text style={{ fontFamily: 'ISBold', fontSize: 16, color: '#333' }}>
-                                        درخواست جدید
-                                    </Text>
-                                    {/* Close modal  */}
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            this.setModalVisible(false);
-                                        }}>
-                                        <Icon size={40} name="close" color="#C50143" />
-
-                                    </TouchableOpacity>
+                                        </TouchableOpacity>
+                                    </View>
 
                                 </View>
 
@@ -454,7 +467,7 @@ export default class Home extends Component {
 
                                         {/* nights */}
                                         <View style={styles.modal_boxes}>
-                                            <Counter counter={(e) => this._personCounter(e)} />
+                                            <Counter counter={(e) => this._counterHandler(e,'night')} />
                                             <View style={styles.capacity} >
                                                 <Text style={styles.modal_titles} >شب </Text>
                                                 <Icon style={{ marginLeft: 5 }} size={22} name="weather-night" color="#636363" />
@@ -463,7 +476,7 @@ export default class Home extends Component {
 
                                         {/* capacity  */}
                                         <View style={styles.modal_boxes}>
-                                            <Counter counter={(e) => this._personCounter(e)} />
+                                            <Counter counter={(e) => this._counterHandler(e,'capacity')} />
                                             <View style={styles.capacity} >
                                                 <Text style={styles.modal_titles} >ظرفیت </Text>
                                                 <Icon style={{ marginLeft: 5 }} size={22} name="account-group-outline" color="#636363" />
@@ -736,7 +749,7 @@ const styles = ({
         height: 50,
         width: '90%',
     },
-    show_selected_date:{
+    show_selected_date: {
         backgroundColor: '#fff',
         fontSize: 18,
         color: '#555',
@@ -805,10 +818,10 @@ const styles = ({
         borderRadius: 30,
         position: 'absolute',
         backgroundColor: 'transparent',
-        flexDirection:'column',
+        flexDirection: 'column',
 
     },
-    search_touch_sibling:{
+    search_touch_sibling: {
         width: '100%',
         height: 140,
         alignItems: 'center',
@@ -818,19 +831,19 @@ const styles = ({
     },
     search_touch: {
         backgroundColor: '#C50143',
-        width: Dimensions.get('window').width/3,
-        height: Dimensions.get('window').width/3,
-        borderRadius: Dimensions.get('window').width/6,
+        width: Dimensions.get('window').width / 3,
+        height: Dimensions.get('window').width / 3,
+        borderRadius: Dimensions.get('window').width / 6,
         alignItems: 'center',
         justifyContent: 'center',
         // position: 'absolute',
-        top: Dimensions.get('window').width/6,
+        top: Dimensions.get('window').width / 6,
         borderWidth: 10,
         borderColor: '#fff',
         shadowColor: "black",
         shadowOpacity: .5,
         elevation: 2,
-        zIndex:99
+        zIndex: 99
     },
 
     select_date: {
@@ -844,7 +857,7 @@ const styles = ({
         alignItems: 'center',
         fontFamily: 'ISBold',
     },
-   
+
     picker_modal: {
         position: 'absolute',
         right: 0,
