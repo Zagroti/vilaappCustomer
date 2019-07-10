@@ -229,7 +229,7 @@ class Test extends Component {
                             paddingVertical: 10,
                         }}>
                         <View style={styles.tab}  >
-                            <Text style={{ width: '20%', fontSize: 10, fontFamily: 'ISBold' }}  >ترتیب بر اساس:</Text>
+                            <Text style={{ width: '20%', fontSize: 10, fontFamily: 'IYB' }}  >ترتیب بر اساس:</Text>
                             <View style={{
                                 width: '80%',
                                 height: 40,
@@ -251,8 +251,6 @@ class Test extends Component {
                                 </TouchableOpacity>
                             </View>
                         </View>
-
-
                     </Animated.View>
                     <View style={{ marginBottom: 200 }}>
 

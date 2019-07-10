@@ -143,7 +143,7 @@ const styles = ({
 
     title: {
         fontSize: 12,
-        fontFamily: 'ISBold',
+        fontFamily: 'IYB',
         color: '#A52D53',
 
     },
