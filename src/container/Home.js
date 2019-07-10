@@ -161,11 +161,8 @@ export default class Home extends Component {
     _counterHandler =  (e,method) => {
         if(method === 'night'){
              this.setState({ nights: e })
-            console.log(this.state)
         }else{
              this.setState({ persons: e })
-            console.log(this.state)
-
         }
     }
 
