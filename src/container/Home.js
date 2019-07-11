@@ -259,10 +259,10 @@ export default class Home extends Component {
                             <Requestitems navigate={this._showRequestsNavigate} />
                         </ScrollView>
                     </View>
-                    <TouchableOpacity activeOpacity={.9} style={styles.modal_button}
+                    <TouchableOpacity activeOpacity={.8} style={styles.modal_button}
                         onPress={() => { this.setModalVisible(true) }}>
-                        <View style={styles.middleInside}>
-                            <Icon name="filter-outline" size={36} color="#C92652" />
+                        <View style={styles.middle_inside}>
+                            <Icon name="filter-outline" size={36} color="#fff" />
                         </View>
                     </TouchableOpacity>
 
@@ -490,7 +490,7 @@ export default class Home extends Component {
                                                 height: 60,
                                                 position: 'relative',
                                             }} >
-                                                <View style={{ flexDirection: 'row', marginRight: 10, }} >
+                                                <View style={{ flexDirection: 'row', marginRight: 10,alignItems:'center' }} >
                                                     <Text style={{
                                                         color: '#A52D53',
                                                         fontFamily: 'ISBold',
@@ -500,7 +500,7 @@ export default class Home extends Component {
                                                     </Text>
                                                     <Text style={{
                                                         color: '#A52D53',
-                                                        fontFamily: 'SR',
+                                                        fontFamily: 'ISFBold',
                                                         fontSize: 14
                                                     }}> {this.state.sliderValue} </Text>
                                                 </View>
@@ -635,24 +635,24 @@ const styles = ({
         bottom: 140,
         zIndex: 10,
         right: 20,
-        width: 80,
-        height: 80,
-        borderRadius: 40,
-        backgroundColor: '#C92652',
+        width: 90,
+        height: 90,
+        borderRadius: 100,
+        backgroundColor: '#fff',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        shadowColor: "black",
+        shadowColor: "#C92652",
         shadowOpacity: .5,
         elevation: 10,
     },
-    middleInside: {
-        width: 74,
-        height: 74,
-        backgroundColor: '#fff',
+    middle_inside: {
+        width: 84,
+        height: 84,
+        backgroundColor: '#C92652',
         borderWidth: 2,
-        borderColor: '#eee',
-        borderRadius: 40,
+        borderColor: '#fff',
+        borderRadius: 100,
         justifyContent: 'center',
         alignItems: 'center',
         zIndex: 20
@@ -745,12 +745,16 @@ const styles = ({
         borderRadius: 5,
         height: 50,
         width: '90%',
+
+        shadowOpacity: 0.2,
+        shadowRadius: 2,
+        elevation: 2,
     },
     show_selected_date: {
         backgroundColor: '#fff',
         fontSize: 18,
         color: '#555',
-        fontFamily: 'SB',
+        fontFamily: 'ISFBold',
         textAlign: 'left',
         justifyContent: 'center',
         alignItems: 'center',
@@ -848,7 +852,6 @@ const styles = ({
         width: '50%',
         backgroundColor: '#fff',
         color: '#636363',
-        marginTop: 5,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
