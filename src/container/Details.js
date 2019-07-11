@@ -500,8 +500,8 @@ export default class Details extends Component {
                                 fontSize: 13,
                                 fontFamily: 'ISBold',
                                 color: '#ccc',
-                            }} >{this.state.aboutvilaText}</Text>
-                            {this.state.aboutvila ? arrowUp : arrowDown}
+                            }} >{this.state.conditionsText}</Text>
+                            {this.state.conditions ? arrowUp : arrowDown}
                         </TouchableOpacity>
 
                     </View>
