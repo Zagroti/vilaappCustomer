@@ -47,7 +47,8 @@ export default class Home extends Component {
             minRangeSlider: 0,
             maxRangeSlider: 1000000,
             sliderValue: 100000,
-
+            nights:1,
+            persons:1
         };
     }
 
@@ -262,7 +263,7 @@ export default class Home extends Component {
                     <TouchableOpacity activeOpacity={.8} style={styles.modal_button}
                         onPress={() => { this.setModalVisible(true) }}>
                         <View style={styles.middle_inside}>
-                            <Icon name="filter-outline" size={36} color="#fff" />
+                            <Icon name="magnify" size={36} color="#fff" />
                         </View>
                     </TouchableOpacity>
 
@@ -464,7 +465,7 @@ export default class Home extends Component {
 
                                         {/* nights */}
                                         <View style={styles.modal_boxes}>
-                                            <Counter counter={(e) => this._counterHandler(e,'night')} />
+                                            <Counter counter={(e) => this._counterHandler(e,'night')} number={this.state.nights}/>
                                             <View style={styles.capacity} >
                                                 <Text style={styles.modal_titles} >شب </Text>
                                                 <Icon style={{ marginLeft: 5 }} size={22} name="weather-night" color="#636363" />
@@ -473,7 +474,7 @@ export default class Home extends Component {
 
                                         {/* capacity  */}
                                         <View style={styles.modal_boxes}>
-                                            <Counter counter={(e) => this._counterHandler(e,'capacity')} />
+                                            <Counter counter={(e) => this._counterHandler(e,'persons')} number={this.state.persons}/>
                                             <View style={styles.capacity} >
                                                 <Text style={styles.modal_titles} >ظرفیت </Text>
                                                 <Icon style={{ marginLeft: 5 }} size={22} name="account-group-outline" color="#636363" />
@@ -521,7 +522,7 @@ export default class Home extends Component {
                                                     minimumValue={50000}
                                                     maximumValue={1000000}
                                                     step={50000}
-                                                    value={100000}
+                                                    value={this.state.sliderValue}
                                                     onValueChange={value => this.setState({ sliderValue: value })}
                                                     onSlidingStart={value =>
                                                         this.setState({

@@ -40,7 +40,7 @@ export default class Counter extends Component {
                             <Icon name="plus" size={26} color="#ccc" />
                         </View>
                     </TouchableOpacity>
-                    <Text style={styles.show}>{this.state.number}</Text>
+                    <Text style={styles.show}>{this.props.number}</Text>
                     <TouchableOpacity onPress={() => this._count('minus')}  >
                         <View style={styles.box}>
                             <Icon name="minus" size={26} color="#ccc" />
