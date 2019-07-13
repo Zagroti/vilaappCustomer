@@ -146,7 +146,6 @@ class Routes extends React.Component {
                         title=""
                         hideNavBar={true}
                         initial={true}
-
                     />  */}
 
 
@@ -226,5 +225,3 @@ const styles = ({
     },
 
 })
-
-

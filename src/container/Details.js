@@ -478,7 +478,7 @@ export default class Details extends Component {
                         <Text style={styles.detail_title}>شرایط</Text>
 
                         <Text style={styles.conditions_text}>1. آرام باشید و مراقب خودتان باشید.</Text>
-                        <Text style={{ color: '#DC3053', fontSize: 12, fontFamily: 'ISMedium' }}>2. عاشق خودتان باشید .</Text>
+                        <Text style={styles.conditions_text}>2. عاشق خودتان باشید .</Text>
                         <Text style={styles.conditions_text}>3. اتاق را کثیف نکنید </Text>
                         <Text style={styles.conditions_text}>4. اتاق را تمیز نکنید . </Text>
 

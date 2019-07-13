@@ -47,8 +47,8 @@ export default class Home extends Component {
             minRangeSlider: 0,
             maxRangeSlider: 1000000,
             sliderValue: 100000,
-            nights:1,
-            persons:1
+            nights: 1,
+            persons: 1
         };
     }
 
@@ -62,7 +62,7 @@ export default class Home extends Component {
 
     componentDidMount() {
         // for disable back btn
-
+        BackHandler.addEventListener('hardwareBackPress', this._handleBackButton);
 
         {
             PermissionsAndroid.requestMultiple(
@@ -100,7 +100,6 @@ export default class Home extends Component {
 
     //for disable back button hardware
     _handleBackButton() {
-        alert(0)
         return true
     }
 
@@ -159,11 +158,11 @@ export default class Home extends Component {
 
 
 
-    _counterHandler =  (e,method) => {
-        if(method === 'night'){
-             this.setState({ nights: e })
-        }else{
-             this.setState({ persons: e })
+    _counterHandler = (e, method) => {
+        if (method === 'night') {
+            this.setState({ nights: e })
+        } else {
+            this.setState({ persons: e })
         }
     }
 
@@ -316,22 +315,9 @@ export default class Home extends Component {
                                 {/* Close modal  */}
 
                                 <View
-                                    style={{
-                                        backgroundColor: '#f6f6f6',
-                                        width: '100%',
-                                        height: 50,
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        // padding: 10,
-                                    }}>
-                                    <View style={{
-                                        width: '90%', 
-                                        flexDirection: 'row',
-                                        justifyContent: 'space-between',
-                                        alignItems: 'center',
-                                        height:50
-                                    }}>
-                                        <Text style={{ fontFamily: 'ISBold', fontSize: 16, color: '#333' }}>
+                                    style={styles.title_box}>
+                                    <View style={styles.title_child}>
+                                        <Text style={styles.modal_title}>
                                             درخواست جدید
                                         </Text>
                                         {/* Close modal  */}
@@ -465,7 +451,7 @@ export default class Home extends Component {
 
                                         {/* nights */}
                                         <View style={styles.modal_boxes}>
-                                            <Counter counter={(e) => this._counterHandler(e,'night')} number={this.state.nights}/>
+                                            <Counter counter={(e) => this._counterHandler(e, 'night')} number={this.state.nights} />
                                             <View style={styles.capacity} >
                                                 <Text style={styles.modal_titles} >شب </Text>
                                                 <Icon style={{ marginLeft: 5 }} size={22} name="weather-night" color="#636363" />
@@ -474,7 +460,7 @@ export default class Home extends Component {
 
                                         {/* capacity  */}
                                         <View style={styles.modal_boxes}>
-                                            <Counter counter={(e) => this._counterHandler(e,'persons')} number={this.state.persons}/>
+                                            <Counter counter={(e) => this._counterHandler(e, 'persons')} number={this.state.persons} />
                                             <View style={styles.capacity} >
                                                 <Text style={styles.modal_titles} >ظرفیت </Text>
                                                 <Icon style={{ marginLeft: 5 }} size={22} name="account-group-outline" color="#636363" />
@@ -491,7 +477,7 @@ export default class Home extends Component {
                                                 height: 60,
                                                 position: 'relative',
                                             }} >
-                                                <View style={{ flexDirection: 'row', marginRight: 10,alignItems:'center' }} >
+                                                <View style={{ flexDirection: 'row', marginRight: 10, alignItems: 'center' }} >
                                                     <Text style={{
                                                         color: '#A52D53',
                                                         fontFamily: 'ISBold',
@@ -891,6 +877,25 @@ const styles = ({
         width: '100%',
         backgroundColor: '#fff',
         padding: 5
+    },
+    title_box: {
+        backgroundColor: '#f6f6f6',
+        width: '100%',
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    title_child: {
+        width: '90%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        height: 50
+    },
+    modal_title: {
+        fontFamily: 'ISBold',
+        fontSize: 16,
+        color: '#333'
     }
 
 
