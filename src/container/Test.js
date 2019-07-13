@@ -7,12 +7,12 @@ import {
     TouchableOpacity,
     ScrollView,
     PermissionsAndroid,
-    Animated,
-    ImageBackground
+    Animated
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Mapir from 'mapir-react-native-sdk'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 
 //components
 import ResultItems from '../components/ResultItems';
@@ -142,15 +142,32 @@ class Test extends Component {
     render() {
         return (
             <View style={{ backgroundColor: '#fff', flex: 1 }}>
-                <View style={styles.menu}>
+                <View style={{
+                    height: 50,
+                    width: Dimensions.get('window').width,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    backgroundColor: '#f6f6f6',
+
+                }}>
                     <TouchableOpacity
-                        style={styles.menu_icon}
+                        style={styles.humberger}
                         onPress={() => Actions.Support()}>
-                        <View style={styles.notification_circle} ></View>
-                        <Icon name="bell-outline" size={32} color="#B22850" />
+                        <View style={styles.notification} >
+                            <Text style={styles.notification_text} >3</Text>
+                        </View>
+                        <Icon style={{ position: 'absolute', top: 5 }} name="bell-outline" size={32} color="#B22850" />
                     </TouchableOpacity>
-                    <Text style={styles.title} >  نتایج جستجو - 218#</Text>
-                    <TouchableOpacity style={styles.menu_icon} onPress={() => Actions.pop()} >
+                    <Text style={styles.title} >  نتایج جستجو - 219</Text>
+                    <TouchableOpacity
+                        style={{
+                            padding: 10,
+                            width: 50,
+                            height: 50,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }} onPress={() => Actions.pop()} >
                         <Icon name="arrow-right" size={28} color="#B22850" />
                     </TouchableOpacity>
                 </View>
@@ -183,13 +200,9 @@ class Test extends Component {
                                 </Mapir>
 
                             </View>
+                            <View style={styles.details_right}>
 
-                            <View style={{  width: '50%', height: 160 }}>
-                                <ImageBackground style={styles.details_right_image}
-                                    source={require('./../../Assets/Images/background.png')}
-                                    imageStyle={{ resizeMode: 'cover', }}
-                                    resizeMode="contain"
-                                >
+                                <View style={{ justifyContent: 'center', alignItems: 'flex-end', padding: 10, height: 160 }}>
                                     <View style={{ flexDirection: 'row' }}>
                                         <Text style={styles.detail_view}>از تاریخ  1398/03/31 </Text>
                                         <Icon name="calendar-range" style={{ marginLeft: 10 }} size={20} color="#fff" />
@@ -210,9 +223,9 @@ class Test extends Component {
                                         <Text style={styles.detail_view}>  تعداد: 5  نفر </Text>
                                         <Icon style={{ marginLeft: 10 }} name="account-multiple-outline" size={20} color="#fff" />
                                     </View>
-                                </ImageBackground>
-                            </View>
+                                </View>
 
+                            </View>
 
                         </View>
 
@@ -229,14 +242,14 @@ class Test extends Component {
                             paddingVertical: 10,
                         }}>
                         <View style={styles.tab}  >
-                            <Text style={{ width: '20%', fontSize: 10, fontFamily: 'IYB' }}  >ترتیب بر اساس:</Text>
+                            <Text style={{ width: '20%', fontSize: 10, fontFamily: 'ISBold' }}  >ترتیب بر اساس:</Text>
                             <View style={{
                                 width: '80%',
                                 height: 40,
                                 flexDirection: 'row',
                                 justifyContent: 'space-between',
                                 alignItems: 'center',
-                                }}>
+                            }}>
                                 <TouchableOpacity style={[styles.tab_box, { borderColor: this.state.color_1 }]} onPress={() => this._changeTab('tab1')}>
                                     <Text style={[styles.tab_text, { color: this.state.color_1 }]}>  تخفیف %</Text>
                                 </TouchableOpacity>
@@ -251,9 +264,10 @@ class Test extends Component {
                                 </TouchableOpacity>
                             </View>
                         </View>
+
+
                     </Animated.View>
                     <View style={{ marginBottom: 200 }}>
-
                         {this.state.tab1 ?
 
                             <View style={{ width: '100%', alignItems: 'center' }}>
@@ -284,7 +298,6 @@ class Test extends Component {
                         {this.state.tab3 ?
 
                             <View style={{ width: '100%', alignItems: 'center' }}>
-                                <ResultItems navigate={this._showDetail} />
                                 <ResultItems navigate={this._showDetail} />
                                 <ResultItems navigate={this._showDetail} />
                                 <ResultItems navigate={this._showDetail} />
@@ -324,6 +337,7 @@ const styles = ({
         backgroundColor: '#fff',
         flexDirection: 'column',
         alignItems: 'center',
+        // height: Dimensions.get('window').height,
         paddingBottom: 160,
         position: 'relative'
 
@@ -336,33 +350,27 @@ const styles = ({
         alignItems: 'center',
         paddingHorizontal: 10,
     },
-    menu: {
-        backgroundColor: '#f6f6f6',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        height: 50,
-        width: '100%',
-        paddingVertical: 5,
-        alignItems: 'center',
-    },
-    notification_circle: {
-        width: 10,
-        height: 10,
+    notification: {
+        width: 14,
+        height: 14,
         borderRadius: 7,
         backgroundColor: '#B22850',
-        end: 13,
-        top: 15,
+        start: 8,
+        top: 5,
         justifyContent: 'center',
         alignItems: 'center',
-        position: 'absolute'
     },
-    menu_icon: {
+    notification_text: {
+        color: '#fff',
+        fontSize: 9,
+        fontFamily: 'ISFMedium',
+    },
+    humberger: {
         width: 50,
         height: 50,
         alignItems: 'center',
-        justifyContent: 'center',
-        position: 'relative'
     },
+
     title: {
         fontSize: 14,
         fontFamily: 'ISBold',
@@ -395,26 +403,46 @@ const styles = ({
         flexDirection: 'row',
         backgroundColor: '#fff',
     },
-    details_right_image: {
-        width: '100%',
+    details_right: {
+        width: '50%',
         height: 160,
-        backgroundColor: '#A52D53',
-        justifyContent: 'center',
-        alignItems: 'flex-end',
-        height: 160,
-        paddingRight: 10,
+        justifyContent: 'space-between',
+        backgroundColor: '#A52D53'
 
     },
     details_map: {
         width: '50%',
         height: 160,
     },
+    detail_row: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: 5,
+        borderWidth: 1,
+        borderRadius: 5,
+        backgroundColor: '#f1f1f1',
+        borderColor: '#eee',
 
+    },
+    detail_row2: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: 5,
+        borderWidth: 1,
+        borderRadius: 5,
+        borderColor: '#eee',
+        width: '48%',
+        backgroundColor: '#f1f1f1'
+
+    },
     detail_view: {
         fontFamily: 'ISFBold',
         fontSize: 14,
         color: '#fff'
     }
+
 
 
 

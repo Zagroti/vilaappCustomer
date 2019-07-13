@@ -5,21 +5,23 @@ import {
     Dimensions,
     DrawerLayoutAndroid,
     Image,
-    ImageBackground,
     TouchableOpacity,
     BackHandler,
     ScrollView,
     Modal,
-    TextInput,
-    Picker,
-    KeyboardAvoidingView,
-    PermissionsAndroid
+    PermissionsAndroid,
+    Animated
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import InputScrollView from 'react-native-input-scroll-view';
 import PersianDatePicker from "rn-persian-date-picker";
 import Mapir from 'mapir-react-native-sdk'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import AsyncStorage from '@react-native-community/async-storage';
+// import Slider from '@react-native-community/slider';
+import Slider from "react-native-slider";
+
+// import { Slider} from 'react-native'
 
 //components 
 import NoRequest from '../components/NoRequest';
@@ -33,24 +35,20 @@ var moment = require('moment-jalaali')
 moment().format('jYYYY/jM/jD')
 
 
-
 export default class Home extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
             modalVisible: false,
+            miniModal: false,
+            city: 'آمل',
             selectStart: false,
-            selectEnd: false,
-            mapFull: false,
-            otherZIndex: null,
-            mapStatusIcon: require('./../../Assets/Images/fullscreen.png'),
-            mapIconTop: 10,
-            mapIconLeft: 10,
-            markers: [
-                { latitude: 51.422548, longitude: 35.732573 },
-            ],
-            modalHeight: Dimensions.get('window').height - 50
+            minRangeSlider: 0,
+            maxRangeSlider: 1000000,
+            sliderValue: 100000,
+            nights: 1,
+            persons: 1
         };
     }
 
@@ -64,10 +62,8 @@ export default class Home extends Component {
 
     componentDidMount() {
         // for disable back btn
-        BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+        BackHandler.addEventListener('hardwareBackPress', this._handleBackButton);
 
-
-        // for map
         {
             PermissionsAndroid.requestMultiple(
                 [PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
@@ -77,30 +73,35 @@ export default class Home extends Component {
                     message: 'App needs location permission to find your position.'
                 }
             ).then(granted => {
-                console.log(granted);
+                // console.log(granted);
                 resolve();
             }).catch(err => {
-                console.warn(err);
+                // console.warn(err);
                 reject(err);
             });
         }
+    }
 
+
+
+    _back = () => {
+        if (this.state.modalVisible) {
+            alert(0)
+        }
+        return true
     }
 
 
     componentWillUnmount() {
         // for disable back btn
-        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+        BackHandler.removeEventListener('hardwareBackPress', this._handleBackButton);
     }
 
 
-    //for disable back button haedware
-    handleBackButton() {
-        // ToastAndroid.show('Back button is pressed', ToastAndroid.SHORT);
-        return true;
+    //for disable back button hardware
+    _handleBackButton() {
+        return true
     }
-
-
 
     //footer actions
     _navigate = (path) => {
@@ -114,6 +115,29 @@ export default class Home extends Component {
         this.refs['DRAWER_REF'].closeDrawer();
 
     }
+
+
+
+
+
+    // log out
+    _exit = () => {
+        this._removeData()
+        Actions.SendNumber()
+    }
+    _removeData = async () => {
+        try {
+            await AsyncStorage.removeItem('login')
+            console.log(AsyncStorage.getItem('login'))
+            return true;
+        } catch (e) {
+            return false
+        }
+    }
+
+
+
+
 
     // got to vila cases
     _showRequestsNavigate = () => {
@@ -131,115 +155,26 @@ export default class Home extends Component {
         this.refs['STARTPICKER'].showPicker()
         this.setState({ selectStart: true })
     }
-    _endDateOpen = async () => {
-        this.refs['ENDPICKER'].showPicker()
-        this.setState({ selectEnd: true })
-    }
-
-
-    // send nes request
-    _newRequest = () => {
-        this.setModalVisible(false)
-    }
 
 
 
-    // change map size and arrow 
-    _mapFullScreen = () => {
-
-        // when map is small
-        if (this.state.mapFull) {
-            this.setState({
-                otherZIndex: -10,
-                mapFull: false,
-                mapStatusIcon: require('./../../Assets/Images/fullscreen.png'),
-                mapIconTop: 10,
-                mapIconLeft: 10,
-                modalHeight: Dimensions.get('window').height - 50
-            });
-            mapParentStyle = {
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                width: '90%'
-            };
-            mapStyle = {
-                width: '48%',
-                height: 200,
-            };
-            square = {
-                width: '100%',
-                alignItems: 'center',
-                justifyContent: 'center'
-            }
-
+    _counterHandler = (e, method) => {
+        if (method === 'night') {
+            this.setState({ nights: e })
         } else {
-            this.setState({
-                otherZIndex: null,
-                mapFull: true,
-                mapStatusIcon: require('./../../Assets/Images/resize.png'),
-                mapIconTop: 70,
-                mapIconLeft: 20,
-                modalHeight: Dimensions.get('window').height
-            });
-            mapParentStyle = {
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                width: Dimensions.get('window').width,
-                height: Dimensions.get('window').height + 50,
-                position: "absolute",
-                zIndex: 999,
-                marginTop: -100
-
-            };
-            mapStyle = {
-                width: Dimensions.get('window').width,
-                height: Dimensions.get('window').height + 50,
-                position: 'absolute',
-                zIndex: 999
-            };
-            square = {
-                width: '100%',
-                alignItems: 'center',
-                justifyContent: 'center',
-                height: Dimensions.get('window').height + 50
-            }
-
+            this.setState({ persons: e })
         }
-
     }
 
-    // map marker select
-    // select location 
-    addMarker = async (coordinates) => {
-        await this.setState({
-            markers: [{ latitude: coordinates[0], longitude: coordinates[1] }]
-        });
-
-    }
-
-    _personCounter = async (e) => {
-        await this.setState({ persons: e })
+    _selectCity = (city) => {
+        this.setState({
+            city: city,
+            miniModal: false
+        })
     }
 
 
     render() {
-
-        // map marker
-        const mark = this.state.markers.map(markers =>
-            (<Mapir.Marker
-                id={'2'}
-                key={markers.latitude}
-                coordinate={[markers.latitude, markers.longitude]}
-            >
-                <View style={{ width: 100, height: 100 }}>
-                    <View style={{ marginLeft: 20, width: 80, height: 80, borderRadius: 50, backgroundColor: 'rgba(165, 45, 83,.3)', borderColor: 'rgb(165, 45, 83)', borderWidth: 2 }}>
-
-                    </View>
-                </View>
-            </Mapir.Marker>
-            ))
-
-
 
         // drawer menu 
         const navigationView = (
@@ -262,20 +197,26 @@ export default class Home extends Component {
                     </View>
 
                 </View>
-                <TouchableOpacity activeOpacity={.6} style={styles.bottomIcons} onPress={(e) => this._navigate('profile')}>
+                <TouchableOpacity activeOpacity={.6} style={styles.bottom_icons} onPress={(e) => this._navigate('profile')}>
                     <Text style={styles.drawer_text}>پروفایل</Text>
                     <Icon name="account-outline" size={24} color="#b04267" />
                 </TouchableOpacity>
 
                 {/* got to history */}
-                <TouchableOpacity activeOpacity={.6} style={styles.bottomIcons} onPress={(e) => this._navigate('history')}>
+                <TouchableOpacity activeOpacity={.6} style={styles.bottom_icons} onPress={(e) => this._navigate('history')}>
                     <Text style={styles.drawer_text}>تاریخچه</Text>
                     <Icon name="calendar-clock" size={24} color="#b04267" />
+                </TouchableOpacity>
+
+                {/* EXIT */}
+                <TouchableOpacity activeOpacity={.6} style={styles.bottom_icons} onPress={this._exit}>
+                    <Text style={styles.drawer_text}>خروج</Text>
+                    <Icon name="exit-to-app" size={24} color="#b04267" />
                 </TouchableOpacity>
             </View>
         );
 
-        const { startDate, endDate } = this.state
+        const { startDate } = this.state
 
         return (
             <DrawerLayoutAndroid
@@ -293,18 +234,14 @@ export default class Home extends Component {
                     {/* MENU */}
                     <View style={styles.menu} >
                         <TouchableOpacity
-                            style={styles.humberger}
-                            onPress={() => Actions.Support()}
-                        >
-                            <View style={styles.notification} >
-                                <Text style={styles.notification_text} >3</Text>
-                            </View>
-                            <Icon style={{ position: 'absolute', top: 0 }} name="bell-outline" size={32} color="#B22850" />
+                            style={styles.menu_icon}
+                            onPress={() => Actions.Support()}>
+                            <View style={styles.notification_circle} ></View>
+                            <Icon name="bell-outline" size={32} color="#B22850" />
                         </TouchableOpacity>
                         <Text style={styles.title} >درخواست های من</Text>
-
-                        <TouchableOpacity style={styles.humberger} onPress={this._openDrawer}>
-                            <Icon style={{ position: 'absolute', top: 0 }} name="menu" size={32} color="#B22850" />
+                        <TouchableOpacity style={styles.menu_icon} onPress={this._openDrawer}>
+                            <Icon name="menu" size={32} color="#B22850" />
                         </TouchableOpacity>
                     </View>
 
@@ -322,24 +259,10 @@ export default class Home extends Component {
                             <Requestitems navigate={this._showRequestsNavigate} />
                         </ScrollView>
                     </View>
-                    <TouchableOpacity activeOpacity={.9} style={{
-                        position: 'absolute', bottom: 140, zIndex: 10, right: 20, width: 90,
-                        height: 90,
-                        borderRadius: 50,
-                        backgroundColor: '#C92652',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        shadowColor: "black",
-                        shadowOpacity: .5,
-                        elevation: 10,
-                    }}
-                        onPress={() => {
-                            this.setModalVisible(true);
-                        }}
-                    >
-                        <View style={styles.middleInside}>
-                            <Icon name="map-search-outline" size={50} color="#C92652" />
+                    <TouchableOpacity activeOpacity={.8} style={styles.modal_button}
+                        onPress={() => { this.setModalVisible(true) }}>
+                        <View style={styles.middle_inside}>
+                            <Icon name="magnify" size={36} color="#fff" />
                         </View>
                     </TouchableOpacity>
 
@@ -348,236 +271,158 @@ export default class Home extends Component {
                 </View>
 
 
+                {/* <Modal
+                        animationType="slide"
+                        transparent={false}
+                        visible={this.state.modalVisible}
+                        onRequestClose={() => {
+                            this.setModalVisible(false);
+                        }}> */}
+
 
                 {/* MODAL */}
+                {
+                    this.state.modalVisible ?
+                        <View style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            backgroundColor: '#fff'
+                        }} >
 
-
-                <Modal
-                    animationType="slide"
-                    transparent={false}
-                    visible={this.state.modalVisible}
-                    onRequestClose={() => {
-                        this.setModalVisible(false);
-                    }}
-
-                >
-                    {
-                        this.state.selectStart ?
-                            <Text style={{
-                                width: Dimensions.get('window').width,
-                                height: Dimensions.get('window').height,
-                                backgroundColor: 'rgba(0,0,0,.7)', position: 'absolute', top: 0, right: 0, left: 0, bottom: 0,
-                                zIndex: 20000
-                            }}
-                                onPress={() => {
-                                    this.setState({ selectStart: false })
-                                    this.refs['STARTPICKER'].hidePicker()
-                                }}
-                            >
-                            </Text> : null
-
-                    }
-                    {
-                        this.state.selectEnd ?
-                            <Text style={{
-                                width: Dimensions.get('window').width,
-                                height: Dimensions.get('window').height,
-                                backgroundColor: 'rgba(0,0,0,.7)', position: 'absolute', top: 0, right: 0, left: 0, bottom: 0,
-                                zIndex: 20000
-                            }}
-                                onPress={() => {
-                                    this.setState({ selectEnd: false })
-                                    this.refs['ENDPICKER'].hidePicker()
-                                }}
-                            >
-                            </Text> : null
-
-                    }
-                    <InputScrollView >
-                        {/* Close modal  */}
-                        {
-                            this.state.mapFull ? null :
-                                <View
-                                    style={{
-                                        backgroundColor: '#f6f6f6',
-                                        width: '100%',
-                                        height: 50,
-                                        flexDirection: 'row',
-                                        justifyContent: 'space-between',
-                                        alignItems: 'center',
-                                        padding: 10,
-                                    }}>
-                                    <TouchableOpacity style={{
-                                        fontSize: 20,
-                                        backgroundColor: '#ddd',
-                                        borderWidth: 1,
-                                        borderColor: '#bbb',
-                                        width: 30,
-                                        height: 30,
-                                        borderRadius: 15,
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                    }}>
-                                        <Text style={{ fontSize: 20, color: '#bbb' }}>
-                                            ?
-                                        </Text>
-                                    </TouchableOpacity>
-                                    <Text style={{ fontFamily: 'IS', fontSize: 20, }}>
-                                        درخواست ویلا
-                                    </Text>
-                                    {/* Close modal  */}
-                                    <TouchableOpacity
+                            {/* time select background  */}
+                            {
+                                this.state.selectStart ?
+                                    <Text style={{
+                                        width: Dimensions.get('window').width,
+                                        height: Dimensions.get('window').height,
+                                        backgroundColor: 'rgba(0,0,0,.5)', position: 'absolute', top: 0, right: 0, left: 0, bottom: 0,
+                                        zIndex: 20000
+                                    }}
                                         onPress={() => {
-                                            this.setModalVisible(false);
-                                        }}>
-                                        <Icon size={40} name="close" color="#bbb" />
+                                            this.setState({ selectStart: false })
+                                            this.refs['STARTPICKER'].hidePicker()
+                                        }}
+                                    >
+                                    </Text> : null
+                            }
 
-                                    </TouchableOpacity>
+
+
+                            <View style={{ flex: 1, position: 'relative', backgroundColor: '#f6f6f6' }} >
+                                {/* Close modal  */}
+
+                                <View
+                                    style={styles.title_box}>
+                                    <View style={styles.title_child}>
+                                        <Text style={styles.modal_title}>
+                                            درخواست جدید
+                                        </Text>
+                                        {/* Close modal  */}
+                                        <TouchableOpacity
+                                            onPress={() => {
+                                                this.setModalVisible(false);
+                                            }}>
+                                            <Icon size={40} name="close" color="#C50143" />
+
+                                        </TouchableOpacity>
+                                    </View>
 
                                 </View>
 
-                        }
-
-                        {/* Modal Body */}
-                        <View style={{
-                            flexDirection: 'column',
-                            justifyContent: 'space-around',
-                            alignItems: 'center',
-                            backgroundColor: '#f7f7f7',
-                            height: this.state.modalHeight,
-                            width: Dimensions.get('window').width,
-                            top: 0,
-                            bottom: 0,
-                            flex: 1
-                        }} >
-                            <View style={square}>
 
 
-                                <View style={{ flexDirection: 'row', width: '90%', justifyContent: 'space-between', marginBottom: 10 }} >
+                                {/* Modal Body */}
+                                <View style={styles.modal_body} >
 
-
-                                    {/* price */}
-                                    <View style={styles.modal_price} >
-                                        <View style={styles.modal_details} >
-                                            <View style={styles.modal_titles}>
-                                                <Text style={styles.toman} > ( تومان ) </Text>
-                                                <Text style={styles.gheymat} >قیمت</Text>
-                                            </View>
-                                            <Icon style={{ marginLeft: 5 }} size={22} name="brightness-percent" color="#555" />
-                                        </View>
-                                        <View style={{
-                                            flexDirection: 'column-reverse',
-                                            justifyContent: 'space-between',
-                                            width: '100%',
-                                            alignItems: 'space-between',
-                                            height: 120,
-                                            padding: 10
-                                        }}>
-                                            <View style={{ justifyContent: 'center', width: '100%' }}>
-                                                <TextInput
-                                                    placeholderTextColor={'#999'}
-                                                    placeholder="تا"
-                                                    style={styles.price_input}
-                                                    onChangeText={(price) => this.setState({ price })}
-                                                    keyboardType='numeric'
-                                                />
-                                            </View>
-
-                                            <View style={{ justifyContent: 'center', width: '100%' }}>
-                                                <TextInput
-                                                    placeholderTextColor={'#999'}
-                                                    placeholder="از"
-                                                    style={styles.price_input}
-                                                    onChangeText={(price) => this.setState({ price })}
-                                                    keyboardType='numeric'
-                                                />
-                                            </View>
-
-                                        </View>
-
-
-                                    </View>
-
-                                    {/* date */}
-                                    <View style={styles.start_date} >
-                                        <View style={styles.modal_details} >
-                                            <Text style={styles.modal_titles} >تاریخ شروع</Text>
-                                            <Icon style={{ marginLeft: 5 }} size={22} name="calendar-range" color="#555" />
-                                        </View>
-
-
-
-                                        {/* date picker date picker  */}
-                                        <View style={{
-                                            flexDirection: 'column-reverse',
-                                            justifyContent: 'space-between',
-                                            zIndex: -10,
-                                            width: '100%',
-                                            height: 120,
-                                            padding: 10
-                                        }}>
-
-                                            {/* end date */}
-                                            <View style={{ width: '100%' }}>
-                                                <TouchableOpacity style={styles.select_date} onPress={this._endDateOpen}>
-                                                    {this.state.endDate ?
-                                                        <Text style={{
-                                                            fontSize: 15,
-                                                            fontFamily: 'ISBold',
-                                                            alignItems: 'center',
-                                                            color: '#636363'
-                                                        }}>{moment(endDate).format("jYYYY/jMM/jDD")}</Text> :
-                                                        <Text style={{
-                                                            fontSize: 15,
-                                                            fontFamily: 'ISBold',
-                                                            alignItems: 'center',
-                                                            color: '#999'
-                                                        }}> تا تاریخ </Text>
-                                                    }
-
+                                    <View style={{ flexDirection: 'column', width: Dimensions.get('window').width, alignItems: "center" }} >
+                                        {/* places */}
+                                        <View style={styles.modal_boxes} >
+                                            <View style={{ width: '50%', height: 50, borderRadius: 5, justifyContent: 'center' }}>
+                                                <TouchableOpacity onPress={() => {
+                                                    this.setState({ miniModal: true })
+                                                }}>
+                                                    <Text
+                                                        style={{ fontSize: 18, color: '#555', padding: 10, fontFamily: 'ISBold', width: '100%' }}
+                                                    >ایران ، {this.state.city}</Text>
                                                 </TouchableOpacity>
-
-
-                                                <PersianDatePicker
-                                                    type="Jalali"
-                                                    yearCount={10}
-                                                    onConfirm={date => {
-                                                        this.setState({ endDate: date, selectEnd: false });
-                                                    }}
-                                                    pickerFontSize={24}
-                                                    pickerToolBarFontSize={15}
-                                                    minDate={this.state.startDate ? moment(this.state.startDate).format("jYYYY/jMM/jDD") : null}
-                                                    ref={'ENDPICKER'}
-                                                    pickerFontFamily="ISBold"
-                                                    pickerConfirmBtnColor={[0, 123, 255, 1]}
-                                                    pickerCancelBtnColor={[220, 53, 69, 1]}
-                                                    pickerTitleText="تا تاریخ"
-                                                    pickerTitleColor={[99, 99, 99, 1]}
-                                                    onPickerCancel={() => {
-                                                        this.setState({ selectEnd: false });
-                                                    }}
-
-                                                />
                                             </View>
-                                            {/* start date */}
-                                            <View style={{ width: '100%' }}>
+                                            <View style={styles.right_icon_box}>
+                                                <Text style={{
+                                                    fontSize: 12,
+                                                    fontFamily: 'ISBold',
+                                                    alignItems: 'center',
+                                                    color: '#636363'
+                                                }}>مکان  </Text>
+                                                <Icon style={{ marginLeft: 5 }} size={22} name="map-marker-outline" color="#636363" />
+                                            </View>
+
+                                            {/* modal for select city  */}
+                                            <Modal
+                                                animationType="fade"
+                                                transparent={true}
+                                                visible={this.state.miniModal}
+                                                onRequestClose={() => {
+                                                    this.setState({ miniModal: false })
+                                                }}>
+                                                <TouchableOpacity style={styles.picker_modal} activeOpacity={1} onPress={() => this.setState({ miniModal: false })} >
+                                                    <View style={styles.picker_box}>
+                                                        <ScrollView
+                                                            contentContainerStyle={{
+                                                                justifyContent: 'center',
+                                                                alignItems: 'center',
+                                                            }}
+                                                            style={{ width: '100%' }}>
+                                                            <TouchableOpacity
+                                                                style={styles.picker_button}
+                                                                activeOpacity={.3}
+                                                                onPress={() => this._selectCity('آمل')}>
+                                                                <Text style={styles.picker_item} >آمل</Text>
+                                                            </TouchableOpacity>
+                                                            <TouchableOpacity
+                                                                style={styles.picker_button}
+                                                                activeOpacity={.3}
+                                                                onPress={() => this._selectCity('بابل')}>
+                                                                <Text style={styles.picker_item} >بابل</Text>
+                                                            </TouchableOpacity>
+                                                            <TouchableOpacity
+                                                                style={styles.picker_button}
+                                                                activeOpacity={.3}
+                                                                onPress={() => this._selectCity('کیش')}>
+                                                                <Text style={styles.picker_item} >کیش</Text>
+                                                            </TouchableOpacity>
+                                                        </ScrollView>
+                                                    </View>
+                                                </TouchableOpacity>
+                                            </Modal>
+                                        </View>
+
+
+
+                                        {/* date */}
+                                        <View style={styles.modal_boxes} >
+                                            <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center' }}>
                                                 <TouchableOpacity style={styles.select_date} onPress={this._startDateOpen} >
-                                                    {this.state.startDate ?
-                                                        <Text style={{
-                                                            fontSize: 15,
-                                                            fontFamily: 'ISBold',
-                                                            alignItems: 'center',
-                                                            color: '#636363'
-                                                        }}>{moment(startDate).format("jYYYY/jMM/jDD")}</Text> :
-                                                        <Text style={{
-                                                            fontSize: 15,
-                                                            fontFamily: 'ISBold',
-                                                            alignItems: 'center',
-                                                            color: '#999'
-                                                        }}> از تاریخ </Text>
-                                                    }
-
+                                                    <View style={{
+                                                        width: '100%',
+                                                        justifyContent: 'center',
+                                                        alignItems: 'center',
+                                                        height: 50
+                                                    }}>
+                                                        <Text style={styles.show_selected_date}>{moment(startDate).format("jYYYY/jMM/jDD")}</Text>
+                                                    </View>
                                                 </TouchableOpacity>
+                                                <View style={styles.right_icon_box}>
+                                                    <Text style={{
+                                                        fontSize: 12,
+                                                        fontFamily: 'ISBold',
+                                                        alignItems: 'center',
+                                                        color: '#636363'
+                                                    }}>تاریخ شروع </Text>
+                                                    <Icon style={{ marginLeft: 5 }} size={22} name="calendar-range" color="#636363" />
+                                                </View>
 
 
                                                 <PersianDatePicker
@@ -587,170 +432,127 @@ export default class Home extends Component {
                                                         this.setState({ startDate: date, selectStart: false });
                                                     }}
                                                     ref={'STARTPICKER'}
+                                                    pickerBg={[248, 248, 248, 1]}
                                                     pickerFontSize={24}
                                                     pickerToolBarFontSize={15}
                                                     pickerFontFamily="ISBold"
                                                     pickerConfirmBtnColor={[0, 123, 255, 1]}
                                                     pickerCancelBtnColor={[220, 53, 69, 1]}
-                                                    pickerTitleText=" از تاریخ"
+                                                    pickerTitleText="تاریخ شروع"
                                                     pickerTitleColor={[99, 99, 99, 1]}
+                                                    pickerFontFamily="ISMedium"
                                                     onPickerCancel={() => {
                                                         this.setState({ selectStart: false });
                                                     }}
                                                 />
                                             </View>
 
-
-
                                         </View>
 
-
-
-                                    </View>
-
-                                </View>
-                                {/* map map map  */}
-                                <View style={mapParentStyle}>
-                                    <View style={{
-                                        width: '48%',
-                                        height: 200,
-                                        zIndex: this.state.otherZIndex,
-                                        justifyContent: 'space-between',
-                                        borderRadius: 5,
-                                        // backgroundColor: '#eee',
-
-                                    }}>
-                                        <View style={{ width: '100%', backgroundColor: '#eee', padding: 10, borderRadius: 5, marginBottom: 10 }}>
-                                            <View style={styles.modal_detailsx} >
-                                                <Text style={styles.modal_titles} >نوع وبلا</Text>
-                                                <Icon style={{ marginLeft: 5 }} size={22} name="home" color="#555" />
-
+                                        {/* nights */}
+                                        <View style={styles.modal_boxes}>
+                                            <Counter counter={(e) => this._counterHandler(e, 'night')} number={this.state.nights} />
+                                            <View style={styles.capacity} >
+                                                <Text style={styles.modal_titles} >شب </Text>
+                                                <Icon style={{ marginLeft: 5 }} size={22} name="weather-night" color="#636363" />
                                             </View>
+                                        </View>
+
+                                        {/* capacity  */}
+                                        <View style={styles.modal_boxes}>
+                                            <Counter counter={(e) => this._counterHandler(e, 'persons')} number={this.state.persons} />
+                                            <View style={styles.capacity} >
+                                                <Text style={styles.modal_titles} >ظرفیت </Text>
+                                                <Icon style={{ marginLeft: 5 }} size={22} name="account-group-outline" color="#636363" />
+                                            </View>
+                                        </View>
+
+                                        {/* price */}
+                                        <View style={styles.modal_boxes}>
                                             <View style={{
-                                                backgroundColor: '#fff',
-                                                borderRadius: 5,
-
-                                            }}>
-
-                                                <Picker
-                                                    textStyle={{
-                                                        fontFamily: 'ISBold'
-                                                    }}
-                                                    itemTextStyle={{
-                                                        fontFamily: 'ISBold'
-                                                    }}
-                                                    selectedValue={this.state.language}
-                                                    style={{ height: 40, width: '100%' }}
-                                                    onValueChange={(itemValue) =>
-                                                        this.setState({ language: itemValue })
-                                                    }>
-                                                    <Picker.Item label="جنگلی" value="1" />
-                                                    <Picker.Item label="ویلایی" value="2" />
-                                                </Picker>
-                                            </View>
-                                        </View>
-                                        <View style={{ width: '100%', backgroundColor: '#eee', padding: 10, borderRadius: 5 }}>
-                                            <View style={styles.modal_detailsx} >
-                                                <Text style={styles.modal_titles} >ظرفیت</Text>
-                                                <Icon style={{ marginLeft: 5 }} size={22} name="account-group-outline" color="#555" />
-                                            </View>
-                                            <Counter counter={(e) => this._personCounter(e)} />
-                                        </View>
-                                    </View>
-
-                                    <View style={mapStyle}>
-                                        <TouchableOpacity
-                                            onPress={this._mapFullScreen}
-                                            style={{
-                                                zIndex: 999,
-                                                position: 'absolute',
-                                                backgroundColor: 'rgba(255,255,255,.6)',
-                                                borderRadius: 5,
-                                                padding: 0,
-                                                width: 40,
-                                                height: 40,
-                                                justifyContent: 'center',
+                                                width: '80%',
+                                                flexDirection: 'row',
+                                                justifyContent: 'space-around',
                                                 alignItems: 'center',
-                                                top: this.state.mapIconTop,
-                                                left: this.state.mapIconLeft
+                                                height: 60,
+                                                position: 'relative',
                                             }} >
-                                            {
-                                                this.state.mapFull ?
-                                                    <Icon size={40} name="fullscreen-exit" color="#A52D53" /> :
-                                                    <Icon size={40} name="fullscreen" color="#A52D53" />
+                                                <View style={{ flexDirection: 'row', marginRight: 10, alignItems: 'center' }} >
+                                                    <Text style={{
+                                                        color: '#A52D53',
+                                                        fontFamily: 'ISBold',
+                                                        fontSize: 10
+                                                    }}>
+                                                        تومان
+                                                    </Text>
+                                                    <Text style={{
+                                                        color: '#A52D53',
+                                                        fontFamily: 'ISFBold',
+                                                        fontSize: 14
+                                                    }}> {this.state.sliderValue} </Text>
+                                                </View>
+                                                <Slider
+                                                    style={{ width: '70%', height: 32 }}
+                                                    trackStyle={{
+                                                        height: 5,
+                                                        borderRadius: 5,
+                                                        backgroundColor: '#d0d0d0',
+                                                    }}
+                                                    thumbStyle={{
+                                                        width: 30,
+                                                        height: 30,
+                                                        borderRadius: 30,
+                                                        backgroundColor: '#C50143',
+                                                    }}
+                                                    minimumTrackTintColor='#C50143'
+                                                    minimumValue={50000}
+                                                    maximumValue={1000000}
+                                                    step={50000}
+                                                    value={this.state.sliderValue}
+                                                    onValueChange={value => this.setState({ sliderValue: value })}
+                                                    onSlidingStart={value =>
+                                                        this.setState({
+                                                            slideStartingValue: value,
+                                                            slideStartingCount: this.state.slideStartingCount + 1,
+                                                        })
+                                                    }
+                                                />
 
-                                            }
-                                        </TouchableOpacity>
+                                            </View>
+                                            <View style={styles.price} >
+                                                <Text style={styles.modal_titles} >قیمت </Text>
+                                                <Icon style={{ marginLeft: 5 }} size={22} name="brightness-percent" color="#555" />
+                                            </View>
+                                        </View>
 
-                                        <Mapir
-                                            accessToken={'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjM5ZjlmMWZhNDA4YzM0ODI2ZjcxZGI5YTdlM2U2ZmVjNDEzMzNmMDU0MjVhM2MzOTM0NmMwNTlkMzBiMzcyYjA5YzU1OGZjOGU4NTJmNWJhIn0.eyJhdWQiOiJteWF3ZXNvbWVhcHAiLCJqdGkiOiIzOWY5ZjFmYTQwOGMzNDgyNmY3MWRiOWE3ZTNlNmZlYzQxMzMzZjA1NDI1YTNjMzkzNDZjMDU5ZDMwYjM3MmIwOWM1NThmYzhlODUyZjViYSIsImlhdCI6MTU1OTQ1NTIzMiwibmJmIjoxNTU5NDU1MjMyLCJleHAiOjE1NTk0NTg4MzIsInN1YiI6IiIsInNjb3BlcyI6WyJiYXNpYyIsImVtYWlsIl19.JNowwSPWaoVoJ1Omirk9OTtkDySsNL91nP00GcCARdM-YHoTQYw3NZy3SaVlAsbafO9oPPvlVfhNIxPIHESACZATutE3tb7RBEmQGEXX-8G7GOSu8IzyyLBmHaQe75LtisgdKi-zPTGsx8zFv0Acn6HrDDxFrKFNtmI85L3jos_GVxvYYhHWKAez8mbJRHcH1b15DrwgWAhCjO2p_HqpuGLdRF1l03J6HsOnJLMid2997g7iAVTOa8mt2oaEPvmwA_f6pwFZSURqw-RJzdN_R8IEmtqWQq5ZNTEppVaV82yuwfnSmrb0_Sak2hfBIiLwQeCMsnfhU_CvUbE_1rukmQ'}
-                                            zoomLevel={13}
-                                            showUserLocation={true}
-                                            centerCoordinate={[51.422548, 35.732573]}
-                                            onPress={e => this.addMarker(e.geometry.coordinates)}
-                                            style={{ flex: 1 }}
-                                        >
-                                            {mark}
-
-                                        </Mapir>
 
                                     </View>
 
+
+                                    {/* request btn */}
+                                    <View style={styles.new_request_box}>
+                                        <TouchableOpacity activeOpacity={.7}
+                                            onPress={() => this.setState({ modalVisible: false })}
+                                            style={styles.search_touch}>
+                                            <Text style={{ color: '#fff', fontFamily: 'ISBold' }} >جستجو</Text>
+                                        </TouchableOpacity>
+                                        <View style={styles.search_touch_sibling} ></View>
+                                    </View>
                                 </View>
                             </View>
 
-
-                            {/* request btn */}
-                            <View style={styles.new_request_box}>
-                                <GradientButton
-                                    width="90%"
-                                    press={this._newRequest}
-                                    activeOpacity={.6}
-                                    color_1="#18749a"
-                                    color_2="#46add8"
-                                    height={50}
-                                    borderRadius={50}
-                                    textColor="#fff"
-                                    size={16}
-                                    title="درخواست جدید"
-                                    top={0}
-                                    bottom={0}
-                                />
-                            </View>
                         </View>
-                    </InputScrollView>
 
+                        : null
 
-
-                </Modal>
-
-
-
-
+                }
+                {/* </Modal> */}
 
             </DrawerLayoutAndroid >
 
 
         );
     }
-}
-let mapParentStyle = {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '90%',
-};
-let mapStyle = {
-    width: '48%',
-    height: 200,
-    borderWidth: 1,
-    borderRadius: 5,
-    borderColor: '#fff'
-}
-
-let square = {
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center'
 }
 
 const styles = ({
@@ -769,31 +571,26 @@ const styles = ({
         justifyContent: 'space-between',
         height: 50,
         width: '100%',
-        paddingVertical: 5
-    },
-    notification: {
-        width: 14,
-        height: 14,
-        borderRadius: 7,
-        backgroundColor: '#B22850',
-        start: 8,
-        top: 0,
-        justifyContent: 'center',
+        paddingVertical: 5,
         alignItems: 'center',
     },
-    notification_text: {
-        color: '#fff',
-        fontSize: 9,
-        fontFamily: 'ISFMedium',
+    notification_circle: {
+        width: 10,
+        height: 10,
+        borderRadius: 7,
+        backgroundColor: '#B22850',
+        end: 13,
+        top: 15,
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute'
     },
-    humberger: {
+    menu_icon: {
         width: 50,
         height: 50,
         alignItems: 'center',
-    },
-    humberger_icon: {
-        width: 30,
-        height: 30,
+        justifyContent: 'center',
+        position: 'relative'
     },
     up: {
         flexDirection: 'column',
@@ -809,8 +606,8 @@ const styles = ({
 
     },
     title: {
-        fontSize: 18,
-        fontFamily: 'IS',
+        fontSize: 14,
+        fontFamily: 'ISBold',
         color: '#333',
         textAlign: 'center',
     },
@@ -820,45 +617,33 @@ const styles = ({
         paddingTop: 20,
         paddingBottom: 200,
     },
-
-    footer: {
-        width: Dimensions.get('window').width,
-        height: 100,
-        backgroundColor: "#C92652",
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        zIndex: 20
-    },
-    middleBtn: {
-        bottom: 50,
+    modal_button: {
+        position: 'absolute',
+        bottom: 140,
+        zIndex: 10,
+        right: 20,
         width: 90,
         height: 90,
-        borderRadius: 50,
-        backgroundColor: '#C92652',
+        borderRadius: 100,
+        backgroundColor: '#fff',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        zIndex: 2,
-
+        shadowColor: "#C92652",
+        shadowOpacity: .5,
+        elevation: 10,
     },
-    middleInside: {
-        width: 80,
-        height: 80,
-        backgroundColor: '#fff',
+    middle_inside: {
+        width: 84,
+        height: 84,
+        backgroundColor: '#C92652',
         borderWidth: 2,
-        borderColor: '#eee',
-        borderRadius: 50,
+        borderColor: '#fff',
+        borderRadius: 100,
         justifyContent: 'center',
         alignItems: 'center',
         zIndex: 20
     },
-    middleIcon: {
-        width: 40,
-        height: 50,
-        zIndex: 20
-    },
-
     icon_parent: {
         width: 100,
         height: 100,
@@ -886,19 +671,10 @@ const styles = ({
         elevation: 1,
     },
 
-    icon_cover: {
-        width: 60,
-        height: 60,
-        backgroundColor: '#C92652',
-        borderRadius: 40,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
     icon: {
         width: '100%',
         height: '100%',
         borderRadius: 40,
-
     },
     person_desc: {
         flexDirection: 'column',
@@ -910,7 +686,7 @@ const styles = ({
         marginTop: 10,
         color: '#fff'
     },
-    bottomIcons: {
+    bottom_icons: {
         padding: 10,
         alignItems: 'center',
         justifyContent: 'flex-end',
@@ -923,49 +699,20 @@ const styles = ({
         fontFamily: 'ISBold',
         marginRight: 10,
     },
-    bottomIcon: {
-        width: 30,
-        height: 30
+    modal_body: {
+        flexDirection: 'column',
+        backgroundColor: '#f6f6f6',
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').height,
+        top: 0,
+        bottom: 0,
+        flex: 1,
+        paddingTop: 10,
+
     },
 
-    modal_description: {
-        backgroundColor: '#eee',
-        borderBottomRightRadius: 20,
-        borderBottomLeftRadius: 10,
-        borderTopLeftRadius: 50,
-        borderTopRightRadius: 20,
-        width: '90%',
-        flexDirection: 'row',
-        alignItems: 'center',
-        shadowColor: "#f7f7f7",
-        shadowOpacity: 1,
-        elevation: 1,
-        height: 100,
-        padding: 10,
-        marginTop: 50,
-    },
-
-    home_icon_marker: {
-        width: 50,
-        resizeMode: "contain",
-        top: -40,
-    },
-
-    modal_description_left: {
-        flex: 1
-    },
-    modal_description_text: {
-        fontSize: 14,
-        color: '#333',
-        fontFamily: 'ISBold',
-    },
-    modal_description_title: {
-        fontSize: 10,
-        color: '#aaa',
-        fontFamily: 'IS',
-    },
     modal_price: {
-        width: '48%',
+        width: '90%',
         flexDirection: 'column',
         marginVertical: 5,
         borderRadius: 5,
@@ -975,23 +722,49 @@ const styles = ({
         backgroundColor: '#eee',
 
     },
-    modal_details: {
+    modal_boxes: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'flex-end',
-        backgroundColor: '#ddd',
-        width: '100%',
-        justifyContent: 'center',
-        paddingVertical: 5,
-        borderTopLeftRadius: 5,
-        borderTopRightRadius: 5
+        justifyContent: 'space-between',
+        backgroundColor: '#fff',
+        marginBottom: 20,
+        paddingHorizontal: 10,
+        borderRadius: 5,
+        height: 50,
+        width: '90%',
+
+        shadowOpacity: 0.2,
+        shadowRadius: 2,
+        elevation: 2,
     },
-    modal_detailsx: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        width: '100%',
+    show_selected_date: {
+        backgroundColor: '#fff',
+        fontSize: 18,
+        color: '#555',
+        fontFamily: 'ISFBold',
+        textAlign: 'left',
         justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%'
+    },
+    right_icon_box: {
+        flexDirection: 'row',
+        width: '50%',
+        justifyContent: 'flex-end',
+        alignItems: 'center'
+    },
+    capacity: {
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+        justifyContent: 'flex-end',
+        width: '50%',
+        paddingBottom: 5,
+    },
+    price: {
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+        justifyContent: 'flex-end',
+        width: '20%',
         paddingBottom: 5,
     },
     modal_titles: {
@@ -1011,82 +784,118 @@ const styles = ({
         fontFamily: 'ISBold',
         color: '#636363'
     },
-    modal_icons: {
-        width: 20,
-        resizeMode: "contain",
-        marginLeft: 10,
-    },
 
     price_input: {
-        textAlign: 'center',
-        borderRadius: 5,
-        height: 40,
         backgroundColor: '#fff',
-        color: '#636363',
-        marginTop: 5,
-        fontFamily: 'ISBold',
-        minWidth: 50,
-        fontSize: 15,
-        borderRadius: 5
-
-    },
-    start_date: {
-        width: '48%',
-        marginVertical: 5,
-        // height: 160,
-        backgroundColor: '#eee',
-        justifyContent: 'space-between',
-        alignItems: 'space-between',
-        borderRadius: 5
-    },
-    select_time: {
-        textAlign: 'center',
-        fontSize: 15,
-        fontFamily: 'ISFBold',
-        borderRadius: 5,
-        shadowColor: "#f7f7f7",
-        shadowOpacity: .3,
-        elevation: 1,
-        width: '100%',
         height: 50,
-        backgroundColor: '#fff',
-        color: '#636363',
-        marginTop: 5,
-        justifyContent: 'center',
-        alignItems: 'center',
+        fontSize: 14,
+        fontFamily: 'ISBold',
+        textAlign: 'left',
+        paddingRight: 10,
+        width: '50%',
+        color: '#636363'
     },
-    nights: {
-        width: '90%',
-        marginVertical: 5
-    },
+
 
     new_request_box: {
         width: '100%',
-        height: 80,
+        height: 200,
         alignItems: 'center',
         justifyContent: 'center',
-        // backgroundColor: '#ebebeb',
-        marginTop: 10,
-        marginBottom: 30,
+        bottom: 100,
+        borderRadius: 30,
+        position: 'absolute',
+        backgroundColor: 'transparent',
+        flexDirection: 'column',
+
     },
-
-
-    modal_close: {
-        width: 25,
-        height: 25,
+    search_touch_sibling: {
+        width: '100%',
+        height: 140,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 30,
+        backgroundColor: '#fff'
+    },
+    search_touch: {
+        backgroundColor: '#C50143',
+        width: Dimensions.get('window').width / 3,
+        height: Dimensions.get('window').width / 3,
+        borderRadius: Dimensions.get('window').width / 6,
+        alignItems: 'center',
+        justifyContent: 'center',
+        // position: 'absolute',
+        top: Dimensions.get('window').width / 6,
+        borderWidth: 10,
+        borderColor: '#fff',
+        shadowColor: "black",
+        shadowOpacity: .5,
+        elevation: 2,
+        zIndex: 99
     },
 
     select_date: {
-        textAlign: 'center',
         borderRadius: 5,
-        width: '100%',
-        height: 40,
+        width: '50%',
         backgroundColor: '#fff',
         color: '#636363',
-        marginTop: 5,
+        flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
         fontFamily: 'ISBold',
+    },
+
+    picker_modal: {
+        position: 'absolute',
+        right: 0,
+        left: 0,
+        top: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0,0,0,.5)',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    picker_box: {
+        width: '90%',
+        paddingHorizontal: 5,
+        borderRadius: 5,
+        backgroundColor: '#fff',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: 50
+    },
+    picker_item: {
+        fontFamily: 'ISBold',
+        paddingVertical: 10,
+        fontSize: 14,
+        textAlign: 'center',
+        color: '#333'
+    },
+    picker_button: {
+        borderBottomWidth: 1,
+        borderBottomColor: '#f1f1f1',
+        width: '100%',
+        backgroundColor: '#fff',
+        padding: 5
+    },
+    title_box: {
+        backgroundColor: '#f6f6f6',
+        width: '100%',
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    title_child: {
+        width: '90%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        height: 50
+    },
+    modal_title: {
+        fontFamily: 'ISBold',
+        fontSize: 16,
+        color: '#333'
     }
 
 

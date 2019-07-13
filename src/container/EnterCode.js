@@ -6,7 +6,8 @@ import {
     TouchableOpacity,
     TextInput,
     KeyboardAvoidingView,
-    Animated
+    Animated,
+    BackHandler
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Actions } from 'react-native-router-flux';
@@ -30,7 +31,14 @@ class EnterCode extends Component {
 
         }
     }
+    componentWillMount(){
+        BackHandler.addEventListener('hardwareBackPress',this._back)
+    }
 
+    _back = () => {
+        alert(0)
+        return true
+    }
 
     // resend number 
     _sendNumber = () => {
@@ -88,7 +96,6 @@ class EnterCode extends Component {
         } catch (e) {
             // saving error
         }
-        console.log('set')
 
     }
 
@@ -109,24 +116,24 @@ class EnterCode extends Component {
                         justifyContent: 'center',
                         alignItems: 'center',
                     }}>
-                        <View style={styles.Box1} >
-                            <Text style={styles.MyCode} >
+                        <View style={styles.box_1} >
+                            <Text style={styles.my_code} >
                                 کد فعال سازی
                             </Text>
-                            <View style={styles.ResendBox}>
+                            <View style={styles.resend_box}>
                                 <TouchableOpacity
                                     style={styles.Resend}
                                     activeOpacity={.6}
                                     onPress={this._sendNumber}
                                 >
-                                    <Text style={styles.ResendText}  >ارسال مجدد</Text>
+                                    <Text style={styles.resend_text}  >ارسال مجدد</Text>
                                 </TouchableOpacity>
-                                <Text style={styles.MyNumber}>+912 123 4567</Text>
+                                <Text style={styles.my_number}>+912 123 4567</Text>
                             </View>
                         </View>
 
-                        <View style={styles.Box2} >
-                            <Text style={styles.ActivationCodeText} >
+                        <View style={styles.box_2} >
+                            <Text style={styles.activation_code_text} >
                                 کد فعال سازی خود را وارد کنید
                             </Text>
 
@@ -144,13 +151,13 @@ class EnterCode extends Component {
                                         borderBottomColor: this.state.bg,
                                         marginHorizontal: 5,
                                         paddingHorizontal: 5,
-                                        fontSize: 30,
+                                        fontSize: 24,
                                         paddingBottom: 5,
                                         borderBottomWidth: 2,
                                         fontWeight: '900',
                                         textAlign: 'center',
                                         width: '70%',
-                                        letterSpacing: 16
+                                        letterSpacing: 18
                                     }}
                                     keyboardType='numeric'
                                 />
@@ -216,44 +223,43 @@ const styles = ({
         backgroundColor: '#f6f6f6',
     },
 
-    Box1: {
-        // flexGrow: 1,
+    box_1: {
         flexDirection: 'column',
         justifyContent: 'flex-end',
         alignItems: 'flex-end',
         width: Dimensions.get('window').width - 100,
     },
 
-    MyCode: {
-        fontSize: 24,
+    my_code: {
+        fontSize: 18,
         fontFamily: 'ISBold',
     },
 
-    ResendBox: {
+    resend_box: {
         flexDirection: 'row',
         alignItems: 'center',
         marginTop: 10
     },
 
-    MyNumber: {
-        fontSize: 18,
+    my_number: {
+        fontSize: 14,
         fontWeight: '900',
         color: '#b7b7b7'
     },
 
-    ResendText: {
-        fontSize: 14,
+    resend_text: {
+        fontSize: 12,
         fontFamily: 'ISBold',
         marginRight: 10,
         color: '#fff',
         backgroundColor: '#C72A54',
         borderRadius: 50,
         paddingHorizontal: 10,
-        paddingVertical: 5,
+        paddingVertical: 2,
     },
 
 
-    Box2: {
+    box_2: {
         // flexGrow: 1,
         height: 200,
         width: Dimensions.get('window').width - 100,
@@ -269,11 +275,11 @@ const styles = ({
         elevation: 2,
     },
 
-    ActivationCodeText: {
+    activation_code_text: {
         fontFamily: "ISMedium",
         color: '#333',
         marginBottom: 20,
-        fontSize: 14,
+        fontSize: 15,
         marginTop: 20
 
     },
@@ -281,18 +287,7 @@ const styles = ({
         flexDirection: 'row',
     }
 
-
-
-
-
 })
-
-
-
-
-
-
-
 
 
 export default EnterCode; 

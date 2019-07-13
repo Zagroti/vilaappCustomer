@@ -7,7 +7,7 @@ export default class Counter extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            number: 0
+            number: 1
         }
     }
 
@@ -16,37 +16,34 @@ export default class Counter extends Component {
         if (e === 'plus') {
             await this.setState((prev) => {
                 return {
-                    number: prev.number + 1
+                    number: prev.number + 1 < 11 ? prev.number + 1 : prev.number 
                 }
             })
         } else {
             await this.setState((prev) => {
                 return {
-                    number: prev.number - 1 < 0 ? prev.number : prev.number - 1
+                    number: prev.number - 1 < 1 ? prev.number : prev.number - 1
                 }
             })
-
         }
-
         this.props.counter(this.state.number)
-
     }
 
 
     render() {
 
         return (
-            <View style={styles.Counter} >
+            <View style={{width:'50%'}} >
                 <View style={styles.inside} counter={this.props.counter}>
-                    <TouchableOpacity onPress={() => this._count('minus')}  >
-                        <View style={styles.box}>
-                            <Icon name="minus" size={30} color="#aaa" />
-                        </View>
-                    </TouchableOpacity>
-                    <Text style={styles.show}>{this.state.number}</Text>
                     <TouchableOpacity onPress={() => this._count('plus')}  >
                         <View style={styles.box}>
-                            <Icon name="plus" size={30} color="#aaa" />
+                            <Icon name="plus" size={26} color="#ccc" />
+                        </View>
+                    </TouchableOpacity>
+                    <Text style={styles.show}>{this.props.number}</Text>
+                    <TouchableOpacity onPress={() => this._count('minus')}  >
+                        <View style={styles.box}>
+                            <Icon name="minus" size={26} color="#ccc" />
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -57,13 +54,12 @@ export default class Counter extends Component {
 
 const styles = ({
     box: {
-        width: 45,
-        height: 45,
+        width: 35,
+        height: 35,
         borderRadius: 25,
-        backgroundColor: '#eee',
+        backgroundColor: '#f1f1f1',
         justifyContent: 'center',
         alignItems: 'center',
-        borderWidth: 3,
         borderColor: '#ccc',
     },
 
@@ -79,9 +75,9 @@ const styles = ({
     },
 
     show: {
-        fontSize: 22,
-        color: '#666',
-        fontWeight: '900',
+        fontSize: 18,
+        color: '#555',
+        fontFamily: 'ISFBold',
     }
 
 })
