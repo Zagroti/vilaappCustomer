@@ -649,10 +649,10 @@ export default class Details extends Component {
                         <View style={styles.accept_from_owner} >
                             <Icon style={{ paddingHorizontal: 14 }} size={30} name="check" color="#18749a" />
 
-                            <Text style={{ fontSize: 12, fontFamily: 'ISBold', marginRight: 10 }} >پذیرفته شده توسط صاحب ویلا</Text>
+                            <Text style={{ fontSize: 10, fontFamily: 'ISBold', marginRight: 10 }} >پذیرفته شده توسط صاحب ویلا</Text>
                             <View style={{
-                                width: 70,
-                                height: 70,
+                                width: 60,
+                                height: 60,
                                 borderRadius: 35,
                                 backgroundColor: '#f5f5f5',
                                 alignItems: 'center',
@@ -679,7 +679,7 @@ export default class Details extends Component {
                             textColor="#fff"
                             size={16}
                             title="پرداخت"
-                            top={0}
+                            top={20}
                             bottom={100}
                         />
                     </View>
@@ -865,7 +865,7 @@ const styles = ({
     },
     modal_title: {
         alignItems: 'center',
-        marginTop: -50
+        marginTop: -40
     },
 
     icon_parent: {
@@ -914,19 +914,19 @@ const styles = ({
         alignItems: 'center',
     },
     person_name: {
-        fontSize: 18,
+        fontSize: 14,
         fontFamily: 'ISBold',
         marginTop: 5
     },
     person_number: {
-        fontSize: 15,
+        fontSize: 12,
         fontFamily: 'ISF',
         color: '#949494'
     },
 
     rent_detail: {
         width: '80%',
-        marginTop: 20
+        marginVertical: 10
     },
     rent_items: {
         borderRadius: 5,
@@ -978,9 +978,8 @@ const styles = ({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#fff',
-        height: 60,
+        height: 50,
         borderRadius: 30,
-        marginVertical: 10
     }
 
 

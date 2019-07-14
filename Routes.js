@@ -79,7 +79,7 @@ class Routes extends React.Component {
             < Router >
                 <Scene key="root" >
 
-                      <Scene key="SendNumber"
+                    <Scene key="SendNumber"
                         component={SendNumber}
                         title="Send Number"
                         hideNavBar={true}
@@ -101,7 +101,7 @@ class Routes extends React.Component {
                         component={Home}
                         title="home"
                         hideNavBar={true}
-                        initial={this.state.logged}                        
+                        initial={this.state.logged}
 
                     />
 
@@ -113,14 +113,14 @@ class Routes extends React.Component {
                         navigationBarStyle={styles.login_style_bar}
                         sceneStyle={styles.login_scene_style}
                     />
-                     <Scene key="Support" component={Support}
+                    <Scene key="Support" component={Support}
                         title=""
                         titleStyle={{ color: 'transparent' }}
                         renderRightButton={() => backButton()}
                         renderBackButton={() => nothing}
                         navigationBarStyle={styles.login_style_bar}
                         sceneStyle={styles.login_scene_style}
-                    />  
+                    />
 
                     <Scene key="ResultItemsPage" component={ResultItemsPage}
                         title=""
@@ -139,13 +139,12 @@ class Routes extends React.Component {
                         renderRightButton={() => nothing}
                         navigationBarStyle={styles.login_style_bar_detail}
                         sceneStyle={styles.login_scene_style}
-                    />  
+                    />
 
                     {/* <Scene key="Test"
                         component={Test}
                         title=""
                         hideNavBar={true}
-                        initial={true}
                     />  */}
 
 
