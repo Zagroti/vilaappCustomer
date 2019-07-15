@@ -12,7 +12,6 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
         }
     }
 
-
     _action  (name,val)   { 
         let count = this.state.counter;
       
@@ -24,8 +23,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
         
         this.setState({
             counter : count
-        });
-        console.log(this.state.counter)
+        }); 
         this.props._returnValue(name,count)
     }
 
