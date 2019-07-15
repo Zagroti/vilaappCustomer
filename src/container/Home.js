@@ -35,7 +35,7 @@ var moment = require('moment-jalaali')
 moment().format('jYYYY/jM/jD')
 
 
-export default class Home extends Component {
+  class Home extends Component {
 
     constructor(props) {
         super(props)
@@ -919,3 +919,5 @@ const styles = ({
 
 
 })
+
+export default   Home
