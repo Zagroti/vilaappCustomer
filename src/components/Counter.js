@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Dimensions, Image, TouchableOpacity } from 'react-native';
+import { Text, View, Dimensions, Image, TouchableOpacity, Button } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default class Counter extends Component {
@@ -34,17 +34,23 @@ export default class Counter extends Component {
         return (
             <View style={{width:'50%'}} >
                 <View style={styles.inside}  >
+
                     <TouchableOpacity onPress={() => this._action(this.props.name,'plus')}  >
                         <View style={styles.box}>
                             <Icon name="plus" size={26} color="#ccc" />
                         </View>
-                    </TouchableOpacity>
-                    <Text style={styles.show}>{this.state.counter}</Text>
+                    </TouchableOpacity>   
+
+                    <Text style={styles.show}>
+                        {this.state.counter}
+                    </Text>
+
                     <TouchableOpacity onPress={() => this._action(this.props.name,'minus')}  >
                         <View style={styles.box}>
                             <Icon name="minus" size={26} color="#ccc" />
                         </View>
                     </TouchableOpacity>
+
                 </View>
             </View>
         )
