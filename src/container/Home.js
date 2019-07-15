@@ -172,6 +172,13 @@ export default class Home extends Component {
             miniModal: false
         })
     }
+    _setProps = async(name,val) =>{ 
+        
+        await this.setState({
+            [name] : val
+        })
+    }
+
 
 
     render() {
@@ -451,7 +458,12 @@ export default class Home extends Component {
 
                                         {/* nights */}
                                         <View style={styles.modal_boxes}>
-                                            <Counter counter={(e) => this._counterHandler(e, 'night')} number={this.state.nights} />
+                                            <Counter      
+                                                title="title" 
+                                                name="name" 
+                                                _returnValue={this._setProps} 
+                                                val={this.state.nights}  />
+
                                             <View style={styles.capacity} >
                                                 <Text style={styles.modal_titles} >شب </Text>
                                                 <Icon style={{ marginLeft: 5 }} size={22} name="weather-night" color="#636363" />
@@ -460,7 +472,7 @@ export default class Home extends Component {
 
                                         {/* capacity  */}
                                         <View style={styles.modal_boxes}>
-                                            <Counter counter={(e) => this._counterHandler(e, 'persons')} number={this.state.persons} />
+                                            {/* <Counter counter={(e) => this._counterHandler(e, 'persons')} number={this.state.persons} /> */}
                                             <View style={styles.capacity} >
                                                 <Text style={styles.modal_titles} >ظرفیت </Text>
                                                 <Icon style={{ marginLeft: 5 }} size={22} name="account-group-outline" color="#636363" />

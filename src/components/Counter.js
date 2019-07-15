@@ -7,41 +7,40 @@ export default class Counter extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            number: 1
+            counter: this.props.val
         }
     }
 
 
-    _count = async (e) => {
-        if (e === 'plus') {
-            await this.setState((prev) => {
-                return {
-                    number: prev.number + 1 < 11 ? prev.number + 1 : prev.number 
-                }
-            })
-        } else {
-            await this.setState((prev) => {
-                return {
-                    number: prev.number - 1 < 1 ? prev.number : prev.number - 1
-                }
-            })
-        }
-        this.props.counter(this.state.number)
+    _action = (name,val) => { 
+        let count = this.state.counter;
+        if(val === 'plus')
+            count ++
+        else if(val === 'minus')
+            if(count > 0)
+                count --
+        
+        this.setState({
+            counter : count
+        });
+
+        this.props._returnValue(name,count)
     }
+
 
 
     render() {
 
         return (
             <View style={{width:'50%'}} >
-                <View style={styles.inside} counter={this.props.counter}>
-                    <TouchableOpacity onPress={() => this._count('plus')}  >
+                <View style={styles.inside}  >
+                    <TouchableOpacity onPress={() => this._action(this.props.name,'plus')}  >
                         <View style={styles.box}>
                             <Icon name="plus" size={26} color="#ccc" />
                         </View>
                     </TouchableOpacity>
-                    <Text style={styles.show}>{this.props.number}</Text>
-                    <TouchableOpacity onPress={() => this._count('minus')}  >
+                    <Text style={styles.show}>{this.state.counter}</Text>
+                    <TouchableOpacity onPress={() => this._action(this.props.name,'minus')}  >
                         <View style={styles.box}>
                             <Icon name="minus" size={26} color="#ccc" />
                         </View>
