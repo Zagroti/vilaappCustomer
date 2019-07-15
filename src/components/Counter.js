@@ -12,7 +12,7 @@ export default class Counter extends Component {
     }
 
 
-    _action = (name,val) => { 
+    _action  (name,val)   { 
         let count = this.state.counter;
         if(val === 'plus')
             count ++
