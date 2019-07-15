@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, Dimensions, Image, TouchableOpacity, Button } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+ 
 
  class Counter extends Component {
 
@@ -14,6 +15,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
     _action  (name,val)   { 
         let count = this.state.counter;
+      
         if(val === 'plus')
             count ++
         else if(val === 'minus')
@@ -23,7 +25,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
         this.setState({
             counter : count
         });
-
+        console.log(this.state.counter)
         this.props._returnValue(name,count)
     }
 
