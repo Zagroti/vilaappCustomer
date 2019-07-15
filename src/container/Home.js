@@ -458,8 +458,7 @@ export default class Home extends Component {
 
                                         {/* nights */}
                                         <View style={styles.modal_boxes}>
-                                            <Counter      
-                                                title="title" 
+                                            <Counter       
                                                 name="name" 
                                                 _returnValue={this._setProps} 
                                                 val={this.state.nights}  />
@@ -473,6 +472,11 @@ export default class Home extends Component {
                                         {/* capacity  */}
                                         <View style={styles.modal_boxes}>
                                             {/* <Counter counter={(e) => this._counterHandler(e, 'persons')} number={this.state.persons} /> */}
+                                            <Counter       
+                                                name="persons" 
+                                                _returnValue={this._setProps} 
+                                                val={this.state.persons}  />
+
                                             <View style={styles.capacity} >
                                                 <Text style={styles.modal_titles} >ظرفیت </Text>
                                                 <Icon style={{ marginLeft: 5 }} size={22} name="account-group-outline" color="#636363" />
