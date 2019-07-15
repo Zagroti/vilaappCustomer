@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, Dimensions, Image, TouchableOpacity, Button } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export default class Counter extends Component {
+ class Counter extends Component {
 
     constructor(props) {
         super(props)
@@ -86,3 +86,7 @@ const styles = ({
     }
 
 })
+
+
+
+export default   Counter
