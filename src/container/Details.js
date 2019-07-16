@@ -516,6 +516,7 @@ export default class Details extends Component {
                         <Mapir
                             accessToken={'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjM5ZjlmMWZhNDA4YzM0ODI2ZjcxZGI5YTdlM2U2ZmVjNDEzMzNmMDU0MjVhM2MzOTM0NmMwNTlkMzBiMzcyYjA5YzU1OGZjOGU4NTJmNWJhIn0.eyJhdWQiOiJteWF3ZXNvbWVhcHAiLCJqdGkiOiIzOWY5ZjFmYTQwOGMzNDgyNmY3MWRiOWE3ZTNlNmZlYzQxMzMzZjA1NDI1YTNjMzkzNDZjMDU5ZDMwYjM3MmIwOWM1NThmYzhlODUyZjViYSIsImlhdCI6MTU1OTQ1NTIzMiwibmJmIjoxNTU5NDU1MjMyLCJleHAiOjE1NTk0NTg4MzIsInN1YiI6IiIsInNjb3BlcyI6WyJiYXNpYyIsImVtYWlsIl19.JNowwSPWaoVoJ1Omirk9OTtkDySsNL91nP00GcCARdM-YHoTQYw3NZy3SaVlAsbafO9oPPvlVfhNIxPIHESACZATutE3tb7RBEmQGEXX-8G7GOSu8IzyyLBmHaQe75LtisgdKi-zPTGsx8zFv0Acn6HrDDxFrKFNtmI85L3jos_GVxvYYhHWKAez8mbJRHcH1b15DrwgWAhCjO2p_HqpuGLdRF1l03J6HsOnJLMid2997g7iAVTOa8mt2oaEPvmwA_f6pwFZSURqw-RJzdN_R8IEmtqWQq5ZNTEppVaV82yuwfnSmrb0_Sak2hfBIiLwQeCMsnfhU_CvUbE_1rukmQ'}
                             zoomLevel={13}
+                            zoomEnabled={false}
                             centerCoordinate={[51.422548, 35.732573]}
                             style={{ flex: 1 }}
                             logoEnabled={false}
@@ -619,14 +620,17 @@ export default class Details extends Component {
                             </View>
                             <View style={styles.person_desc} >
                                 <Text style={styles.person_name} >جمیله باغی تبار</Text>
-                                <Text style={styles.person_number} >0912 100 8900</Text>
                             </View>
                         </View>
 
                         <View style={styles.rent_detail} >
                             <View style={styles.rent_items} >
-                                <Text style={styles.rent_text} >شروع تاریخ</Text>
+                                <Text style={styles.rent_text} >تاریخ ورود</Text>
                                 <Text style={styles.rent_number} >1398 / 11 / 10</Text>
+                            </View>
+                            <View style={styles.rent_items} >
+                                <Text style={styles.rent_text} >تاریخ خروج</Text>
+                                <Text style={styles.rent_number} >1398 / 11 / 15</Text>
                             </View>
                             <View style={styles.rent_items} >
                                 <Text style={styles.rent_text} >تعداد شبها</Text>
@@ -634,11 +638,11 @@ export default class Details extends Component {
                             </View>
                             <View style={styles.rent_items} >
                                 <Text style={styles.rent_text} >نفرات</Text>
-                                <Text style={styles.rent_number} >2</Text>
+                                <Text style={styles.rent_number} >3</Text>
                             </View>
                             <View style={styles.rent_items} >
-                                <Text style={styles.rent_text} >هزینه هرشب</Text>
-                                <Text style={styles.rent_number} >100,000</Text>
+                                <Text style={styles.rent_text} >میانگین اجاره شبانه</Text>
+                                <Text style={styles.rent_number} >100,000 ت</Text>
                             </View>
                             <View style={styles.totalـprice} >
                                 <Text style={styles.total_text} >هزینه کل</Text>
@@ -661,7 +665,7 @@ export default class Details extends Component {
                                 shadowOpacity: 1,
                                 elevation: 1,
                             }} >
-                                <Icon size={30} name="account-outline" color="#bbb" />
+                                <Icon size={25} name="account-outline" color="#bbb" />
 
                             </View>
                         </View>
@@ -865,7 +869,7 @@ const styles = ({
     },
     modal_title: {
         alignItems: 'center',
-        marginTop: -40
+        marginTop: -40,
     },
 
     icon_parent: {
@@ -907,16 +911,16 @@ const styles = ({
         width: '100%',
         height: '100%',
         borderRadius: 35,
-
     },
     person_desc: {
         flexDirection: 'column',
         alignItems: 'center',
     },
     person_name: {
-        fontSize: 14,
+        fontSize: 13,
         fontFamily: 'ISBold',
-        marginTop: 5
+        marginTop: 5,
+        color:'#333'
     },
     person_number: {
         fontSize: 12,
@@ -926,7 +930,7 @@ const styles = ({
 
     rent_detail: {
         width: '80%',
-        marginVertical: 10
+        marginVertical: 10,
     },
     rent_items: {
         borderRadius: 5,
@@ -937,8 +941,9 @@ const styles = ({
         flexDirection: 'row-reverse',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: 10,
-        marginVertical: 2,
+        paddingVertical:5,
+        paddingHorizontal:10,
+        marginVertical:2,
     },
     rent_text: {
         fontSize: 13,
