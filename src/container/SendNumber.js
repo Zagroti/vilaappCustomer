@@ -87,10 +87,9 @@ class SendNumber extends Component {
 
             if(res.status === 200 ){
                 // go to enter code componenet!
-                console.log(res.status)
-                            
-            // go to enter code page 
-            Actions.EnterCode();
+                console.log(res.status)  
+                // go to enter code page 
+                Actions.EnterCode();
 
             }
 
