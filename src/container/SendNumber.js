@@ -14,6 +14,8 @@ import {
 
 
 import { Actions } from 'react-native-router-flux';
+import PostToApi from '../controler/postToApi';
+
 
 //components
 import GradientButton from '../components/GradientButton';
@@ -69,6 +71,8 @@ class SendNumber extends Component {
         })
     }
 
+    
+
 
     // send code function
     _enterCode = async () => {
@@ -82,7 +86,17 @@ class SendNumber extends Component {
             await this.setState({
                 sentNumber: sentNumber.trim()
             })
-            this.props.onSendNumber(sentNumber)
+            this.props.onSendNumber(sentNumber);
+            const data = new FormData();
+            data.append('phone',this.state.phone)
+
+            const res = PostToApi(data,'url');
+            console.log(res);
+
+            if(res.status === 200 ){
+                // go to enter code componenet!
+                console.log(res.status)
+            }
 
         }else {
 
