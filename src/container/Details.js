@@ -751,7 +751,7 @@ const styles = ({
         justifyContent: 'space-around',
         width: '90%',
         marginTop: 20,
-        padding: 15
+        padding: 15,
 
     },
     posibility: {

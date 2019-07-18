@@ -1,139 +1,114 @@
-import React, { Component } from 'react';
-import { Text, View, Dimensions, Image, TouchableOpacity, ImageBackground } from 'react-native';
+import React from 'react';
+import { Text, View, Dimensions, Image, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+var touchColor = '#f3f3f3'
 
-export default class ResultItems extends Component {
+const ResultItems = (props) => (
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            touchColor: '#f6f6f6'
-        }
-    }
+    <TouchableOpacity
+        style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            width: Dimensions.get('window').width - 30,
+            borderRadius: 15,
+            height: 120,
+            marginBottom: 10,
+            marginTop: 5,
+            backgroundColor: touchColor,
+            overflow: 'hidden',
+            zIndex: -99,
+        }}
+        activeOpacity={.9}
+        onPress={props.navigate}
+        onPressIn={() => touchColor = 'rgba(110, 29, 54, 0.1)'}
+        onPressOut={() => touchColor = '#eee'}
+    >
 
+ 
+            <View style={{
+                flexDirection: 'column',
+                alignItems: 'flex-end',
+                justifyContent: 'space-between',
+                height: 120,
+                paddingVertical: 5,
+                width: Dimensions.get('window').width - 150,
+                paddingRight:5,
+            }}>
+                <View style={{ position: 'absolute', left: 0, top: -10 }}>
+                    <Icon style={{ transform: [{ rotate: '0deg' }], end: -7 }} name="bookmark" size={40} color="#A52D53" />
+                    <Text
+                        style={{
+                            position: 'absolute',
+                            top: 16,
+                            right: 8,
+                            fontSize: 10,
+                            color: '#fff',
+                            fontFamily: 'ISFBold'
+                        }}
+                    >24
+                    </Text>
+                    <Text style={{ fontSize: 8, color: '#fff', top: 12, right: 2, position: 'absolute' }} > %</Text>
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'center', position: 'relative' }}>
+                    {/* limit character 25 english or 50 persian */}
+                    <Text style={styles.title}>ویلای لوکس ساحلی</Text>
+                </View>
 
-    render() {
-
-        return (
-            <TouchableOpacity
-                style={{
+                <View >
+                    <View style={styles.price}>
+                        <Text style={styles.price_small}> ت</Text>
+                        <Text style={styles.price_number}>1,500,000</Text>
+                        <Text style={styles.price_text}>اجاره کل / 3 شب :  </Text>
+                        <Icon style={{ marginLeft: 5 }} name="cash-multiple" size={14} color="#aaa" />
+                    </View>
+                </View>
+                <View style={{
                     flexDirection: 'row',
-                    alignItems: 'center',
                     justifyContent: 'space-between',
-                    width: Dimensions.get('window').width - 20,
-                    borderRadius: 5,
-                    height: 100,
-                    marginBottom: 10,
-                    zIndex: 10,
-                    backgroundColor: this.state.touchColor,
-                    overflow: 'hidden'
-                }}
-                activeOpacity={.9}
-                onPress={this.props.navigate}
-                onPressIn={() => this.setState({ touchColor: 'rgba(110, 29, 54, 0.1)' })}
-                onPressOut={() => this.setState({ touchColor: '#eee' })}
-            >
-
-                <View
-                    style={{
-                        height: 100,
-                        flexDirection: 'row-reverse',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        width: Dimensions.get('window').width - 120,
-                    }} >
-                    <View style={{
-                        flexDirection: 'column',
-                        alignItems: 'flex-end',
-                        justifyContent: 'space-between',
-                        height: 100,
-                        paddingVertical: 10,
-                    }}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', position: 'relative' }}>
-                            <Text style={styles.title}>ویلای رویال </Text>
-                            <Icon style={{ transform: [{ rotate: '90deg' }], end: -5 }} name="bookmark" size={30} color="#A52D53" />
-                            <Text
-                                style={{
-                                    position: 'absolute',
-                                    top: 8,
-                                    right: 1,
-                                    fontSize: 9,
-                                    color: '#fff',
-                                    fontFamily: 'ISFBold'
-                                }}
-                            >10%</Text>
-                        </View>
-                        <View style={{ marginRight: 5 }}>
-                            <View style={styles.location}>
-                                <Text style={styles.location_text}>بهشهر , منطقه ی جنگلی عباس آباد </Text>
-                                <Icon style={{ marginLeft: 5 }} name="map-marker" size={14} color="#aaa" />
-                            </View>
-                        </View>
-                        <View style={{ marginRight: 5 }}>
-                            <View style={styles.price}>
-                                <Text style={styles.price_small}> تومان</Text>
-                                <Text style={styles.price_number}>1,500,000</Text>
-                                <Text style={styles.price_text}>اجاره کل برای 3 شب: </Text>
-                                <Icon style={{ marginLeft: 5 }} name="cash-multiple" size={14} color="#aaa" />
-                            </View>
-                        </View>
+                    alignItems: "center",
+                    paddingBottom: 10,
+                    width: Dimensions.get('window').width - 160
+                }}>
+                    <View style={{ flexDirection: 'row' }}>
+                        <Icon name="star" size={16} color="gold" />
+                        <Icon name="star" size={16} color="gold" />
+                        <Icon name="star" size={16} color="gold" />
+                        <Icon name="star" size={16} color="gold" />
+                        <Icon name="star" size={16} color="gold" />
                     </View>
-
-                    <View style={{
-                        flexDirection: 'column',
-                        height: 100,
-                        paddingVertical: 10,
-                        justifyContent: 'space-between',
-                        marginLeft: 10,
-                        alignItems: "flex-start",
-                    }}>
-                        <View style={{
-                            flexDirection: 'column',
-                            justifyContent: 'space-between',
-                            alignItems: "center"
-                        }}>
-                            <View style={{ flexDirection: 'row' }}>
-                                <Icon name="star" size={14} color="gold" />
-                                <Icon name="star" size={14} color="gold" />
-                                <Icon name="star" size={14} color="gold" />
-                                <Icon name="star" size={14} color="gold" />
-                                <Icon name="star" size={14} color="gold" />
-                            </View>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
-                                <Icon name="shield-check" size={15} color="#A52D53" />
-                                <Text style={{ fontSize: 10, fontFamily: 'ISBold', color: '#888' }}>آقای کریم پور</Text>
-                            </View>
-                        </View>
-
-                        <View style={styles.person}>
-                            <Text style={styles.person_text}>ظرفیت <Text style={styles.price_number}>10</Text> نفر</Text>
-                            <Icon style={{ marginLeft: 5 }} name="account-group-outline" size={14} color="#aaa" />
-                        </View>
-
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Icon name="shield-check" size={15} color="#A52D53" />
+                        <Text style={{ fontSize: 12, fontFamily: 'ISBold', color: '#888' }}>آقای کریم پور</Text>
                     </View>
                 </View>
-                <View style={styles.image_box} >
-                    <Image style={styles.image} source={require('../../Assets/Images/detail.jpg')} />
-                </View>
-            </TouchableOpacity>
-        )
-    }
-}
+            </View>
+        
+
+        <View style={styles.image_box} >
+            <Image style={styles.image} source={require('../../Assets/Images/detail.jpg')} />
+        </View>
+
+    </TouchableOpacity>
+)
+
+export default ResultItems;
+
 
 const styles = ({
 
     image_box: {
-        width: 100,
-        height: 100,
+        width: 120,
+        height: 120,
         justifyContent: 'center',
         alignItems: 'center',
         borderLeftWidth: 5,
         borderColor: '#A52D53'
     },
     image: {
-        width: 100,
-        height: 100,
+        width: 120,
+        height: 120,
         resizeMode: 'cover',
         borderTopRightRadius: 10,
         borderBottomRightRadius: 10,
@@ -142,23 +117,22 @@ const styles = ({
 
 
     title: {
-        fontSize: 12,
+        fontSize: 14,
         fontFamily: 'IYB',
         color: '#A52D53',
-
+        // end:-7
     },
 
     person: {
         flexDirection: 'row',
-        justifyContent: 'flex-end',
+        justifyContent: 'center',
         alignItems: 'center',
     },
     person_text: {
         fontSize: 10,
         fontFamily: 'ISFMedium',
         color: '#888',
-        marginBottom: 2
-
+        marginBottom: 2,
     },
     location: {
         flexDirection: 'row',
@@ -176,9 +150,10 @@ const styles = ({
         flexDirection: 'row',
         justifyContent: 'flex-end',
         alignItems: 'center',
+
     },
     price_text: {
-        fontSize: 10,
+        fontSize: 12,
         fontFamily: 'ISFMedium',
         color: '#666'
     },

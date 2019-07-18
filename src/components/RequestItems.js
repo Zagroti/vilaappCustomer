@@ -2,76 +2,66 @@ import React, { Component } from 'react';
 import { Text, View, Dimensions, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export default class RequestItems extends Component {
+const RequestItems = (props) => (
+    <TouchableOpacity style={styles.RequestItems} activeOpacity={.8} onPress={props.navigate}>
+        <View style={styles.left} >
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Text style={{
+                    color: '#fff',
+                    fontFamily: 'IS',
+                    fontSize: 10,
+                }}>(تومان)</Text>
+                <Text style={{
+                    color: '#fff',
+                    fontFamily: 'ISFBold',
+                    fontSize: 12,
+                    zIndex: 10
+                }}>  قیمت </Text>
+            </View>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }} >
+                <Text style={styles.price}> 500,000 </Text>
+                <Text style={{ color: '#fff' }}> - </Text>
+                <Text style={styles.price}> 100,000 </Text>
+            </View>
+        </View>
 
+        <View style={styles.right}>
 
-    constructor(props) {
-        super(props)
-        this.state = {
+            <View style={styles.vila_info}>
+                <Text style={styles.vila_name}>ویلای دریاکنار</Text>
+                <View style={styles.vila_detail}>
+                    <View style={styles.times}>
+                        <View style={styles.start_time}>
+                            <Text style={styles.time_show}>1398/10/10</Text>
+                            <Text style={styles.time_title}>تاریخ شروع</Text>
+                        </View>
 
-        }
-    }
-
-    render() {
-
-        return (
-            <TouchableOpacity style={styles.RequestItems} activeOpacity={.8} onPress={this.props.navigate}>
-                <View style={styles.left} >
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={{
-                            color: '#fff',
-                            fontFamily: 'IS',
-                            fontSize: 10,
-                        }}>(تومان)</Text>
-                        <Text style={{
-                            color: '#fff',
-                            fontFamily: 'ISFBold',
-                            fontSize: 12,
-                            zIndex: 10
-                        }}>  قیمت </Text>
-                    </View>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }} >
-                        <Text style={styles.price}> 500,000 </Text>
-                        <Text style={{ color: '#fff' }}> - </Text>
-                        <Text style={styles.price}> 100,000 </Text>
-                    </View>
-                </View>
-
-                <View style={styles.right}>
-
-                    <View style={styles.vila_info}>
-                        <Text style={styles.vila_name}>ویلای دریاکنار</Text>
-                        <View style={styles.vila_detail}>
-                            <View style={styles.times}>
-                                <View style={styles.start_time}>
-                                    <Text style={styles.time_show}>1398/10/10</Text>
-                                    <Text style={styles.time_title}>تاریخ شروع</Text>
-                                </View>
-
-                                <View style={styles.end_time}>
-                                    <Text style={styles.time_show}>1398/10/12</Text>
-                                    <Text style={styles.time_title}>تاریخ پایان</Text>
-                                </View>
-                            </View>
-
-                            <View style={styles.icon_right}>
-                                <Text style={styles.circle}></Text>
-                                <Text style={styles.line}></Text>
-                                <Text style={styles.circle}></Text>
-                            </View>
+                        <View style={styles.end_time}>
+                            <Text style={styles.time_show}>1398/10/12</Text>
+                            <Text style={styles.time_title}>تاریخ پایان</Text>
                         </View>
                     </View>
 
-                    <View style={styles.number_box}>
-                        <Text style={styles.number}>3</Text>
-                        <Text style={styles.case}>مورد</Text>
+                    <View style={styles.icon_right}>
+                        <Text style={styles.circle}></Text>
+                        <Text style={styles.line}></Text>
+                        <Text style={styles.circle}></Text>
                     </View>
-
                 </View>
-            </TouchableOpacity>
-        )
-    }
-}
+            </View>
+
+            <View style={styles.number_box}>
+                <Text style={styles.number}>3</Text>
+                <Text style={styles.case}>مورد</Text>
+            </View>
+
+        </View>
+    </TouchableOpacity>
+)
+
+
+export default RequestItems;
+
 
 const styles = ({
     RequestItems: {
@@ -85,14 +75,15 @@ const styles = ({
         height: 100,
         marginBottom: 20,
         zIndex: 2,
-        height: 90
+        height: 90,
+
     },
 
     right: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        height:100
+        height: 100
     },
 
     number_box: {

@@ -18,8 +18,8 @@ import PersianDatePicker from "rn-persian-date-picker";
 import Mapir from 'mapir-react-native-sdk'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-community/async-storage';
-// import Slider from '@react-native-community/slider';
-import Slider from "react-native-slider";
+import Slider from '@react-native-community/slider';
+// import Slider from "react-native-slider";
 
 // import { Slider} from 'react-native'
 
@@ -35,7 +35,7 @@ var moment = require('moment-jalaali')
 moment().format('jYYYY/jM/jD')
 
 
-  class Home extends Component {
+class Home extends Component {
 
     constructor(props) {
         super(props)
@@ -46,7 +46,7 @@ moment().format('jYYYY/jM/jD')
             selectStart: false,
             minRangeSlider: 0,
             maxRangeSlider: 1000000,
-            sliderValue: 100000,
+            sliderChangedValue: 50000,
             nights: 1,
             persons: 1
         };
@@ -84,12 +84,6 @@ moment().format('jYYYY/jM/jD')
 
 
 
-    _back = () => {
-        if (this.state.modalVisible) {
-            alert(0)
-        }
-        return true
-    }
 
 
     componentWillUnmount() {
@@ -103,7 +97,7 @@ moment().format('jYYYY/jM/jD')
         return true
     }
 
-    //footer actions
+    //drawer menu actions
     _navigate = (path) => {
         if (path === 'profile') {
             Actions.Profile()
@@ -144,10 +138,7 @@ moment().format('jYYYY/jM/jD')
         Actions.ResultItemsPage()
     }
 
-    //close modal
-    setModalVisible(visible) {
-        this.setState({ modalVisible: visible });
-    }
+
 
 
     // open date picker and set date
@@ -172,10 +163,22 @@ moment().format('jYYYY/jM/jD')
             miniModal: false
         })
     }
-    _setProps = async(name,val) =>{ 
-        
+    _setProps = async (name, val) => {
+
         await this.setState({
-            [name] : val
+            [name]: val
+        })
+    }
+
+    _onChangeSlider = (value) => {
+         this.setState({ sliderChangedValue: value })
+    }
+
+
+    _filter = () => {
+        this.setState({
+            modalVisible: false,
+            sliderValue: this.state.sliderChangedValue
         })
     }
 
@@ -267,7 +270,7 @@ moment().format('jYYYY/jM/jD')
                         </ScrollView>
                     </View>
                     <TouchableOpacity activeOpacity={.8} style={styles.modal_button}
-                        onPress={() => { this.setModalVisible(true) }}>
+                        onPress={() => { this.setState({ modalVisible: true }); }}>
                         <View style={styles.middle_inside}>
                             <Icon name="magnify" size={36} color="#fff" />
                         </View>
@@ -330,7 +333,10 @@ moment().format('jYYYY/jM/jD')
                                         {/* Close modal  */}
                                         <TouchableOpacity
                                             onPress={() => {
-                                                this.setModalVisible(false);
+                                                this.setState({
+                                                    modalVisible: false,
+                                                    sliderValue: this.state.sliderChangedValue
+                                                })
                                             }}>
                                             <Icon size={40} name="close" color="#C50143" />
 
@@ -458,10 +464,10 @@ moment().format('jYYYY/jM/jD')
 
                                         {/* nights */}
                                         <View style={styles.modal_boxes}>
-                                            <Counter       
-                                                name="name" 
-                                                _returnValue={this._setProps} 
-                                                val={this.state.nights}  />
+                                            <Counter
+                                                name="nights"
+                                                _returnValue={this._setProps}
+                                                val={this.state.nights} />
 
                                             <View style={styles.capacity} >
                                                 <Text style={styles.modal_titles} >شب </Text>
@@ -472,10 +478,10 @@ moment().format('jYYYY/jM/jD')
                                         {/* capacity  */}
                                         <View style={styles.modal_boxes}>
                                             {/* <Counter counter={(e) => this._counterHandler(e, 'persons')} number={this.state.persons} /> */}
-                                            <Counter       
-                                                name="persons" 
-                                                _returnValue={this._setProps} 
-                                                val={this.state.persons}  />
+                                            <Counter
+                                                name="persons"
+                                                _returnValue={this._setProps}
+                                                val={this.state.persons} />
 
                                             <View style={styles.capacity} >
                                                 <Text style={styles.modal_titles} >ظرفیت </Text>
@@ -505,9 +511,9 @@ moment().format('jYYYY/jM/jD')
                                                         color: '#A52D53',
                                                         fontFamily: 'ISFBold',
                                                         fontSize: 14
-                                                    }}> {this.state.sliderValue} </Text>
+                                                    }}> {this.state.sliderChangedValue} </Text>
                                                 </View>
-                                                <Slider
+                                                {/* <Slider
                                                     style={{ width: '70%', height: 32 }}
                                                     trackStyle={{
                                                         height: 5,
@@ -532,6 +538,16 @@ moment().format('jYYYY/jM/jD')
                                                             slideStartingCount: this.state.slideStartingCount + 1,
                                                         })
                                                     }
+                                                /> */}
+                                                <Slider
+                                                    style={{ width: '70%', height: 32 }}
+                                                    minimumValue={50000}
+                                                    maximumValue={1000000}
+                                                    step={50000}
+                                                    minimumTrackTintColor='#C50143'
+                                                    thumbTintColor='#C50143'
+                                                    value={this.state.sliderValue}
+                                                    onValueChange={(value) => this._onChangeSlider(value)}
                                                 />
 
                                             </View>
@@ -548,7 +564,7 @@ moment().format('jYYYY/jM/jD')
                                     {/* request btn */}
                                     <View style={styles.new_request_box}>
                                         <TouchableOpacity activeOpacity={.7}
-                                            onPress={() => this.setState({ modalVisible: false })}
+                                            onPress={this._filter}
                                             style={styles.search_touch}>
                                             <Text style={{ color: '#fff', fontFamily: 'ISBold' }} >جستجو</Text>
                                         </TouchableOpacity>
@@ -591,15 +607,19 @@ const styles = ({
         alignItems: 'center',
     },
     notification_circle: {
-        width: 10,
-        height: 10,
+        width: 15,
+        height: 15,
         borderRadius: 7,
         backgroundColor: '#B22850',
-        end: 13,
-        top: 15,
+        end: 10,
+        top: 10,
         justifyContent: 'center',
         alignItems: 'center',
-        position: 'absolute'
+        position: 'absolute',
+        borderWidth: 2,
+        borderColor: '#f6f6f6',
+        borderRadius: 20,
+        zIndex: 99
     },
     menu_icon: {
         width: 50,
@@ -920,4 +940,4 @@ const styles = ({
 
 })
 
-export default   Home
+export default Home

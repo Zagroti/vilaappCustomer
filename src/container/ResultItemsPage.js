@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
     Text,
     View,
@@ -11,30 +11,33 @@ import {
     ImageBackground
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import Mapir from 'mapir-react-native-sdk'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 //components
 import ResultItems from '../components/ResultItems';
 
 
-const IMAGE_HEIGHT = 160;
-const SCROLL_HEIGHT = 160
+const IMAGE_HEIGHT = 100;
+const SCROLL_HEIGHT = 50;
+const THEME_COLOR = "#A52D53";
+const TEXT_COLOR = "#fff";
 
-class Test extends Component {
+export default class ResultItemsPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             color_1: '#C72652',
             color_2: '#555',
             color_3: '#555',
-            color_4: '#555',
-            red: '#C72652',
-            black: '#555',
+            iconColor_1: '#C72652',
+            iconColor_2: '#fafafa',
+            iconColor_3: '#fafafa',
+            active: '#C72652',
+            inactive: '#555',
+            invisible: '#fafafa',
             tab1: true,
             tab2: false,
             tab3: false,
-            tab4: false,
 
             markers: [
                 { latitude: 51.422548, longitude: 35.732573 },
@@ -52,83 +55,75 @@ class Test extends Component {
         inputRange: [0, SCROLL_HEIGHT, SCROLL_HEIGHT + 1],
         outputRange: [0, 0, 1]
     });
+
     imgScale = this.nScroll.interpolate({
         inputRange: [-25, 0],
         outputRange: [1.1, 1],
         extrapolateRight: "clamp"
     });
+
     imgOpacity = this.nScroll.interpolate({
         inputRange: [0, SCROLL_HEIGHT],
         outputRange: [1, 0],
     });
 
+    summaryBg = this.scroll.interpolate({
+        inputRange: [0, SCROLL_HEIGHT],
+        outputRange: ["transparent", THEME_COLOR],
+        extrapolate: "clamp"
+    });
+
+    summaryColor = this.scroll.interpolate({
+        inputRange: [0, SCROLL_HEIGHT],
+        outputRange: ["transparent", TEXT_COLOR],
+        extrapolate: "clamp"
+    });
+
+    summaryOpacity = this.nScroll.interpolate({
+        inputRange: [0, SCROLL_HEIGHT],
+        outputRange: [0, 1],
+    });
 
     componentDidMount() {
-
-        // for map
-        {
-            PermissionsAndroid.requestMultiple(
-                [PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-                PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION],
-                {
-                    title: 'Give Location Permission',
-                    message: 'App needs location permission to find your position.'
-                }
-            ).then(granted => {
-                console.log(granted);
-                resolve();
-            }).catch(err => {
-                console.warn(err);
-                reject(err);
-            });
-        }
 
     }
 
     _changeTab = (tab) => {
         if (tab === 'tab1') {
             this.setState({
-                color_1: this.state.red,
-                color_2: this.state.black,
-                color_3: this.state.black,
-                color_4: this.state.black,
+                color_1: this.state.active,
+                color_2: this.state.inactive,
+                color_3: this.state.inactive,
+                iconColor_3: this.state.invisible,
+                iconColor_2: this.state.invisible,
+                iconColor_1: this.state.active,
                 tab2: false,
                 tab3: false,
-                tab4: false,
                 tab1: true,
 
             })
         } else if (tab === 'tab2') {
             this.setState({
-                color_3: this.state.black,
-                color_1: this.state.black,
-                color_4: this.state.black,
-                color_2: this.state.red,
+                color_1: this.state.inactive,
+                color_2: this.state.active,
+                color_3: this.state.inactive,
+                iconColor_3: this.state.invisible,
+                iconColor_1: this.state.invisible,
+                iconColor_2: this.state.active,
                 tab2: true,
-                tab1: false,
                 tab3: false,
-                tab4: false,
+                tab1: false,
             })
         } else if (tab === 'tab3') {
             this.setState({
-                color_1: this.state.black,
-                color_2: this.state.black,
-                color_4: this.state.black,
-                color_3: this.state.red,
+                color_3: this.state.active,
+                color_2: this.state.inactive,
+                color_1: this.state.inactive,
+                iconColor_1: this.state.invisible,
+                iconColor_2: this.state.invisible,
+                iconColor_3: this.state.active,
+                tab2: false,
                 tab3: true,
-                tab2: false,
-                tab1: false,
-                tab4: false,
-            })
-        } else if (tab === 'tab4') {
-            this.setState({
-                color_1: this.state.black,
-                color_2: this.state.black,
-                color_3: this.state.black,
-                color_4: this.state.red,
-                tab4: true,
-                tab3: false,
-                tab2: false,
                 tab1: false,
             })
         }
@@ -139,9 +134,13 @@ class Test extends Component {
         Actions.Details()
     }
 
+
+
+
+
     render() {
         return (
-            <View style={{ backgroundColor: '#fff', flex: 1 }}>
+            <View style={{ backgroundColor: 'red', flex: 1, position: 'relative' }}>
                 <View style={styles.menu}>
                     <TouchableOpacity
                         style={styles.menu_icon}
@@ -155,108 +154,246 @@ class Test extends Component {
                     </TouchableOpacity>
                 </View>
 
+                {/* summary result */}
+                <Animated.View style={{
+                    backgroundColor: this.summaryBg,
+                    height: 50,
+                    right: 0,
+                    left: 0,
+                    position: 'absolute',
+                    top: 50,
+                    zIndex: 200,
+                    paddingHorizontal: 15,
+                    justifyContent: 'center'
+
+                }} >
+                    <Animated.View style={{
+                        flexDirection: 'row-reverse',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        opacity: this.summaryOpacity,
+                        height: 40,
+                        borderRadius: 40
+                    }}>
+                        <View style={{ flexDirection: 'row' }} >
+                            <Text style={styles.summary_Text} >محمودآباد</Text>
+                            <Icon style={{ marginLeft: 5 }} name="map-marker" size={15} color="#fff" />
+                        </View>
+                        <Text style={styles.seprator} >|</Text>
+                        <View style={{ flexDirection: 'row' }}>
+                            <Text style={styles.summary_Text}>31 اردیبهشت</Text>
+                            <Text style={styles.summary_Text}> - </Text>
+                            <Text style={styles.summary_Text}>28 اردیبهشت</Text>
+                        </View>
+                        <Text style={styles.seprator} >|</Text>
+                        <View style={{ flexDirection: 'row' }}>
+                            <Text style={styles.summary_Text}>800,000</Text>
+                            <Text style={styles.summary_Text}> - </Text>
+                            <Text style={styles.summary_Text}>400,000</Text>
+                        </View>
+                        <Text style={styles.seprator} >|</Text>
+                        <View style={{ flexDirection: 'row' }}>
+                            <Text style={styles.summary_Text}>2 شب</Text>
+                        </View>
+                    </Animated.View>
+                </Animated.View>
+
+
                 <Animated.ScrollView
                     scrollEventThrottle={5}
                     showsVerticalScrollIndicator={false}
-                    onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.nScroll } } }], { useNativeDriver: true })}
-                    style={{ zIndex: 0 }}>
+                    onScroll={Animated.event([
+                        { nativeEvent: { contentOffset: { y: this.nScroll } } }
+                    ],
+                        { useNativeDriver: true },
+
+                    )}
+                    style={{ position: 'relative', zIndex: 1, backgroundColor: 'rgba(165, 45, 83,1)' }}>
+
+                    {/* result description */}
                     <Animated.View style={{
                         transform: [{ translateY: Animated.multiply(this.nScroll, .5) }, { scale: this.imgScale }],
-                        opacity: this.imgOpacity,
+
                         height: IMAGE_HEIGHT,
+                        // backgroundColor: 'blue',
+                        zIndex: 998
+
                     }}>
-
                         <View style={styles.details} >
-                            <View style={styles.details_map}>
-                                <Mapir
-                                    logoEnabled={true}
-                                    accessToken={'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjM5ZjlmMWZhNDA4YzM0ODI2ZjcxZGI5YTdlM2U2ZmVjNDEzMzNmMDU0MjVhM2MzOTM0NmMwNTlkMzBiMzcyYjA5YzU1OGZjOGU4NTJmNWJhIn0.eyJhdWQiOiJteWF3ZXNvbWVhcHAiLCJqdGkiOiIzOWY5ZjFmYTQwOGMzNDgyNmY3MWRiOWE3ZTNlNmZlYzQxMzMzZjA1NDI1YTNjMzkzNDZjMDU5ZDMwYjM3MmIwOWM1NThmYzhlODUyZjViYSIsImlhdCI6MTU1OTQ1NTIzMiwibmJmIjoxNTU5NDU1MjMyLCJleHAiOjE1NTk0NTg4MzIsInN1YiI6IiIsInNjb3BlcyI6WyJiYXNpYyIsImVtYWlsIl19.JNowwSPWaoVoJ1Omirk9OTtkDySsNL91nP00GcCARdM-YHoTQYw3NZy3SaVlAsbafO9oPPvlVfhNIxPIHESACZATutE3tb7RBEmQGEXX-8G7GOSu8IzyyLBmHaQe75LtisgdKi-zPTGsx8zFv0Acn6HrDDxFrKFNtmI85L3jos_GVxvYYhHWKAez8mbJRHcH1b15DrwgWAhCjO2p_HqpuGLdRF1l03J6HsOnJLMid2997g7iAVTOa8mt2oaEPvmwA_f6pwFZSURqw-RJzdN_R8IEmtqWQq5ZNTEppVaV82yuwfnSmrb0_Sak2hfBIiLwQeCMsnfhU_CvUbE_1rukmQ'}
-                                    zoomLevel={13}
-                                    centerCoordinate={[51.422548, 35.732573]}
-                                    style={{ flex: 1 }}
-                                    logoEnabled={false}
-                                >
-                                    <Mapir.Marker
-                                        id={'1'}
-                                        coordinate={[51.422548, 35.732573]}
-                                    />
-                                </Mapir>
+                            <View style={{
+                                width: '100%',
+                                height: IMAGE_HEIGHT,
+                                backgroundColor: 'rgba(165, 45, 83,1)',
 
+                            }}>
+
+                                <Animated.View style={{
+                                    width: '100%',
+                                    height: IMAGE_HEIGHT,
+                                    justifyContent: 'flex-start',
+                                    backgroundColor: 'rgba(165, 45, 83,1)',
+                                    opacity: this.imgOpacity,
+
+                                }}>
+                                    <View style={{
+                                        // backgroundColor: 'rgba(165, 45, 83,.7)',
+                                        height: IMAGE_HEIGHT,
+                                        paddingHorizontal: 10,
+                                        flexDirection: 'row',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                        // paddingBottom: 40,
+
+                                    }}>
+                                        <View style={{
+                                            alignItems: 'flex-end',
+                                            borderRightWidth: 1,
+                                            borderRightColor: "#fff",
+                                            paddingRight: 5
+                                        }}>
+                                            <View style={{ flexDirection: 'row', marginVertical:2 }}>
+                                                <Text style={styles.detail_view}>ورود : 1398/02/28 </Text>
+                                                <Icon name="calendar-range" style={{ marginLeft: 10 }} size={15} color="#fff" />
+                                            </View>
+                                            <View style={{ flexDirection: 'row', marginVertical:2 }}>
+                                                <Text style={styles.detail_view}>خروج : 1398/02/31</Text>
+                                                <Icon name="calendar-range" style={{ marginLeft: 10 }} size={15} color="#fff" />
+                                            </View>
+
+                                            <View style={{ flexDirection: 'row', marginVertical:2 }}>
+                                                <Text style={styles.detail_view}>مدت اقامت : 2 شب</Text>
+                                                <Icon style={{ marginLeft: 10 }} name="weather-night" size={15} color="#fff" />
+                                            </View>
+                                        </View>
+                                        <View style={{
+                                            fontFamily: 'IYB',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            borderRadius: 50,
+                                        }}>
+                                            <Icon name="map-marker" size={15} color="#fff" />
+                                            <Text style={{
+                                                color: '#fff',
+                                                fontFamily: 'IYB',
+                                                textAlign: 'center',
+                                                fontSize: 16,
+                                            }} >
+                                                محمودآباد
+                                            </Text>
+                                        </View>
+
+
+
+                                        <View style={{
+                                            alignItems: 'flex-start',
+                                            borderLeftWidth: 1,
+                                            borderLeftColor: "#fff",
+                                            paddingLeft: 5
+                                        }}>
+                                            <View style={{ flexDirection: 'row', marginVertical:2 }}>
+                                                <Icon style={{ marginRight: 10 }} name="cash" size={15} color="#fff" />
+                                                <Text style={styles.detail_view}> از 400,000 ت / شب</Text>
+                                            </View>
+                                            <View style={{ flexDirection: 'row', marginVertical:2 }}>
+                                                <Icon style={{ marginRight: 10 }} name="cash" size={15} color="#fff" />
+                                                <Text style={styles.detail_view}> تا 800,000 ت / شب</Text>
+                                            </View>
+                                            <View style={{ flexDirection: 'row', marginVertical:2 }}>
+                                                <Icon style={{ marginRight: 10 }} name="account-multiple-outline" size={15} color="#fff" />
+                                                <Text style={styles.detail_view}>  تعداد : 5  نفر </Text>
+                                            </View>
+                                        </View>
+
+                                    </View>
+
+
+                                </Animated.View>
                             </View>
-
-                            <View style={{  width: '50%', height: 160 }}>
-                                <ImageBackground style={styles.details_right_image}
-                                    source={require('./../../Assets/Images/background.png')}
-                                    imageStyle={{ resizeMode: 'cover', }}
-                                    resizeMode="contain"
-                                >
-                                    <View style={{ flexDirection: 'row' }}>
-                                        <Text style={styles.detail_view}>از تاریخ  1398/03/31 </Text>
-                                        <Icon name="calendar-range" style={{ marginLeft: 10 }} size={20} color="#fff" />
-                                    </View>
-                                    <View style={{ flexDirection: 'row' }}>
-                                        <Text style={styles.detail_view}>تا تاریخ  1398/04/01</Text>
-                                        <Icon name="calendar-range" style={{ marginLeft: 10 }} size={20} color="#fff" />
-                                    </View>
-                                    <View style={{ flexDirection: 'row' }}>
-                                        <Text style={styles.detail_view}> تا 400,000 تومان / شب</Text>
-                                        <Icon style={{ marginLeft: 10 }} name="cash" size={20} color="#fff" />
-                                    </View>
-                                    <View style={{ flexDirection: 'row' }}>
-                                        <Text style={styles.detail_view}> تا 800,000 تومان / شب</Text>
-                                        <Icon style={{ marginLeft: 10 }} name="cash" size={20} color="#fff" />
-                                    </View>
-                                    <View style={{ flexDirection: 'row' }}>
-                                        <Text style={styles.detail_view}>  تعداد: 5  نفر </Text>
-                                        <Icon style={{ marginLeft: 10 }} name="account-multiple-outline" size={20} color="#fff" />
-                                    </View>
-                                </ImageBackground>
-                            </View>
-
-
                         </View>
 
                     </Animated.View>
 
 
+                    {/* sort buttons */}
                     <Animated.View
                         style={{
                             transform: [{ translateY: this.tabY }],
-                            zIndex: 100,
+                            width: "100%",
+                            alignItems: 'center',
+                            // paddingVertical: 10,
+                            backgroundColor: 'rgba(165, 45, 83,1)',
+                            justifyContent: 'center',
+                            // paddingTop: 50,
+                            // marginTop: -100,
+                            zIndex: 999,
+                        }}>
+                        <View style={{
+                            justifyContent: 'center',
                             width: "100%",
                             alignItems: 'center',
                             backgroundColor: '#fff',
-                            paddingVertical: 10,
-                        }}>
-                        <View style={styles.tab}  >
-                            <Text style={{ width: '20%', fontSize: 10, fontFamily: 'IYB' }}  >ترتیب بر اساس:</Text>
-                            <View style={{
-                                width: '80%',
-                                height: 40,
-                                flexDirection: 'row',
-                                justifyContent: 'space-between',
-                                alignItems: 'center',
+                            padding: 10,
+                            // borderRadius: 40,
+                            borderTopRightRadius: 40,
+                            borderTopLeftRadius: 40,
+                            // paddingTop: 50,
+                            // paddingBottom: 20,
+                            zIndex: 999,
+                        }} >
+                            <View style={styles.tab}  >
+                                <Text style={{
+                                    width: '30%',
+                                    fontSize: 12,
+                                    fontFamily: 'IYB',
+                                    paddingRight: 8
                                 }}>
-                                <TouchableOpacity style={[styles.tab_box, { borderColor: this.state.color_1 }]} onPress={() => this._changeTab('tab1')}>
-                                    <Text style={[styles.tab_text, { color: this.state.color_1 }]}>  تخفیف %</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={[styles.tab_box, { borderColor: this.state.color_2 }]} onPress={() => this._changeTab('tab2')}>
-                                    <Text style={[styles.tab_text, { color: this.state.color_2 }]}>  فاصله </Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={[styles.tab_box, { borderColor: this.state.color_3 }]} onPress={() => this._changeTab('tab3')}>
-                                    <Text style={[styles.tab_text, { color: this.state.color_3 }]}>  قیمت</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={[styles.tab_box, { borderColor: this.state.color_4 }]} onPress={() => this._changeTab('tab4')}>
-                                    <Text style={[styles.tab_text, { color: this.state.color_4 }]}>  امتیاز</Text>
-                                </TouchableOpacity>
+                                    ترتیب بر اساس:
+                                    </Text>
+                                <View style={{
+                                    width: '70%',
+                                    height: 36,
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                }}>
+                                    <TouchableOpacity style={[styles.tab_box]} onPress={() => this._changeTab('tab3')}>
+                                        <Text style={[styles.tab_text, { color: this.state.color_3 }]}>  تخفیف %</Text>
+                                        {
+                                            this.state.tab3 ?
+                                                <Icon name="sort-descending" style={{ marginLeft: 2 }} size={15} color={this.state.iconColor_3} /> : null
+                                        }
+
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={[styles.tab_box]} onPress={() => this._changeTab('tab2')}>
+                                        <Text style={[styles.tab_text, { color: this.state.color_2 }]}>  قیمت</Text>
+                                        {
+                                            this.state.tab2 ?
+                                                <Icon name="sort-ascending" style={{ marginLeft: 2 }} size={15} color={this.state.iconColor_2} /> : null}
+
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={[styles.tab_box]} onPress={() => this._changeTab('tab1')}>
+                                        <Text style={[styles.tab_text, { color: this.state.color_1 }]}>  امتیاز </Text>
+                                        {
+                                            this.state.tab1 ?
+                                                <Icon name="sort-descending" style={{ marginLeft: 2 }} size={15} color={this.state.iconColor_1} /> : null}
+
+                                    </TouchableOpacity>
+
+                                </View>
                             </View>
                         </View>
                     </Animated.View>
-                    <View style={{ marginBottom: 200 }}>
+
+
+                    <View style={{
+                        paddingBottom: 200,
+                        backgroundColor: '#fff',
+                        zIndex: -90000,
+                    }}>
 
                         {this.state.tab1 ?
 
-                            <View style={{ width: '100%', alignItems: 'center' }}>
+                            <View style={{ width: '100%', alignItems: 'center', zIndex: -99999 }}>
                                 <ResultItems navigate={this._showDetail} />
                                 <ResultItems navigate={this._showDetail} />
                                 <ResultItems navigate={this._showDetail} />
@@ -273,7 +410,7 @@ class Test extends Component {
 
                         {this.state.tab2 ?
 
-                            <View style={{ width: '100%', alignItems: 'center' }}>
+                            <View style={{ width: '100%', alignItems: 'center', zIndex: -99999 }}>
                                 <ResultItems navigate={this._showDetail} />
                                 <ResultItems navigate={this._showDetail} />
                             </View>
@@ -283,7 +420,7 @@ class Test extends Component {
 
                         {this.state.tab3 ?
 
-                            <View style={{ width: '100%', alignItems: 'center' }}>
+                            <View style={{ width: '100%', alignItems: 'center', zIndex: -99999 }}>
                                 <ResultItems navigate={this._showDetail} />
                                 <ResultItems navigate={this._showDetail} />
                                 <ResultItems navigate={this._showDetail} />
@@ -293,27 +430,18 @@ class Test extends Component {
 
                         }
 
-                        {this.state.tab4 ?
 
-                            <View style={{ width: '100%', alignItems: 'center' }}>
-                                <ResultItems navigate={this._showDetail} />
-                                <ResultItems navigate={this._showDetail} />
-                                <ResultItems navigate={this._showDetail} />
-                            </View>
-                            : null
-
-                        }
                     </View>
 
 
-
                 </Animated.ScrollView>
+
             </View>
         )
     }
 }
 
-export default Test
+
 
 
 const styles = ({
@@ -324,17 +452,21 @@ const styles = ({
         backgroundColor: '#fff',
         flexDirection: 'column',
         alignItems: 'center',
-        paddingBottom: 160,
+        paddingBottom: 200,
         position: 'relative'
 
     },
     tab: {
-        width: '100%',
-        height: 40,
+        width: Dimensions.get('window').width - 30,
+        height: 55,
         flexDirection: 'row-reverse',
         justifyContent: 'space-around',
         alignItems: 'center',
-        paddingHorizontal: 10,
+        paddingHorizontal: 15,
+        backgroundColor: '#f3f3f3',
+        borderRadius: 50,
+        // marginTop: -30,
+        zIndex: 999999999999999
     },
     menu: {
         backgroundColor: '#f6f6f6',
@@ -369,14 +501,24 @@ const styles = ({
         color: '#333',
         textAlign: 'center',
     },
+    summary_Text: {
+        fontFamily: 'ISBold',
+        fontSize: 10,
+        color: '#fff'
+    },
+    seprator: {
+        marginHorizontal: 5,
+        color: '#fff'
+    },
     tab_box: {
-        width: '22%',
+        width: '31%',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
         height: "100%",
-        backgroundColor: '#f6f6f6',
-        borderBottomWidth: 1,
+        backgroundColor: '#fafafa',
+        // borderWidth: 1,
+        borderRadius: 50
 
     },
 
@@ -397,22 +539,16 @@ const styles = ({
     },
     details_right_image: {
         width: '100%',
-        height: 160,
-        backgroundColor: '#A52D53',
-        justifyContent: 'center',
-        alignItems: 'flex-end',
-        height: 160,
-        paddingRight: 10,
+        height: IMAGE_HEIGHT,
+        justifyContent: 'flex-start',
+        backgroundColor: 'rgba(165, 45, 83,1)',
 
-    },
-    details_map: {
-        width: '50%',
-        height: 160,
+
     },
 
     detail_view: {
         fontFamily: 'ISFBold',
-        fontSize: 14,
+        fontSize: 12,
         color: '#fff'
     }
 

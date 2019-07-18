@@ -1,27 +1,25 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { ImageBackground, Text, View, Dimensions, ActivityIndicator } from 'react-native';
 
 
-export default class SplashScreen extends Component {
-    render() {
-        return (
-            <View style={styles.SplashView}>
-                <ImageBackground style={styles.SplashImage}
-                    source={require('./../../Assets/Images/splash.png')} >
-                    <View style={styles.VilaApp} >
-                        <ActivityIndicator style={{ marginBottom:50 }} size="small" color="#fff" />
-                        <Text style={styles.VilaAppText} >
-                            Power By VilaApp
+const SplashScreen = (props) => (
+    <View style={styles.SplashView}>
+        <ImageBackground style={styles.SplashImage}
+            source={require('./../../Assets/Images/splash.png')} >
+            <View style={styles.VilaApp} >
+                <ActivityIndicator style={{ marginBottom: 50 }} size="small" color="#fff" />
+                <Text style={styles.VilaAppText} >
+                    Power By VilaApp
                         </Text>
-                        <Text style={styles.VilaAppNumber} >
-                            2  0  1  9
+                <Text style={styles.VilaAppNumber} >
+                    2  0  1  9
                         </Text>
-                    </View>
-                </ImageBackground>
             </View>
-        );
-    }
-}
+        </ImageBackground>
+    </View>
+);
+
+export default SplashScreen;
 
 const styles = ({
     SplashView: {
