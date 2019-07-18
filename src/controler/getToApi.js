@@ -1,6 +1,5 @@
 import base from '../api/baseURL';
-import Token from '../api/token';
-import AppToken from '../api/appToken';
+import Token from '../api/token'; 
 import { browserHistory } from 'react-router';
 
 function GetToApi(key, customHeader) { 

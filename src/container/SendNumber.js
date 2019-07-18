@@ -78,8 +78,22 @@ class SendNumber extends Component {
     _enterCode = async () => {
 
         if (this.state.number.length === 10) {
+
+            const data = new FormData();
+            data.append('phone',this.state.phone)
+
+            const res = await PostToApi(data,'url');
+            console.log(res);
+
+            if(res.status === 200 ){
+                // go to enter code componenet!
+                console.log(res.status)
+                            
             // go to enter code page 
             Actions.EnterCode();
+
+            }
+
 
             // merge code and user number 
             let sentNumber = this.state.code + this.state.number
@@ -87,16 +101,9 @@ class SendNumber extends Component {
                 sentNumber: sentNumber.trim()
             })
             this.props.onSendNumber(sentNumber);
-            const data = new FormData();
-            data.append('phone',this.state.phone)
 
-            const res = PostToApi(data,'url');
-            console.log(res);
 
-            if(res.status === 200 ){
-                // go to enter code componenet!
-                console.log(res.status)
-            }
+           
 
         }else {
 
