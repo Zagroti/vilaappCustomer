@@ -2,7 +2,7 @@
 // Create Base URL 'API'
 //
 
-const baseUrl = 'http://api.limitlessco.ir/api/v1/cp/agency/';
+const baseUrl = 'http://api.vilaapp.ir/api/v1/';
 
 
 export default {
