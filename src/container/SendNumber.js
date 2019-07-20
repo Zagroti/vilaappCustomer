@@ -71,40 +71,45 @@ class SendNumber extends Component {
         })
     }
 
-    
+
 
 
     // send code function
     _enterCode = async () => {
 
+
+
         if (this.state.number.length === 10) {
+            // merge code and user number 
+            let sentNumber = this.state.code + this.state.number
+            await this.setState({
+                sentNumber: sentNumber.trim()
+            })
+            // this.props.onSendNumber(sentNumber);
 
+            console.log(this.state.sentNumber)
             const data = new FormData();
-            data.append('phone',this.state.phone)
+            data.append('phone', this.state.sentNumber)
 
-            const res = await PostToApi(data,'url');
+            const res = await PostToApi(data, 'auth/otp/sms');
             console.log(res);
+           
 
-            if(res.status === 200 ){
+            if (res.status === 200) {
+                console.log(res.data.code);
                 // go to enter code componenet!
-                console.log(res.status)  
+                console.log(res.status)
                 // go to enter code page 
                 Actions.EnterCode();
 
             }
 
 
-            // merge code and user number 
-            let sentNumber = this.state.code + this.state.number
-            await this.setState({
-                sentNumber: sentNumber.trim()
-            })
-            this.props.onSendNumber(sentNumber);
 
 
-           
 
-        }else {
+
+        } else {
 
             // animation show permission 
             await this.setState({

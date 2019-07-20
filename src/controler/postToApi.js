@@ -6,6 +6,7 @@ function postApi(data, key,  customeHeader) {
     // console.log(customeHeader)
 
     let url = base.baseUrl + key;
+    console.log(url)
 
     return fetch(url, {
         method: "POST",
@@ -14,7 +15,7 @@ function postApi(data, key,  customeHeader) {
             // "Content-Type": "application/json",
             "Accept": "application/json",
             "agent": "web",
-            // "X-Debug": 1,
+            "X-Debug": 1,
             "Authorization": Token,
             ...customeHeader
         },
