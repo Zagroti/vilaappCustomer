@@ -64,22 +64,7 @@ class Home extends Component {
         // for disable back btn
         BackHandler.addEventListener('hardwareBackPress', this._handleBackButton);
 
-        {
-            PermissionsAndroid.requestMultiple(
-                [PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-                PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION],
-                {
-                    title: 'Give Location Permission',
-                    message: 'App needs location permission to find your position.'
-                }
-            ).then(granted => {
-                // console.log(granted);
-                resolve();
-            }).catch(err => {
-                // console.warn(err);
-                reject(err);
-            });
-        }
+       
     }
 
 

@@ -3,10 +3,7 @@ import {
     Text,
     View,
     Dimensions,
-    Image,
     TouchableOpacity,
-    ScrollView,
-    PermissionsAndroid,
     Animated,
     ImageBackground
 } from 'react-native';
@@ -22,16 +19,10 @@ const SCROLL_HEIGHT = 50;
 const THEME_COLOR = "#A52D53";
 const TEXT_COLOR = "#fff";
 
-export default class ResultItemsPage extends React.Component {
+class ResultItemsPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            color_1: '#C72652',
-            color_2: '#555',
-            color_3: '#555',
-            iconColor_1: '#C72652',
-            iconColor_2: '#fafafa',
-            iconColor_3: '#fafafa',
             active: '#C72652',
             inactive: '#555',
             invisible: '#fafafa',
@@ -90,44 +81,24 @@ export default class ResultItemsPage extends React.Component {
         extrapolate: "clamp"
     });
 
-    componentDidMount() {
 
-    }
 
+    //sort tab 
     _changeTab = (tab) => {
         if (tab === 'tab1') {
             this.setState({
-                color_1: this.state.active,
-                color_2: this.state.inactive,
-                color_3: this.state.inactive,
-                iconColor_3: this.state.invisible,
-                iconColor_2: this.state.invisible,
-                iconColor_1: this.state.active,
                 tab2: false,
                 tab3: false,
                 tab1: true,
-
             })
         } else if (tab === 'tab2') {
             this.setState({
-                color_1: this.state.inactive,
-                color_2: this.state.active,
-                color_3: this.state.inactive,
-                iconColor_3: this.state.invisible,
-                iconColor_1: this.state.invisible,
-                iconColor_2: this.state.active,
                 tab2: true,
                 tab3: false,
                 tab1: false,
             })
         } else if (tab === 'tab3') {
             this.setState({
-                color_3: this.state.active,
-                color_2: this.state.inactive,
-                color_1: this.state.inactive,
-                iconColor_1: this.state.invisible,
-                iconColor_2: this.state.invisible,
-                iconColor_3: this.state.active,
                 tab2: false,
                 tab3: true,
                 tab1: false,
@@ -145,6 +116,7 @@ export default class ResultItemsPage extends React.Component {
 
 
     render() {
+
         return (
             <View style={{ backgroundColor: '#fff', flex: 1, position: 'relative' }}>
                 <View style={styles.menu}>
@@ -217,11 +189,10 @@ export default class ResultItemsPage extends React.Component {
                     style={{
                         position: 'relative', zIndex: 1,
                         // backgroundColor: 'rgba(165, 45, 83,1)' 
-                        backgroundColor: 'red'
                     }}>
 
                     <ImageBackground
-                        style={{ width: '100%', height:195, backgroundColor: 'green',  }}
+                        style={{ width: '100%', height: 185, backgroundColor: 'green', }}
                         imageStyle={{ resizeMode: 'cover' }}
                         source={require('./../../Assets/Images/amol.jpg')}
                     >
@@ -247,7 +218,7 @@ export default class ResultItemsPage extends React.Component {
                                         opacity: this.imgOpacity,
 
                                     }}>
-                                        <View style={{
+                                        <Animated.View style={{
                                             // backgroundColor: 'rgba(165, 45, 83,.7)',
                                             backgroundColor: 'transparent',
                                             height: IMAGE_HEIGHT,
@@ -256,6 +227,7 @@ export default class ResultItemsPage extends React.Component {
                                             justifyContent: 'space-between',
                                             alignItems: 'center',
                                             // paddingBottom: 40,
+                                            opacity: this.imgOpacity,
 
                                         }}>
                                             <View style={{
@@ -317,7 +289,7 @@ export default class ResultItemsPage extends React.Component {
                                                 </View>
                                             </View>
 
-                                        </View>
+                                        </Animated.View>
 
 
                                     </Animated.View>
@@ -335,7 +307,7 @@ export default class ResultItemsPage extends React.Component {
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 zIndex: 999,
-                                height:100,
+                                height: 90,
                             }}>
                             <Animated.View
                                 style={{
@@ -343,7 +315,7 @@ export default class ResultItemsPage extends React.Component {
                                     width: "100%",
                                     alignItems: 'center',
                                     backgroundColor: this.sortBg,
-                                    height:100
+                                    height: 90
                                 }}>
                                 <View style={{
                                     justifyContent: 'center',
@@ -355,7 +327,7 @@ export default class ResultItemsPage extends React.Component {
                                     borderTopRightRadius: 40,
                                     borderTopLeftRadius: 40,
                                     zIndex: 999,
-                                    height:100
+                                    height: 90
                                 }} >
                                     <View style={styles.tab}  >
                                         <Text style={{
@@ -374,25 +346,37 @@ export default class ResultItemsPage extends React.Component {
                                             alignItems: 'center',
                                         }}>
                                             <TouchableOpacity style={[styles.tab_box]} onPress={() => this._changeTab('tab3')}>
-                                                <Text style={[styles.tab_text, { color: this.state.color_3 }]}>  تخفیف %</Text>
+                                                <Text style={[styles.tab_text, { color: this.state.tab3 ? this.state.active : this.state.inactive }]}>  تخفیف %</Text>
                                                 {
                                                     this.state.tab3 ?
-                                                        <Icon name="sort-descending" style={{ marginLeft: 2 }} size={15} color={this.state.iconColor_3} /> : null
+                                                        <Icon name="sort-descending"
+                                                            style={{ marginLeft: 2 }}
+                                                            size={15}
+                                                            color={this.state.tab3 ? this.state.active : this.state.invisible} />
+                                                        : null
                                                 }
 
                                             </TouchableOpacity>
                                             <TouchableOpacity style={[styles.tab_box]} onPress={() => this._changeTab('tab2')}>
-                                                <Text style={[styles.tab_text, { color: this.state.color_2 }]}>  قیمت</Text>
+                                                <Text style={[styles.tab_text, { color: this.state.tab2 ? this.state.active : this.state.inactive }]}>  قیمت</Text>
                                                 {
                                                     this.state.tab2 ?
-                                                        <Icon name="sort-ascending" style={{ marginLeft: 2 }} size={15} color={this.state.iconColor_2} /> : null}
+                                                        <Icon name="sort-ascending"
+                                                            style={{ marginLeft: 2 }}
+                                                            size={15}
+                                                            color={this.state.tab2 ? this.state.active : this.state.invisible} />
+                                                        : null}
 
                                             </TouchableOpacity>
                                             <TouchableOpacity style={[styles.tab_box]} onPress={() => this._changeTab('tab1')}>
-                                                <Text style={[styles.tab_text, { color: this.state.color_1 }]}>  امتیاز </Text>
+                                                <Text style={[styles.tab_text, { color: this.state.tab1 ? this.state.active : this.state.inactive }]}>  امتیاز </Text>
                                                 {
                                                     this.state.tab1 ?
-                                                        <Icon name="sort-descending" style={{ marginLeft: 2 }} size={15} color={this.state.iconColor_1} /> : null}
+                                                        <Icon name="sort-descending"
+                                                            style={{ marginLeft: 2 }}
+                                                            size={15}
+                                                            color={this.state.tab1 ? this.state.active : this.state.invisible} />
+                                                        : null}
 
                                             </TouchableOpacity>
 
@@ -404,6 +388,7 @@ export default class ResultItemsPage extends React.Component {
                         </Animated.View>
 
                     </ImageBackground>
+
 
                     <View style={{
                         paddingBottom: 200,
@@ -457,16 +442,16 @@ export default class ResultItemsPage extends React.Component {
                 </Animated.ScrollView>
 
             </View>
+        
+        
         )
     }
 }
 
 
-
+export default ResultItemsPage;
 
 const styles = ({
-
-
     ResultItemsPage: {
         width: Dimensions.get('window').width,
         backgroundColor: '#fff',
@@ -482,11 +467,11 @@ const styles = ({
         justifyContent: 'space-around',
         alignItems: 'center',
         paddingHorizontal: 15,
-        height:70,
+        height: 60,
         backgroundColor: '#f3f3f3',
         borderRadius: 50,
         zIndex: 9,
-        paddingVertical:15
+        paddingVertical: 15
     },
     menu: {
         backgroundColor: '#f6f6f6',
@@ -498,15 +483,19 @@ const styles = ({
         alignItems: 'center',
     },
     notification_circle: {
-        width: 10,
-        height: 10,
+        width: 15,
+        height: 15,
         borderRadius: 7,
         backgroundColor: '#B22850',
-        end: 13,
-        top: 15,
+        end: 10,
+        top: 10,
         justifyContent: 'center',
         alignItems: 'center',
-        position: 'absolute'
+        position: 'absolute',
+        borderWidth: 2,
+        borderColor: '#f6f6f6',
+        borderRadius: 20,
+        zIndex: 99
     },
     menu_icon: {
         width: 50,

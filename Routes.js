@@ -33,9 +33,9 @@ const backButton = () => (
     </TouchableOpacity>
 );
 
-const nothing = () => (
-    null
-);
+
+//pass nothing 
+const nothing = () => { return <View /> }
 
 
 
@@ -80,17 +80,18 @@ class Routes extends React.Component {
 
                     <Scene key="SendNumber"
                         component={SendNumber}
-                        title="Send Number"
+                        title=""
                         hideNavBar={true}
                         initial={true}
                         initial={!this.state.logged}
 
                     />
-                    <Scene key="EnterCode" component={EnterCode}
+                    <Scene key="EnterCode"
+                        component={EnterCode}
                         title=""
                         titleStyle={{ color: 'transparent' }}
                         renderRightButton={() => backButton()}
-                        renderBackButton={() => nothing}
+                        renderBackButton={() => nothing()}
                         navigationBarStyle={styles.login_style_bar}
                         sceneStyle={styles.login_scene_style}
 
@@ -98,44 +99,49 @@ class Routes extends React.Component {
 
                     <Scene key="Home"
                         component={Home}
-                        title="home"
+                        title=""
                         hideNavBar={true}
-                        initial={this.state.logged}
+                        // initial={this.state.logged}
+                        initial={true}
 
                     />
 
-                    <Scene key="Profile" component={Profile}
+                    <Scene key="ResultItemsPage"
+                        component={ResultItemsPage}
                         title=""
                         titleStyle={{ color: 'transparent' }}
-                        renderRightButton={() => backButton()}
-                        renderBackButton={() => nothing}
-                        navigationBarStyle={styles.login_style_bar}
-                        sceneStyle={styles.login_scene_style}
-                    />
-                    <Scene key="Support" component={Support}
-                        title=""
-                        titleStyle={{ color: 'transparent' }}
-                        renderRightButton={() => backButton()}
-                        renderBackButton={() => nothing}
-                        navigationBarStyle={styles.login_style_bar}
-                        sceneStyle={styles.login_scene_style}
-                    />
-
-                    <Scene key="ResultItemsPage" component={ResultItemsPage}
-                        title=""
-                        titleStyle={{ color: 'transparent' }}
-                        renderBackButton={() => nothing}
-                        renderRightButton={() => nothing}
+                        renderBackButton={() => nothing()}
+                        renderRightButton={() => nothing()}
                         navigationBarStyle={styles.login_style_bar_detail}
-                        sceneStyle={styles.login_scene_style}
 
                     />
 
-                    <Scene key="Details" component={Details}
+
+                    <Scene key="Profile"
+                        component={Profile}
+                        title=""
+                        titleStyle={{ color: 'transparent' }}
+                        renderRightButton={() => backButton()}
+                        renderBackButton={() => nothing()}
+                        navigationBarStyle={styles.login_style_bar}
+                    />
+                    <Scene key="Support"
+                        component={Support}
+                        title=""
+                        titleStyle={{ color: 'transparent' }}
+                        renderRightButton={() => backButton()}
+                        renderBackButton={() => nothing()}
+                        navigationBarStyle={styles.login_style_bar}
+                        sceneStyle={styles.login_scene_style}
+                    />
+
+
+                    <Scene key="Details"
+                        component={Details}
                         title=""
                         titleStyle={{ color: 'red' }}
-                        renderBackButton={() => nothing}
-                        renderRightButton={() => nothing}
+                        renderBackButton={() => nothing()}
+                        renderRightButton={() => nothing()}
                         navigationBarStyle={styles.login_style_bar_detail}
                         sceneStyle={styles.login_scene_style}
                     />
