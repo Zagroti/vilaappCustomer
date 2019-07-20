@@ -11,7 +11,6 @@ import {
     BackHandler
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import InputScrollView from 'react-native-input-scroll-view';
 import Mapir from 'mapir-react-native-sdk'
 import ImageSlider from 'react-native-image-slider';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -25,6 +24,9 @@ import GradientButton from '../components/GradientButton';
 
 const arrowDown = <Icon style={{ top: -10 }} name="chevron-down" size={36} color="#ccc" />
 const arrowUp = <Icon style={{ top: -10 }} name="chevron-up" size={36} color="#ccc" />
+
+
+
 
 
 let parent_slider = {
@@ -109,46 +111,19 @@ export default class Details extends Component {
 
 
     // more funcion 
-    _seeMore = (item) => {
-        if (item === 'availability') {
-            if (!this.state.availability) {
-                this.setState({
-                    availabilityText: 'کمتر',
-                    availability: true,
-                })
-            } else {
-                this.setState({
-                    availabilityText: 'بیشتر',
-                    availability: false,
-                })
-            }
-        } else if (item === 'aboutvila') {
-            if (!this.state.aboutvila) {
-                this.setState({
-                    aboutvilaText: 'کمتر',
-                    aboutvila: true,
-                })
-            } else {
-                this.setState({
-                    aboutvilaText: 'بیشتر',
-                    aboutvila: false,
-                })
-            }
+    _seeMore = (name,text) => {
 
-        } else if (item === 'conditions') {
-            if (!this.state.conditions) {
+        if (!this.state[name]) {
                 this.setState({
-                    conditionsText: 'کمتر',
-                    conditions: true,
+                    [text]: 'کمتر',
+                    [name]: true,
                 })
             } else {
                 this.setState({
-                    conditionsText: 'بیشتر',
-                    conditions: false,
+                    [text]: 'بیشتر',
+                    [name]: false,
                 })
             }
-
-        }
 
     }
 
@@ -253,315 +228,321 @@ export default class Details extends Component {
 
         return (
 
-            <ScrollView style={styles.Details} >
+            <View style={styles.Details} >
+                {!this.state.sliderFullScreen ?
+                    <View style={{
+                        backgroundColor: 'transparent',
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        height: 60,
+                        padding: 20,
+                        width: '100%',
+                        position: 'absolute',
+                        top: 0,
+                        zIndex: 99999,
+                        width: '100%'
+                    }} >
+                        <Text style={styles.owner_answer}>پذیرفته شده</Text>
+                        <TouchableOpacity
+                            style={{
+                                backgroundColor: '#33333320',
+                                padding: 10,
+                                width: 50,
+                                height: 50,
+                                borderRadius: 30,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                top: 10,
+                                end: 10,
+                                position: 'absolute'
+                            }} onPress={() => Actions.pop()} >
+                            <Icon name="arrow-right" size={28} color="#fff" />
 
-                <SafeAreaView style={parent_slider}>
-                    {!this.state.sliderFullScreen ?
-                        <View style={{
-                            backgroundColor: 'transparent',
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            height: 60,
-                            padding: 20,
-                            width: '100%',
-                            position: 'absolute',
-                            top: 0,
-                            zIndex: 99999,
-                            width: '100%'
-                        }} >
-                            <Text style={styles.owner_answer}>پذیرفته شده</Text>
-                            <TouchableOpacity
-                                style={{
-                                    backgroundColor: '#33333320',
-                                    padding: 10,
-                                    width: 50,
-                                    height: 50,
-                                    borderRadius: 30,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    top: 10,
-                                    end: 10,
-                                }} onPress={() => Actions.pop()} >
-                                <Icon name="arrow-right" size={28} color="#fff" />
+                        </TouchableOpacity>
+                    </View> : null
 
-                            </TouchableOpacity>
-                        </View> : null
+                }
+                <ScrollView>
 
-                    }
-                    <ImageSlider
-                        loopBothSides
-                        images={images}
-                        customSlide={({ index, item, style, width }) => (
-                            <TouchableOpacity key={index}
-                                activeOpacity={1}
-                                style={[style, image_slider_parent]}
-                                onPress={this._sliderFullScreen}>
-                                <Image source={{ uri: item }}
-                                    style={image_slider} />
-                            </TouchableOpacity>
-                        )}
-                        customButtons={(position, move) => (
-                            <View style={image_footer}>
-                                <View style={{
-                                    width: 100,
-                                    textAlign: 'center',
-                                    height: 30,
-                                    flexDirection: 'row',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    borderRadius: 20,
-                                }}>
-                                    <Text style={{ color: '#fff', fontFamily: 'ISFBold', fontSize: 12 }}>{position + 1}  /  {images.length}</Text>
-                                    <Icon name="image-area" style={{ marginLeft: 8 }} size={30} color="#fff" />
-                                </View>
-                                {
-                                    !this.state.sliderFullScreen ?
-                                        <View style={{
-                                            backgroundColor: 'rgba(255,255,255,1)',
-                                            textAlign: 'center',
-                                            paddingHorizontal: 50,
-                                            height: 30,
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                            borderRadius: 20,
-                                        }}>
-                                            <Text style={{ color: '#333', fontSize: 16, fontFamily: 'ISFBold' }}>150,000 ت</Text>
-                                        </View> :
-                                        <TouchableOpacity
-                                            style={{
-                                                backgroundColor: '#33333320',
-                                                padding: 10,
-                                                width: 50,
-                                                height: 50,
-                                                borderRadius: 30,
+
+
+                    <SafeAreaView style={parent_slider}>
+                        <ImageSlider
+                            loopBothSides
+                            images={images}
+                            customSlide={({ index, item, style, width }) => (
+                                <TouchableOpacity key={index}
+                                    activeOpacity={1}
+                                    style={[style, image_slider_parent]}
+                                    onPress={this._sliderFullScreen}>
+                                    <Image source={{ uri: item }}
+                                        style={image_slider} />
+                                </TouchableOpacity>
+                            )}
+                            customButtons={(position, move) => (
+                                <View style={image_footer}>
+                                    <View style={{
+                                        width: 100,
+                                        textAlign: 'center',
+                                        height: 30,
+                                        flexDirection: 'row',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        borderRadius: 20,
+                                    }}>
+                                        <Text style={{ color: '#fff', fontFamily: 'ISFBold', marginTop: 3, fontSize: 12 }}>{position + 1}  /  {images.length}</Text>
+                                        <Icon name="image-area" style={{ marginLeft: 8 }} size={30} color="#fff" />
+                                    </View>
+                                    {
+                                        !this.state.sliderFullScreen ?
+                                            <View style={{
+                                                backgroundColor: 'rgba(255,255,255,1)',
+                                                textAlign: 'center',
+                                                paddingHorizontal: 50,
+                                                height: 30,
                                                 justifyContent: 'center',
                                                 alignItems: 'center',
-                                            }} onPress={this._sliderFullScreen} >
-                                            <Icon name="arrow-right" size={28} color="#fff" />
-                                        </TouchableOpacity>
+                                                borderRadius: 20,
+                                            }}>
+                                                <Text style={{ color: '#333', fontSize: 16, fontFamily: 'ISFBold' }}>150,000 ت</Text>
+                                            </View> :
+                                            <TouchableOpacity
+                                                style={{
+                                                    backgroundColor: '#33333320',
+                                                    padding: 10,
+                                                    width: 50,
+                                                    height: 50,
+                                                    borderRadius: 30,
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center',
+                                                }} onPress={this._sliderFullScreen} >
+                                                <Icon name="arrow-right" size={28} color="#fff" />
+                                            </TouchableOpacity>
+                                    }
+
+                                </View>
+                            )}
+                        />
+                    </SafeAreaView>
+
+
+
+
+                    <View style={body}>
+
+                        {/* icons */}
+                        <View style={styles.vila_posibilities}>
+                            <View style={styles.posibility}>
+                                <Text style={styles.posibility_text}>اتاق 2</Text>
+                                <View style={styles.posibility_icon_box} >
+                                    <Icon name="door" size={15} color="#636363" />
+                                </View>
+                            </View>
+                            <View style={styles.posibility}>
+                                <Text style={styles.posibility_text}>2 تختخواب </Text>
+                                <View style={styles.posibility_icon_box} >
+                                    <Icon name="hotel" size={15} color="#636363" />
+                                </View>
+                            </View>
+                            <View style={styles.posibility}>
+                                <Text style={styles.posibility_text}>1 نفر</Text>
+                                <View style={styles.posibility_icon_box} >
+                                    <Icon name="account-group" size={15} color="#636363" />
+                                </View>
+                            </View>
+                            <View style={styles.posibility}>
+                                <Text style={styles.posibility_text}>45 متر مربع</Text>
+                                <View style={styles.posibility_icon_box} >
+                                    <Icon name="home-city-outline" size={15} color="#636363" />
+                                </View>
+                            </View>
+                        </View>
+
+                        <View style={styles.about_vila}>
+                            <View style={styles.about_vila_first}>
+                                <Text style={styles.detail_title} >در مورد ویلا</Text>
+                                <Text style={styles.about_vila_text} >لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</Text>
+                                {
+                                    this.state.aboutvila ?
+                                        <Text style={styles.about_vila_text} >لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</Text>
+                                        : null
                                 }
 
                             </View>
-                        )}
-                    />
-                </SafeAreaView>
-
-
-
-
-                <View style={body}>
-
-                    {/* icons */}
-                    <View style={styles.vila_posibilities}>
-                        <View style={styles.posibility}>
-                            <Text style={styles.posibility_text}>اتاق 2</Text>
-                            <View style={styles.posibility_icon_box} >
-                                <Icon name="door" size={15} color="#636363" />
-                            </View>
-                        </View>
-                        <View style={styles.posibility}>
-                            <Text style={styles.posibility_text}>2 تختخواب </Text>
-                            <View style={styles.posibility_icon_box} >
-                                <Icon name="hotel" size={15} color="#636363" />
-                            </View>
-                        </View>
-                        <View style={styles.posibility}>
-                            <Text style={styles.posibility_text}>1 نفر</Text>
-                            <View style={styles.posibility_icon_box} >
-                                <Icon name="account-group" size={15} color="#636363" />
-                            </View>
-                        </View>
-                        <View style={styles.posibility}>
-                            <Text style={styles.posibility_text}>45 متر مربع</Text>
-                            <View style={styles.posibility_icon_box} >
-                                <Icon name="home-city-outline" size={15} color="#636363" />
-                            </View>
-                        </View>
-                    </View>
-
-                    <View style={styles.about_vila}>
-                        <View style={styles.about_vila_first}>
-                            <Text style={styles.detail_title} >در مورد ویلا</Text>
-                            <Text style={styles.about_vila_text} >لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</Text>
-                            {
-                                this.state.aboutvila ?
-                                    <Text style={styles.about_vila_text} >لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</Text>
-                                    : null
-                            }
-
-                        </View>
-                        <TouchableOpacity
-                            style={{ marginTop: 10, alignItems: 'center' }}
-                            onPress={() => this._seeMore('aboutvila')}
-                        >
-                            <Text style={{
-                                fontSize: 13,
-                                fontFamily: 'ISBold',
-                                color: '#ccc',
-                            }} >{this.state.aboutvilaText}</Text>
-                            {this.state.aboutvila ? arrowUp : arrowDown}
-                        </TouchableOpacity>
-                    </View>
-
-
-                    <View style={styles.availability} >
-                        <Text style={styles.detail_title} >امکانات </Text>
-                        <View style={styles.availability_first}>
-                            <View style={styles.availability_item} >
-                                <Text style={styles.availability_text} >پارکینگ</Text>
-                                <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
-                            </View>
-                            <View style={styles.availability_item} >
-                                <Text style={styles.availability_text} >WiFi</Text>
-                                <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
-                            </View>
-                            <View style={styles.availability_item} >
-                                <Text style={styles.availability_text} >لباسشویی</Text>
-                                <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#bbb" />
-                            </View>
-                            <View style={styles.availability_item} >
-                                <Text style={styles.availability_text} >سیستم گرمایشی</Text>
-                                <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
-                            </View>
-                            <View style={styles.availability_item} >
-                                <Text style={styles.availability_text} >الکتریکی</Text>
-                                <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
-                            </View>
-                            <View style={styles.availability_item} >
-                                <Text style={styles.availability_text} >استخر</Text>
-                                <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
-                            </View>
-                            {
-                                this.state.availability ?
-                                    <View style={styles.availability_first}>
-                                        <View style={styles.availability_item} >
-                                            <Text style={styles.availability_text} >پارکینگ</Text>
-                                            <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
-                                        </View>
-                                        <View style={styles.availability_item} >
-                                            <Text style={styles.availability_text} >WiFi</Text>
-                                            <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
-                                        </View>
-                                        <View style={styles.availability_item} >
-                                            <Text style={styles.availability_text} >لباسشویی</Text>
-                                            <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#bbb" />
-                                        </View>
-                                        <View style={styles.availability_item} >
-                                            <Text style={styles.availability_text} >سیستم گرمایشی</Text>
-                                            <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
-                                        </View>
-                                        <View style={styles.availability_item} >
-                                            <Text style={styles.availability_text} >الکتریکی</Text>
-                                            <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
-                                        </View>
-
-                                    </View> : null
-
-                            }
-                        </View>
-
-                        <TouchableOpacity
-                            style={{ marginTop: 10, alignItems: 'center' }}
-                            onPress={() => this._seeMore('availability')}
-                        >
-                            <Text style={{
-                                fontSize: 13,
-                                fontFamily: 'ISBold',
-                                color: '#ccc',
-                            }} >{this.state.availabilityText}</Text>
-                            {this.state.availability ? arrowUp : arrowDown}
-                        </TouchableOpacity>
-                    </View>
-
-                    <View style={styles.conditions}>
-                        <Text style={styles.detail_title}>شرایط</Text>
-
-                        <Text style={styles.conditions_text}>1. آرام باشید و مراقب خودتان باشید.</Text>
-                        <Text style={styles.conditions_text}>2. عاشق خودتان باشید .</Text>
-                        <Text style={styles.conditions_text}>3. اتاق را کثیف نکنید </Text>
-                        <Text style={styles.conditions_text}>4. اتاق را تمیز نکنید . </Text>
-
-
-                        {this.state.conditions ?
-                            <View>
-
-                                <Text style={styles.conditions_text}>5. خانوم بازی نکنید </Text>
-                                <Text style={styles.conditions_text}>6. داخل اتاق سیگار نکشید . </Text>
-                                <Text style={styles.conditions_text}>7. دقت کنید </Text>
-                                <Text style={styles.conditions_text}>8. نماز اول وقت را فراموش نکنید </Text>
-                                <Text style={styles.conditions_text} >9. خدا را ناظر بر اعمال خود بدانید </Text>
-                            </View> : null}
-                        <TouchableOpacity
-                            style={{ marginTop: 10, alignItems: 'center' }}
-                            onPress={() => this._seeMore('conditions')}
-                        >
-                            <Text style={{
-                                fontSize: 13,
-                                fontFamily: 'ISBold',
-                                color: '#ccc',
-                            }} >{this.state.conditionsText}</Text>
-                            {this.state.conditions ? arrowUp : arrowDown}
-                        </TouchableOpacity>
-
-                    </View>
-
-                    <View
-                        style={{
-                            width: Dimensions.get('window').width,
-                            height: Dimensions.get('window').width,
-                            marginTop: 20
-                        }}
-                    >
-                        <Mapir
-                            accessToken={'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjM5ZjlmMWZhNDA4YzM0ODI2ZjcxZGI5YTdlM2U2ZmVjNDEzMzNmMDU0MjVhM2MzOTM0NmMwNTlkMzBiMzcyYjA5YzU1OGZjOGU4NTJmNWJhIn0.eyJhdWQiOiJteWF3ZXNvbWVhcHAiLCJqdGkiOiIzOWY5ZjFmYTQwOGMzNDgyNmY3MWRiOWE3ZTNlNmZlYzQxMzMzZjA1NDI1YTNjMzkzNDZjMDU5ZDMwYjM3MmIwOWM1NThmYzhlODUyZjViYSIsImlhdCI6MTU1OTQ1NTIzMiwibmJmIjoxNTU5NDU1MjMyLCJleHAiOjE1NTk0NTg4MzIsInN1YiI6IiIsInNjb3BlcyI6WyJiYXNpYyIsImVtYWlsIl19.JNowwSPWaoVoJ1Omirk9OTtkDySsNL91nP00GcCARdM-YHoTQYw3NZy3SaVlAsbafO9oPPvlVfhNIxPIHESACZATutE3tb7RBEmQGEXX-8G7GOSu8IzyyLBmHaQe75LtisgdKi-zPTGsx8zFv0Acn6HrDDxFrKFNtmI85L3jos_GVxvYYhHWKAez8mbJRHcH1b15DrwgWAhCjO2p_HqpuGLdRF1l03J6HsOnJLMid2997g7iAVTOa8mt2oaEPvmwA_f6pwFZSURqw-RJzdN_R8IEmtqWQq5ZNTEppVaV82yuwfnSmrb0_Sak2hfBIiLwQeCMsnfhU_CvUbE_1rukmQ'}
-                            zoomLevel={13}
-                            zoomEnabled={false}
-                            centerCoordinate={[51.422548, 35.732573]}
-                            style={{ flex: 1 }}
-                            logoEnabled={false}
-                            scrollEnabled={false}
-                        >
-                            <Mapir.Marker
-                                id={'1'}
-                                coordinate={[51.422548, 35.732573]}
+                            <TouchableOpacity
+                                style={{ marginTop: 10, alignItems: 'center' }}
+                                onPress={(e) => this._seeMore('aboutvila','availabilityText')}
                             >
-                                <View style={{ width: 100, height: 100 }}>
-                                    <View style={{ marginLeft: 20, width: 80, height: 80, borderRadius: 50, backgroundColor: 'rgba(165, 45, 83,.3)', borderColor: 'rgb(165, 45, 83)', borderWidth: 2 }}>
+                                <Text style={{
+                                    fontSize: 13,
+                                    fontFamily: 'ISBold',
+                                    color: '#ccc',
+                                }} >{this.state.aboutvilaText}</Text>
+                                {this.state.aboutvila ? arrowUp : arrowDown}
+                            </TouchableOpacity>
+                        </View>
 
-                                    </View>
+
+                        <View style={styles.availability} >
+                            <Text style={styles.detail_title} >امکانات </Text>
+                            <View style={styles.availability_first}>
+                                <View style={styles.availability_item} >
+                                    <Text style={styles.availability_text} >پارکینگ</Text>
+                                    <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
                                 </View>
-                            </Mapir.Marker>
-                        </Mapir>
-                    </View>
+                                <View style={styles.availability_item} >
+                                    <Text style={styles.availability_text} >WiFi</Text>
+                                    <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
+                                </View>
+                                <View style={styles.availability_item} >
+                                    <Text style={styles.availability_text} >لباسشویی</Text>
+                                    <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#bbb" />
+                                </View>
+                                <View style={styles.availability_item} >
+                                    <Text style={styles.availability_text} >سیستم گرمایشی</Text>
+                                    <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
+                                </View>
+                                <View style={styles.availability_item} >
+                                    <Text style={styles.availability_text} >الکتریکی</Text>
+                                    <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
+                                </View>
+                                <View style={styles.availability_item} >
+                                    <Text style={styles.availability_text} >استخر</Text>
+                                    <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
+                                </View>
+                                {
+                                    this.state.availability ?
+                                        <View style={styles.availability_first}>
+                                            <View style={styles.availability_item} >
+                                                <Text style={styles.availability_text} >پارکینگ</Text>
+                                                <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
+                                            </View>
+                                            <View style={styles.availability_item} >
+                                                <Text style={styles.availability_text} >WiFi</Text>
+                                                <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
+                                            </View>
+                                            <View style={styles.availability_item} >
+                                                <Text style={styles.availability_text} >لباسشویی</Text>
+                                                <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#bbb" />
+                                            </View>
+                                            <View style={styles.availability_item} >
+                                                <Text style={styles.availability_text} >سیستم گرمایشی</Text>
+                                                <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
+                                            </View>
+                                            <View style={styles.availability_item} >
+                                                <Text style={styles.availability_text} >الکتریکی</Text>
+                                                <Icon style={{ marginLeft: 5 }} size={15} name="check-circle-outline" color="#6FCF97" />
+                                            </View>
 
-                    <View style={styles.save_button}
-                        onPress={() => {
-                            this.setModalVisible(true);
-                        }}
-                    >
+                                        </View> : null
+
+                                }
+                            </View>
+
+                            <TouchableOpacity
+                                style={{ marginTop: 10, alignItems: 'center' }}
+                                onPress={() => this._seeMore('availability','availabilityText')}
+                            >
+                                <Text style={{
+                                    fontSize: 13,
+                                    fontFamily: 'ISBold',
+                                    color: '#ccc',
+                                }} >{this.state.availabilityText}</Text>
+                                {this.state.availability ? arrowUp : arrowDown}
+                            </TouchableOpacity>
+                        </View>
+
+                        <View style={styles.conditions}>
+                            <Text style={styles.detail_title}>شرایط</Text>
+
+                            <Text style={styles.conditions_text}>1. آرام باشید و مراقب خودتان باشید.</Text>
+                            <Text style={styles.conditions_text}>2. عاشق خودتان باشید .</Text>
+                            <Text style={styles.conditions_text}>3. اتاق را کثیف نکنید </Text>
+                            <Text style={styles.conditions_text}>4. اتاق را تمیز نکنید . </Text>
 
 
-                        <GradientButton
-                            width="80%"
-                            press={() => {
+                            {this.state.conditions ?
+                                <View>
+
+                                    <Text style={styles.conditions_text}>5. خانوم بازی نکنید </Text>
+                                    <Text style={styles.conditions_text}>6. داخل اتاق سیگار نکشید . </Text>
+                                    <Text style={styles.conditions_text}>7. دقت کنید </Text>
+                                    <Text style={styles.conditions_text}>8. نماز اول وقت را فراموش نکنید </Text>
+                                    <Text style={styles.conditions_text} >9. خدا را ناظر بر اعمال خود بدانید </Text>
+                                </View> : null}
+                            <TouchableOpacity
+                                style={{ marginTop: 10, alignItems: 'center' }}
+                                onPress={() => this._seeMore('conditions','conditionsText')}
+                            >
+                                <Text style={{
+                                    fontSize: 13,
+                                    fontFamily: 'ISBold',
+                                    color: '#ccc',
+                                }} >{this.state.conditionsText}</Text>
+                                {this.state.conditions ? arrowUp : arrowDown}
+                            </TouchableOpacity>
+
+                        </View>
+
+                        <View
+                            style={{
+                                width: Dimensions.get('window').width,
+                                height: Dimensions.get('window').width,
+                                marginTop: 20
+                            }}
+                        >
+                            <Mapir
+                                accessToken={'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjM5ZjlmMWZhNDA4YzM0ODI2ZjcxZGI5YTdlM2U2ZmVjNDEzMzNmMDU0MjVhM2MzOTM0NmMwNTlkMzBiMzcyYjA5YzU1OGZjOGU4NTJmNWJhIn0.eyJhdWQiOiJteWF3ZXNvbWVhcHAiLCJqdGkiOiIzOWY5ZjFmYTQwOGMzNDgyNmY3MWRiOWE3ZTNlNmZlYzQxMzMzZjA1NDI1YTNjMzkzNDZjMDU5ZDMwYjM3MmIwOWM1NThmYzhlODUyZjViYSIsImlhdCI6MTU1OTQ1NTIzMiwibmJmIjoxNTU5NDU1MjMyLCJleHAiOjE1NTk0NTg4MzIsInN1YiI6IiIsInNjb3BlcyI6WyJiYXNpYyIsImVtYWlsIl19.JNowwSPWaoVoJ1Omirk9OTtkDySsNL91nP00GcCARdM-YHoTQYw3NZy3SaVlAsbafO9oPPvlVfhNIxPIHESACZATutE3tb7RBEmQGEXX-8G7GOSu8IzyyLBmHaQe75LtisgdKi-zPTGsx8zFv0Acn6HrDDxFrKFNtmI85L3jos_GVxvYYhHWKAez8mbJRHcH1b15DrwgWAhCjO2p_HqpuGLdRF1l03J6HsOnJLMid2997g7iAVTOa8mt2oaEPvmwA_f6pwFZSURqw-RJzdN_R8IEmtqWQq5ZNTEppVaV82yuwfnSmrb0_Sak2hfBIiLwQeCMsnfhU_CvUbE_1rukmQ'}
+                                zoomLevel={13}
+                                zoomEnabled={false}
+                                centerCoordinate={[51.422548, 35.732573]}
+                                style={{ flex: 1 }}
+                                logoEnabled={false}
+                                scrollEnabled={false}
+                            >
+                                <Mapir.Marker
+                                    id={'1'}
+                                    coordinate={[51.422548, 35.732573]}
+                                >
+                                    <View style={{ width: 100, height: 100 }}>
+                                        <View style={{ marginLeft: 20, width: 80, height: 80, borderRadius: 50, backgroundColor: 'rgba(165, 45, 83,.3)', borderColor: 'rgb(165, 45, 83)', borderWidth: 2 }}>
+
+                                        </View>
+                                    </View>
+                                </Mapir.Marker>
+                            </Mapir>
+                        </View>
+
+                        <View style={styles.save_button}
+                            onPress={() => {
                                 this.setModalVisible(true);
                             }}
-                            activeOpacity={.6}
-                            color_1="#36a35b"
-                            color_2="#6fcf97"
-                            height={50}
-                            borderRadius={50}
-                            textColor="#fff"
-                            size={16}
-                            title="رزرو"
-                            top={0}
-                            bottom={0}
-                        />
+                        >
+
+
+                            <GradientButton
+                                width="80%"
+                                press={() => {
+                                    this.setModalVisible(true);
+                                }}
+                                activeOpacity={.6}
+                                color_1="#36a35b"
+                                color_2="#6fcf97"
+                                height={50}
+                                borderRadius={50}
+                                textColor="#fff"
+                                size={16}
+                                title="رزرو"
+                                top={0}
+                                bottom={0}
+                            />
+                        </View>
+
+
                     </View>
 
 
-                </View>
 
 
 
@@ -574,121 +555,120 @@ export default class Details extends Component {
 
 
 
+                    {/* M O D A L  modal MODAL  */}
 
+                    <Modal
+                        animationType="slide"
+                        transparent={false}
+                        visible={this.state.modalVisible}
+                        onRequestClose={() => {
+                            this.setModalVisible(false);
+                        }}
 
-                {/* M O D A L  modal MODAL  */}
+                    >
 
-                <Modal
-                    animationType="slide"
-                    transparent={false}
-                    visible={this.state.modalVisible}
-                    onRequestClose={() => {
-                        this.setModalVisible(false);
-                    }}
-
-                >
-
-                    {/* Close modal  */}
-                    <View
-                        style={{
-                            backgroundColor: '#f7f7f7',
-                            width: '100%',
-                            height: 50,
-                            flexDirection: 'row',
-                            justifyContent: 'flex-end',
-                            padding: 10
-                        }}>
                         {/* Close modal  */}
-                        <TouchableOpacity
-                            onPress={() => {
-                                this.setModalVisible(false);
+                        <View
+                            style={{
+                                backgroundColor: '#f7f7f7',
+                                width: '100%',
+                                height: 50,
+                                flexDirection: 'row',
+                                justifyContent: 'flex-end',
+                                padding: 10
                             }}>
-                            <Icon size={45} name="close" color="#bbb" />
+                            {/* Close modal  */}
+                            <TouchableOpacity
+                                onPress={() => {
+                                    this.setModalVisible(false);
+                                }}>
+                                <Icon size={45} name="close" color="#bbb" />
 
-                        </TouchableOpacity>
-                    </View>
+                            </TouchableOpacity>
+                        </View>
 
 
 
-                    {/* Modal modal modal modal  */}
-                    <View style={styles.Modal}>
-                        <View style={styles.modal_title} >
-                            <View style={styles.icon_parent} >
-                                <View style={styles.icon_child} >
-                                    <Image style={styles.icon} source={require('../../Assets/Images/natalie.jpeg')} />
+                        {/* Modal modal modal modal  */}
+                        <View style={styles.Modal}>
+                            <View style={styles.modal_title} >
+                                <View style={styles.icon_parent} >
+                                    <View style={styles.icon_child} >
+                                        <Image style={styles.icon} source={require('../../Assets/Images/natalie.jpeg')} />
+                                    </View>
+                                </View>
+                                <View style={styles.person_desc} >
+                                    <Text style={styles.person_name} >جمیله باغی تبار</Text>
                                 </View>
                             </View>
-                            <View style={styles.person_desc} >
-                                <Text style={styles.person_name} >جمیله باغی تبار</Text>
+
+                            <View style={styles.rent_detail} >
+                                <View style={styles.rent_items} >
+                                    <Text style={styles.rent_text} >تاریخ ورود</Text>
+                                    <Text style={styles.rent_number} >1398 / 11 / 10</Text>
+                                </View>
+                                <View style={styles.rent_items} >
+                                    <Text style={styles.rent_text} >تاریخ خروج</Text>
+                                    <Text style={styles.rent_number} >1398 / 11 / 15</Text>
+                                </View>
+                                <View style={styles.rent_items} >
+                                    <Text style={styles.rent_text} >تعداد شبها</Text>
+                                    <Text style={styles.rent_number} >5</Text>
+                                </View>
+                                <View style={styles.rent_items} >
+                                    <Text style={styles.rent_text} >نفرات</Text>
+                                    <Text style={styles.rent_number} >3</Text>
+                                </View>
+                                <View style={styles.rent_items} >
+                                    <Text style={styles.rent_text} >میانگین اجاره شبانه</Text>
+                                    <Text style={styles.rent_number} >100,000 ت</Text>
+                                </View>
+                                <View style={styles.totalـprice} >
+                                    <Text style={styles.total_text} >هزینه کل</Text>
+                                    <Text style={styles.total_number} >500,000 ت</Text>
+                                </View>
                             </View>
+
+                            <View style={styles.accept_from_owner} >
+                                <Icon style={{ paddingHorizontal: 14 }} size={30} name="check" color="#18749a" />
+
+                                <Text style={{ fontSize: 10, fontFamily: 'ISBold', marginRight: 10 }} >پذیرفته شده توسط صاحب ویلا</Text>
+                                <View style={{
+                                    width: 60,
+                                    height: 60,
+                                    borderRadius: 35,
+                                    backgroundColor: '#f5f5f5',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    shadowColor: "#f7f7f7",
+                                    shadowOpacity: 1,
+                                    elevation: 1,
+                                }} >
+                                    <Icon size={25} name="account-outline" color="#bbb" />
+
+                                </View>
+                            </View>
+
+                            {/* request btn */}
+
+                            <GradientButton
+                                width={Dimensions.get('window').width - 100}
+                                press={this._saveVila}
+                                activeOpacity={.6}
+                                color_1="#18749a"
+                                color_2="#46add8"
+                                height={50}
+                                borderRadius={50}
+                                textColor="#fff"
+                                size={16}
+                                title="پرداخت"
+                                top={20}
+                                bottom={100}
+                            />
                         </View>
-
-                        <View style={styles.rent_detail} >
-                            <View style={styles.rent_items} >
-                                <Text style={styles.rent_text} >تاریخ ورود</Text>
-                                <Text style={styles.rent_number} >1398 / 11 / 10</Text>
-                            </View>
-                            <View style={styles.rent_items} >
-                                <Text style={styles.rent_text} >تاریخ خروج</Text>
-                                <Text style={styles.rent_number} >1398 / 11 / 15</Text>
-                            </View>
-                            <View style={styles.rent_items} >
-                                <Text style={styles.rent_text} >تعداد شبها</Text>
-                                <Text style={styles.rent_number} >5</Text>
-                            </View>
-                            <View style={styles.rent_items} >
-                                <Text style={styles.rent_text} >نفرات</Text>
-                                <Text style={styles.rent_number} >3</Text>
-                            </View>
-                            <View style={styles.rent_items} >
-                                <Text style={styles.rent_text} >میانگین اجاره شبانه</Text>
-                                <Text style={styles.rent_number} >100,000 ت</Text>
-                            </View>
-                            <View style={styles.totalـprice} >
-                                <Text style={styles.total_text} >هزینه کل</Text>
-                                <Text style={styles.total_number} >500,000 ت</Text>
-                            </View>
-                        </View>
-
-                        <View style={styles.accept_from_owner} >
-                            <Icon style={{ paddingHorizontal: 14 }} size={30} name="check" color="#18749a" />
-
-                            <Text style={{ fontSize: 10, fontFamily: 'ISBold', marginRight: 10 }} >پذیرفته شده توسط صاحب ویلا</Text>
-                            <View style={{
-                                width: 60,
-                                height: 60,
-                                borderRadius: 35,
-                                backgroundColor: '#f5f5f5',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                shadowColor: "#f7f7f7",
-                                shadowOpacity: 1,
-                                elevation: 1,
-                            }} >
-                                <Icon size={25} name="account-outline" color="#bbb" />
-
-                            </View>
-                        </View>
-
-                        {/* request btn */}
-
-                        <GradientButton
-                            width={Dimensions.get('window').width - 100}
-                            press={this._saveVila}
-                            activeOpacity={.6}
-                            color_1="#18749a"
-                            color_2="#46add8"
-                            height={50}
-                            borderRadius={50}
-                            textColor="#fff"
-                            size={16}
-                            title="پرداخت"
-                            top={20}
-                            bottom={100}
-                        />
-                    </View>
-                </Modal >
-            </ScrollView >
+                    </Modal >
+                </ScrollView >
+            </View>
 
 
 
@@ -920,7 +900,7 @@ const styles = ({
         fontSize: 13,
         fontFamily: 'ISBold',
         marginTop: 5,
-        color:'#333'
+        color: '#333'
     },
     person_number: {
         fontSize: 12,
@@ -941,9 +921,9 @@ const styles = ({
         flexDirection: 'row-reverse',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingVertical:5,
-        paddingHorizontal:10,
-        marginVertical:2,
+        paddingVertical: 5,
+        paddingHorizontal: 10,
+        marginVertical: 2,
     },
     rent_text: {
         fontSize: 13,
