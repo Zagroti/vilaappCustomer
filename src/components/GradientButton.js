@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -7,8 +7,8 @@ import LinearGradient from 'react-native-linear-gradient';
 const GradientButton = (props) => (
     <TouchableOpacity style={{
         width: props.width,
-        marginTop:props.top,
-        marginBottom:props.bottom
+        marginTop: props.top,
+        marginBottom: props.bottom
     }}
         onPress={props.press}
         activeOpacity={.6}>
@@ -23,13 +23,19 @@ const GradientButton = (props) => (
                 alignItems: 'center',
                 borderRadius: props.borderRadius
             }}>
-            <Text style={{
-                fontFamily: 'ISBold',
-                color: props.textColor,
-                fontSize: props.size,
-            }} >
-                {props.title}
-            </Text>
+            {
+                props.isLoading ?
+                    <ActivityIndicator  size="small" color="#fff" />
+                    :
+                    <Text style={{
+                        fontFamily: 'ISBold',
+                        color: props.textColor,
+                        fontSize: props.size,
+                    }} >
+                        {props.title}
+                    </Text>
+            }
+
         </LinearGradient>
     </TouchableOpacity>
 )

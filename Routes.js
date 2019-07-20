@@ -73,7 +73,6 @@ class Routes extends React.Component {
     render() {
         if (this.state.loading) {
             return <Splash />
-
         }
         return (
             < Router >
