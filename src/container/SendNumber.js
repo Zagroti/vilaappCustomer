@@ -32,16 +32,10 @@ class SendNumber extends Component {
             code: '+98',
             number: '',
             fadeText: new Animated.Value(1),
-            wrongNumber: false
+            wrongNumber: false,
+            isLoading: false
         }
     }
-
-    componentDidMount() {
-        // focus number input
-        this.refs['NUMBER'].focus()
-    }
-
-
 
 
     // country code onchange 
@@ -79,7 +73,9 @@ class SendNumber extends Component {
 
 
 
+
         if (this.state.number.length === 10) {
+            this.setState({ isLoading: true })
             // merge code and user number 
             let sentNumber = this.state.code + this.state.number
             await this.setState({
@@ -87,21 +83,51 @@ class SendNumber extends Component {
             })
             // this.props.onSendNumber(sentNumber);
 
-            console.log(this.state.sentNumber)
+
             const data = new FormData();
             data.append('phone', this.state.sentNumber)
 
             const res = await PostToApi(data, 'auth/otp/sms');
-            console.log(res);
-           
+
 
             if (res.status === 200) {
-                console.log(res.data.code);
-                // go to enter code componenet!
-                console.log(res.status)
-                // go to enter code page 
-                Actions.EnterCode();
+                this.setState({ isLoading: false })
+                console.log(res)
 
+                // go to enter code page 
+                Actions.EnterCode({
+                    phone: res.data.phone,
+                    code: res.data.code
+                });
+
+            } else {
+                this.setState({ isLoading: false })
+
+                // error message show
+                // animation show permission 
+                await this.setState({
+                    wrongNumber: true,
+                    errorText: res.error
+                })
+
+                //text animation 
+                Animated.timing(
+                    this.state.fadeText,
+                    {
+                        toValue: 0,
+                        duration: 2000,
+                        delay: 3000
+                    }
+                ).start()
+
+                // set text animation opacity value
+                // reset wrong number to default
+                setTimeout(() => {
+                    this.setState({
+                        wrongNumber: false,
+                        fadeText: new Animated.Value(1),
+                    })
+                }, 5000)
             }
 
 
@@ -113,7 +139,8 @@ class SendNumber extends Component {
 
             // animation show permission 
             await this.setState({
-                wrongNumber: true
+                wrongNumber: true,
+                errorText: ' شماره همراه باید ۱۰ کارکتر باشد'
             })
 
             //text animation 
@@ -205,7 +232,7 @@ class SendNumber extends Component {
 
 
                                 <TextInput
-                                    ref={'NUMBER'}
+                                    autoFocus={true}
                                     style={styles.input_box_2}
                                     onChangeText={(e) => this._changeNumber(e)}
                                     value={this.state.number}
@@ -234,8 +261,8 @@ class SendNumber extends Component {
                                     marginTop: 5,
                                     opacity: fadeText
                                 }} >
-                                    شماره همراه باید ۱۰ کارکتر باشد
-                            </Animated.Text> :
+                                    {this.state.errorText}
+                                </Animated.Text> :
                                 <Text style={{ height: 20, paddingHorizontal: 20, marginTop: 5, }}></Text>
 
                         }
@@ -255,6 +282,7 @@ class SendNumber extends Component {
                             title="ارسال"
                             top={20}
                             bottom={100}
+                            isLoading={this.state.isLoading}
                         />
 
 

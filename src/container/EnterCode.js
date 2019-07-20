@@ -26,14 +26,16 @@ class EnterCode extends Component {
             code: '12345',
 
             wrongCode: false,
-            fadeText: new Animated.Value(1)
+            fadeText: new Animated.Value(1),
 
+            isLoading:false
 
         }
     }
-    componentWillMount(){
-        BackHandler.addEventListener('hardwareBackPress',this._back)
+    componentWillMount() {
+        BackHandler.addEventListener('hardwareBackPress', this._back)
     }
+
 
     _back = () => {
         alert(0)
@@ -49,15 +51,12 @@ class EnterCode extends Component {
     // validation and go home
     _goHome = async () => {
 
-
-
-        // fetch ...
-        //..
-        //..
-        if (this.state.code == '12345') {
+        if (this.state.code == this.props.code) {
+            this.setState({isLoading:true})
             // go HOME
             Actions.Home();
             this._storeData()
+
 
         } else {
 
@@ -92,7 +91,7 @@ class EnterCode extends Component {
     _storeData = async () => {
         try {
             await AsyncStorage.setItem('login', 'true')
-            
+
         } catch (e) {
             // saving error
         }
@@ -101,7 +100,6 @@ class EnterCode extends Component {
 
     render() {
         let { fadeText } = this.state
-
 
         return (
             <View style={styles.EnterCode}>
@@ -128,7 +126,7 @@ class EnterCode extends Component {
                                 >
                                     <Text style={styles.resend_text}  >ارسال مجدد</Text>
                                 </TouchableOpacity>
-                                <Text style={styles.my_number}>+912 123 4567</Text>
+                                <Text style={styles.my_number}>+{this.props.phone}</Text>
                             </View>
                         </View>
 
@@ -139,30 +137,23 @@ class EnterCode extends Component {
 
                             <View style={styles.code_show_box}>
                                 <TextInput
+                                    autoFocus={true}
                                     onFocus={() => {
                                         this.setState({ bg: '#C72A54' })
                                     }}
                                     onBlur={() => {
                                         this.setState({ bg: '#dfdfdf' })
-                                    }} value={this.state.code}
+                                    }} 
                                     onChangeText={(e) => this.setState({ code: e.replace(/[^0-9]/g, '').trim() })}
-                                    maxLength={5}
-                                    style={{
-                                        borderBottomColor: this.state.bg,
-                                        marginHorizontal: 5,
-                                        paddingHorizontal: 5,
-                                        fontSize: 24,
-                                        paddingBottom: 5,
-                                        borderBottomWidth: 2,
-                                        fontWeight: '900',
-                                        textAlign: 'center',
-                                        width: '70%',
-                                        letterSpacing: 18
-                                    }}
+                                    maxLength={4}
+                                    style={[styles.code_input,{borderBottomColor: this.state.bg}]}
                                     keyboardType='numeric'
                                 />
 
                             </View>
+
+
+                            {/* E R R O R   box */}
                             {
                                 this.state.wrongCode ?
                                     <Animated.Text style={{
@@ -199,8 +190,9 @@ class EnterCode extends Component {
                             title="ورود"
                             top={20}
                             bottom={100}
+                            isLoading={this.state.isLoading}
                         />
-                       
+
                     </View>
 
                 </KeyboardAvoidingView>
@@ -285,6 +277,18 @@ const styles = ({
     },
     code_show_box: {
         flexDirection: 'row',
+    },
+    code_input: {
+        
+        marginHorizontal: 5,
+        paddingHorizontal: 5,
+        fontSize: 24,
+        paddingBottom: 5,
+        borderBottomWidth: 2,
+        fontWeight: '900',
+        textAlign: 'center',
+        width: '50%',
+        letterSpacing: 18
     }
 
 })
