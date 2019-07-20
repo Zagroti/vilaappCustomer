@@ -121,8 +121,7 @@ class Home extends Component {
     }
     _removeData = async () => {
         try {
-            await AsyncStorage.removeItem('login')
-            console.log(AsyncStorage.getItem('login'))
+            await AsyncStorage.removeItem('@token')
             return true;
         } catch (e) {
             return false

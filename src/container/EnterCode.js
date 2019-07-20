@@ -90,7 +90,7 @@ class EnterCode extends Component {
 
     _storeData = async () => {
         try {
-            await AsyncStorage.setItem('login', 'true')
+            await AsyncStorage.setItem('@token', 'true')
 
         } catch (e) {
             // saving error

@@ -54,7 +54,7 @@ class Routes extends React.Component {
 
     componentWillMount() {
         self = this;
-        AsyncStorage.getItem('login')
+        AsyncStorage.getItem('@token')
             .then((value) => {
                 if (value != null) {
                     this.setState({
