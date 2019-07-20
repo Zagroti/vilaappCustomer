@@ -372,7 +372,7 @@ export default class Details extends Component {
                             </View>
                             <TouchableOpacity
                                 style={{ marginTop: 10, alignItems: 'center' }}
-                                onPress={(e) => this._seeMore('aboutvila','availabilityText')}
+                                onPress={(e) => this._seeMore('aboutvila','aboutvilaText')}
                             >
                                 <Text style={{
                                     fontSize: 13,
