@@ -111,19 +111,19 @@ export default class Details extends Component {
 
 
     // more funcion 
-    _seeMore = (name,text) => {
+    _seeMore = (name, text) => {
 
         if (!this.state[name]) {
-                this.setState({
-                    [text]: 'کمتر',
-                    [name]: true,
-                })
-            } else {
-                this.setState({
-                    [text]: 'بیشتر',
-                    [name]: false,
-                })
-            }
+            this.setState({
+                [text]: 'کمتر',
+                [name]: true,
+            })
+        } else {
+            this.setState({
+                [text]: 'بیشتر',
+                [name]: false,
+            })
+        }
 
     }
 
@@ -135,15 +135,14 @@ export default class Details extends Component {
 
     // slide full screen
     _sliderFullScreen = () => {
+
         // full size
         if (this.state.sliderFullScreen) {
             this.setState({ sliderFullScreen: false })
-            parent_slider = {
-                // position: 'relative',
-            }
+            parent_slider = {}
 
-            image_slider_parent = {
-            }
+            image_slider_parent = {}
+
             image_slider = {
                 width: '100%',
                 height: Dimensions.get('window').width,
@@ -172,9 +171,8 @@ export default class Details extends Component {
 
         } else {
             this.setState({ sliderFullScreen: true })
+
             parent_slider = {
-                // position: 'relative',
-                backgroundColor: 'red',
                 height: Dimensions.get('window').height,
                 width: Dimensions.get('window').width,
                 zIndex: 9999,
@@ -229,43 +227,19 @@ export default class Details extends Component {
         return (
 
             <View style={styles.Details} >
-                {!this.state.sliderFullScreen ?
-                    <View style={{
-                        backgroundColor: 'transparent',
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        height: 60,
-                        padding: 20,
-                        width: '100%',
-                        position: 'absolute',
-                        top: 0,
-                        zIndex: 99999,
-                        width: '100%'
-                    }} >
-                        <Text style={styles.owner_answer}>پذیرفته شده</Text>
-                        <TouchableOpacity
-                            style={{
-                                backgroundColor: '#33333320',
-                                padding: 10,
-                                width: 50,
-                                height: 50,
-                                borderRadius: 30,
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                top: 10,
-                                end: 10,
-                                position: 'absolute'
-                            }} onPress={() => Actions.pop()} >
-                            <Icon name="arrow-right" size={28} color="#fff" />
 
+                {/* header */}
+                {!this.state.sliderFullScreen ?
+                    <View style={styles.header} >
+                        <Text style={styles.owner_answer}>پذیرفته شده</Text>
+                        <TouchableOpacity style={styles.back_button} onPress={() => Actions.pop()} >
+                            <Icon name="arrow-right" size={28} color="#fff" />
                         </TouchableOpacity>
                     </View> : null
-
                 }
+
+                {/* slider and others  */}
                 <ScrollView>
-
-
 
                     <SafeAreaView style={parent_slider}>
                         <ImageSlider
@@ -291,9 +265,12 @@ export default class Details extends Component {
                                         alignItems: 'center',
                                         borderRadius: 20,
                                     }}>
-                                        <Text style={{ color: '#fff', fontFamily: 'ISFBold', marginTop: 3, fontSize: 12 }}>{position + 1}  /  {images.length}</Text>
+                                        <Text style={styles.image_counter}>{position + 1}  /  {images.length}</Text>
                                         <Icon name="image-area" style={{ marginLeft: 8 }} size={30} color="#fff" />
                                     </View>
+
+
+                                    {/* price and back button fullscreen and resize mode */}
                                     {
                                         !this.state.sliderFullScreen ?
                                             <View style={{
@@ -372,7 +349,7 @@ export default class Details extends Component {
                             </View>
                             <TouchableOpacity
                                 style={{ marginTop: 10, alignItems: 'center' }}
-                                onPress={(e) => this._seeMore('aboutvila','aboutvilaText')}
+                                onPress={(e) => this._seeMore('aboutvila', 'aboutvilaText')}
                             >
                                 <Text style={{
                                     fontSize: 13,
@@ -442,7 +419,7 @@ export default class Details extends Component {
 
                             <TouchableOpacity
                                 style={{ marginTop: 10, alignItems: 'center' }}
-                                onPress={() => this._seeMore('availability','availabilityText')}
+                                onPress={() => this._seeMore('availability', 'availabilityText')}
                             >
                                 <Text style={{
                                     fontSize: 13,
@@ -473,7 +450,7 @@ export default class Details extends Component {
                                 </View> : null}
                             <TouchableOpacity
                                 style={{ marginTop: 10, alignItems: 'center' }}
-                                onPress={() => this._seeMore('conditions','conditionsText')}
+                                onPress={() => this._seeMore('conditions', 'conditionsText')}
                             >
                                 <Text style={{
                                     fontSize: 13,
@@ -691,25 +668,19 @@ const styles = ({
     },
 
     header: {
-        width: '100%',
-        height: Dimensions.get('window').width,
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'space-between'
-    },
-
-    menu: {
         backgroundColor: 'transparent',
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+        justifyContent: 'space-between',
         alignItems: 'center',
         height: 60,
         padding: 20,
         width: '100%',
         position: 'absolute',
         top: 0,
-        zIndex: 99999
+        zIndex: 99999,
+        width: '100%'
     },
+
 
 
     owner_answer: {
@@ -721,8 +692,26 @@ const styles = ({
         paddingHorizontal: 30,
         paddingVertical: 2,
         textAlign: 'center',
+        marginTop: 10
     },
-
+    back_button: {
+        backgroundColor: '#33333320',
+        padding: 10,
+        width: 50,
+        height: 50,
+        borderRadius: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+        top: 10,
+        end: 10,
+        position: 'absolute'
+    },
+    image_counter: {
+        color: '#fff',
+        fontFamily: 'ISFBold',
+        marginTop: 3,
+        fontSize: 12
+    },
     vila_posibilities: {
         backgroundColor: '#f6f6f6',
         borderRadius: 30,
