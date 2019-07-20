@@ -221,7 +221,7 @@ export default class ResultItemsPage extends React.Component {
                     }}>
 
                     <ImageBackground
-                        style={{ width: '100%', height:185, backgroundColor: 'green',  }}
+                        style={{ width: '100%', height:195, backgroundColor: 'green',  }}
                         imageStyle={{ resizeMode: 'cover' }}
                         source={require('./../../Assets/Images/amol.jpg')}
                     >
@@ -335,6 +335,7 @@ export default class ResultItemsPage extends React.Component {
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 zIndex: 999,
+                                height:100,
                             }}>
                             <Animated.View
                                 style={{
@@ -342,17 +343,19 @@ export default class ResultItemsPage extends React.Component {
                                     width: "100%",
                                     alignItems: 'center',
                                     backgroundColor: this.sortBg,
+                                    height:100
                                 }}>
                                 <View style={{
                                     justifyContent: 'center',
                                     width: "100%",
                                     alignItems: 'center',
                                     backgroundColor: '#fff',
-                                    padding: 10,
-                                    paddingVertical:15,
+                                    // padding: 10,
+                                    // paddingVertical:15,
                                     borderTopRightRadius: 40,
                                     borderTopLeftRadius: 40,
                                     zIndex: 999,
+                                    height:100
                                 }} >
                                     <View style={styles.tab}  >
                                         <Text style={{
@@ -475,11 +478,11 @@ const styles = ({
     },
     tab: {
         width: Dimensions.get('window').width - 30,
-        // height: 55,
         flexDirection: 'row-reverse',
         justifyContent: 'space-around',
         alignItems: 'center',
         paddingHorizontal: 15,
+        height:70,
         backgroundColor: '#f3f3f3',
         borderRadius: 50,
         zIndex: 9,
