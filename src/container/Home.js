@@ -250,10 +250,8 @@ class Home extends Component {
                         </ScrollView>
                     </View>
                     <TouchableOpacity activeOpacity={.8} style={styles.modal_button}
-                        onPress={() => { this.setState({ modalVisible: true }); }}>
-                        <View style={styles.middle_inside}>
+                        onPress={() => this.setState({ modalVisible: true })}>
                             <Icon name="magnify" size={36} color="#fff" />
-                        </View>
                     </TouchableOpacity>
 
 
@@ -318,7 +316,7 @@ class Home extends Component {
                                                     sliderValue: this.state.sliderChangedValue
                                                 })
                                             }}>
-                                            <Icon size={40} name="close" color="#C50143" />
+                                            <Icon size={40} name="close" color="#A52D53" />
 
                                         </TouchableOpacity>
                                     </View>
@@ -504,9 +502,9 @@ class Home extends Component {
                                                         width: 30,
                                                         height: 30,
                                                         borderRadius: 30,
-                                                        backgroundColor: '#C50143',
+                                                        backgroundColor: '#A52D53',
                                                     }}
-                                                    minimumTrackTintColor='#C50143'
+                                                    minimumTrackTintColor='#A52D53'
                                                     minimumValue={50000}
                                                     maximumValue={1000000}
                                                     step={50000}
@@ -524,8 +522,8 @@ class Home extends Component {
                                                     minimumValue={50000}
                                                     maximumValue={1000000}
                                                     step={50000}
-                                                    minimumTrackTintColor='#C50143'
-                                                    thumbTintColor='#C50143'
+                                                    minimumTrackTintColor='#A52D53'
+                                                    thumbTintColor='#A52D53'
                                                     value={this.state.sliderValue}
                                                     onValueChange={(value) => this._onChangeSlider(value)}
                                                 />
@@ -602,28 +600,19 @@ const styles = ({
         bottom: 140,
         zIndex: 10,
         right: 20,
-        width: 90,
-        height: 90,
+        width: 80,
+        height: 80,
         borderRadius: 100,
         backgroundColor: '#fff',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        shadowColor: "#C92652",
+        shadowColor: "#A52D53",
         shadowOpacity: .5,
         elevation: 10,
+        backgroundColor:'#A52D53'
     },
-    middle_inside: {
-        width: 84,
-        height: 84,
-        backgroundColor: '#C92652',
-        borderWidth: 2,
-        borderColor: '#fff',
-        borderRadius: 100,
-        justifyContent: 'center',
-        alignItems: 'center',
-        zIndex: 20
-    },
+
     icon_parent: {
         width: 100,
         height: 100,
@@ -798,7 +787,7 @@ const styles = ({
         backgroundColor: '#fff'
     },
     search_touch: {
-        backgroundColor: '#C50143',
+        backgroundColor: '#A52D53',
         width: Dimensions.get('window').width / 3,
         height: Dimensions.get('window').width / 3,
         borderRadius: Dimensions.get('window').width / 6,
