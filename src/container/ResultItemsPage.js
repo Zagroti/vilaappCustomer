@@ -27,9 +27,7 @@ class ResultItemsPage extends React.Component {
             active: '#C72652',
             inactive: '#555',
             invisible: '#fafafa',
-            tab1: true,
-            tab2: false,
-            tab3: false,
+            tab: [true, false, false],
 
             markers: [
                 { latitude: 51.422548, longitude: 35.732573 },
@@ -86,25 +84,9 @@ class ResultItemsPage extends React.Component {
 
     //sort tab 
     _changeTab = (tab) => {
-        if (tab === 'tab1') {
-            this.setState({
-                tab2: false,
-                tab3: false,
-                tab1: true,
-            })
-        } else if (tab === 'tab2') {
-            this.setState({
-                tab2: true,
-                tab3: false,
-                tab1: false,
-            })
-        } else if (tab === 'tab3') {
-            this.setState({
-                tab2: false,
-                tab3: true,
-                tab1: false,
-            })
-        }
+        this.setState({
+            tab: tab
+        })
     }
 
 
@@ -179,12 +161,8 @@ class ResultItemsPage extends React.Component {
                         { nativeEvent: { contentOffset: { y: this.nScroll } } }
                     ],
                         { useNativeDriver: true },
-
                     )}
-                    style={{
-                        position: 'relative', zIndex: 1,
-                        // backgroundColor: 'rgba(165, 45, 83,1)' 
-                    }}>
+                    style={{ position: 'relative', zIndex: 1 }}>
 
                     <ImageBackground
                         style={{ width: '100%', height: 185, backgroundColor: 'green', }}
@@ -209,19 +187,16 @@ class ResultItemsPage extends React.Component {
                                         width: '100%',
                                         height: IMAGE_HEIGHT,
                                         justifyContent: 'flex-start',
-                                        // backgroundColor: 'rgba(165, 45, 83,.1)',
                                         opacity: this.imgOpacity,
 
                                     }}>
                                         <Animated.View style={{
-                                            // backgroundColor: 'rgba(165, 45, 83,.7)',
                                             backgroundColor: 'transparent',
                                             height: IMAGE_HEIGHT,
                                             paddingHorizontal: 20,
                                             flexDirection: 'row',
                                             justifyContent: 'space-between',
                                             alignItems: 'center',
-                                            // paddingBottom: 40,
                                             opacity: this.imgOpacity,
 
                                         }}>
@@ -317,8 +292,6 @@ class ResultItemsPage extends React.Component {
                                     width: "100%",
                                     alignItems: 'center',
                                     backgroundColor: '#fff',
-                                    // padding: 10,
-                                    // paddingVertical:15,
                                     borderTopRightRadius: 40,
                                     borderTopLeftRadius: 40,
                                     zIndex: 999,
@@ -336,42 +309,43 @@ class ResultItemsPage extends React.Component {
                                         <View style={{
                                             width: '70%',
                                             height: 36,
-                                            flexDirection: 'row',
+                                            flexDirection: 'row-reverse',
                                             justifyContent: 'space-between',
                                             alignItems: 'center',
                                         }}>
-                                            <TouchableOpacity style={[styles.tab_box]} onPress={() => this._changeTab('tab3')}>
-                                                <Text style={[styles.tab_text, { color: this.state.tab3 ? this.state.active : this.state.inactive }]}>  تخفیف %</Text>
+
+                                            <TouchableOpacity style={[styles.tab_box]} onPress={() => this._changeTab([true, false, false])}>
+                                                <Text style={[styles.tab_text, { color: this.state.tab[0] ? this.state.active : this.state.inactive }]}>  امتیاز </Text>
                                                 {
-                                                    this.state.tab3 ?
+                                                    this.state.tab[0] ?
                                                         <Icon name="sort-descending"
                                                             style={{ marginLeft: 2 }}
                                                             size={15}
-                                                            color={this.state.tab3 ? this.state.active : this.state.invisible} />
-                                                        : null
-                                                }
-
+                                                            color={this.state.tab[0] ? this.state.active : this.state.invisible} />
+                                                        : null}
                                             </TouchableOpacity>
-                                            <TouchableOpacity style={[styles.tab_box]} onPress={() => this._changeTab('tab2')}>
-                                                <Text style={[styles.tab_text, { color: this.state.tab2 ? this.state.active : this.state.inactive }]}>  قیمت</Text>
+
+                                            <TouchableOpacity style={[styles.tab_box]} onPress={() => this._changeTab([false, true, false])}>
+                                                <Text style={[styles.tab_text, { color: this.state.tab[1] ? this.state.active : this.state.inactive }]}>  قیمت</Text>
                                                 {
-                                                    this.state.tab2 ?
+                                                    this.state.tab[1] ?
                                                         <Icon name="sort-ascending"
                                                             style={{ marginLeft: 2 }}
                                                             size={15}
-                                                            color={this.state.tab2 ? this.state.active : this.state.invisible} />
+                                                            color={this.state.tab[1] ? this.state.active : this.state.invisible} />
                                                         : null}
-
                                             </TouchableOpacity>
-                                            <TouchableOpacity style={[styles.tab_box]} onPress={() => this._changeTab('tab1')}>
-                                                <Text style={[styles.tab_text, { color: this.state.tab1 ? this.state.active : this.state.inactive }]}>  امتیاز </Text>
+
+                                            <TouchableOpacity style={[styles.tab_box]} onPress={() => this._changeTab([false, false, true])}>
+                                                <Text style={[styles.tab_text, { color: this.state.tab[2] ? this.state.active : this.state.inactive }]}>  تخفیف %</Text>
                                                 {
-                                                    this.state.tab1 ?
+                                                    this.state.tab[2] ?
                                                         <Icon name="sort-descending"
                                                             style={{ marginLeft: 2 }}
                                                             size={15}
-                                                            color={this.state.tab1 ? this.state.active : this.state.invisible} />
-                                                        : null}
+                                                            color={this.state.tab[2] ? this.state.active : this.state.invisible} />
+                                                        : null
+                                                }
 
                                             </TouchableOpacity>
 
@@ -391,7 +365,7 @@ class ResultItemsPage extends React.Component {
                         zIndex: -90000,
                     }}>
 
-                        {this.state.tab1 ?
+                        {this.state.tab[0] ?
 
                             <View style={{ width: '100%', alignItems: 'center', zIndex: -99999 }}>
                                 <ResultItems navigate={this._showDetail} />
@@ -408,7 +382,7 @@ class ResultItemsPage extends React.Component {
 
                         }
 
-                        {this.state.tab2 ?
+                        {this.state.tab[1] ?
 
                             <View style={{ width: '100%', alignItems: 'center', zIndex: -99999 }}>
                                 <ResultItems navigate={this._showDetail} />
@@ -418,7 +392,7 @@ class ResultItemsPage extends React.Component {
 
                         }
 
-                        {this.state.tab3 ?
+                        {this.state.tab[2] ?
 
                             <View style={{ width: '100%', alignItems: 'center', zIndex: -99999 }}>
                                 <ResultItems navigate={this._showDetail} />
@@ -485,7 +459,6 @@ const styles = ({
         justifyContent: 'center',
         height: "100%",
         backgroundColor: '#fafafa',
-        // borderWidth: 1,
         borderRadius: 50
 
     },
@@ -503,7 +476,6 @@ const styles = ({
     details: {
         width: Dimensions.get('window').width,
         flexDirection: 'row',
-        // backgroundColor: '#fff',
     },
     details_right_image: {
         width: '100%',
