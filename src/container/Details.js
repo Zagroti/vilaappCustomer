@@ -124,7 +124,6 @@ export default class Details extends Component {
                 [name]: false,
             })
         }
-
     }
 
     _backButtonCustom = () => {
@@ -149,7 +148,6 @@ export default class Details extends Component {
                 resizeMode: 'cover'
             }
             body = {
-
                 top: -50,
                 borderTopRightRadius: 40,
                 borderTopLeftRadius: 40,
@@ -214,6 +212,8 @@ export default class Details extends Component {
 
     }
 
+
+    
     render() {
 
         const images = [

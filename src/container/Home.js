@@ -26,8 +26,8 @@ import Slider from '@react-native-community/slider';
 //components 
 import NoRequest from '../components/NoRequest';
 import Requestitems from '../components/RequestItems';
-import GradientButton from '../components/GradientButton';
 import Counter from '../components/Counter';
+import Header from '../components/Header'
 
 
 
@@ -64,7 +64,7 @@ class Home extends Component {
         // for disable back btn
         BackHandler.addEventListener('hardwareBackPress', this._handleBackButton);
 
-       
+
     }
 
 
@@ -155,7 +155,7 @@ class Home extends Component {
     }
 
     _onChangeSlider = (value) => {
-         this.setState({ sliderChangedValue: value })
+        this.setState({ sliderChangedValue: value })
     }
 
 
@@ -225,19 +225,15 @@ class Home extends Component {
             >
                 <View style={styles.home_cover} >
 
-                    {/* MENU */}
-                    <View style={styles.menu} >
-                        <TouchableOpacity
-                            style={styles.menu_icon}
-                            onPress={() => Actions.Support()}>
-                            <View style={styles.notification_circle} ></View>
-                            <Icon name="bell-outline" size={32} color="#B22850" />
-                        </TouchableOpacity>
-                        <Text style={styles.title} >درخواست های من</Text>
-                        <TouchableOpacity style={styles.menu_icon} onPress={this._openDrawer}>
-                            <Icon name="menu" size={32} color="#B22850" />
-                        </TouchableOpacity>
-                    </View>
+
+                    <Header title="درخواست های من"
+                        leftIcon="bell-outline"
+                        leftPress={() => Actions.Support()}
+                        rightIcon="menu"
+                        rightPress={() => this._openDrawer()}
+                        iconColor="#B22850"
+                        notification={true}
+                    />
 
 
                     {/* request box  */}
@@ -581,37 +577,7 @@ const styles = ({
 
     },
 
-    menu: {
-        backgroundColor: '#f6f6f6',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        height: 50,
-        width: '100%',
-        paddingVertical: 5,
-        alignItems: 'center',
-    },
-    notification_circle: {
-        width: 15,
-        height: 15,
-        borderRadius: 7,
-        backgroundColor: '#B22850',
-        end: 10,
-        top: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        position: 'absolute',
-        borderWidth: 2,
-        borderColor: '#f6f6f6',
-        borderRadius: 20,
-        zIndex: 99
-    },
-    menu_icon: {
-        width: 50,
-        height: 50,
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'relative'
-    },
+
     up: {
         flexDirection: 'column',
         justifyContent: 'flex-start',
@@ -624,12 +590,6 @@ const styles = ({
         overflow: 'hidden',
         zIndex: 1,
 
-    },
-    title: {
-        fontSize: 14,
-        fontFamily: 'ISBold',
-        color: '#333',
-        textAlign: 'center',
     },
     requestBox: {
         width: Dimensions.get('window').width,

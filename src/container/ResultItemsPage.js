@@ -12,6 +12,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 //components
 import ResultItems from '../components/ResultItems';
+import Header from '../components/Header';
 
 
 const IMAGE_HEIGHT = 100;
@@ -113,24 +114,18 @@ class ResultItemsPage extends React.Component {
 
 
 
-
-
     render() {
 
         return (
             <View style={{ backgroundColor: '#fff', flex: 1, position: 'relative' }}>
-                <View style={styles.menu}>
-                    <TouchableOpacity
-                        style={styles.menu_icon}
-                        onPress={() => Actions.Support()}>
-                        <View style={styles.notification_circle} ></View>
-                        <Icon name="bell-outline" size={32} color="#B22850" />
-                    </TouchableOpacity>
-                    <Text style={styles.title} >  نتایج جستجو - 218#</Text>
-                    <TouchableOpacity style={styles.menu_icon} onPress={() => Actions.pop()} >
-                        <Icon name="arrow-right" size={28} color="#B22850" />
-                    </TouchableOpacity>
-                </View>
+                <Header title="نتایج جستجو - 218#"
+                    leftIcon="bell-outline"
+                    leftPress={() => Actions.Support()}
+                    rightIcon="arrow-right"
+                    rightPress={() => Actions.pop()}
+                    iconColor="#B22850"
+                    notification={true}
+                />
 
                 {/* summary result */}
                 <Animated.View style={{
@@ -442,8 +437,8 @@ class ResultItemsPage extends React.Component {
                 </Animated.ScrollView>
 
             </View>
-        
-        
+
+
         )
     }
 }
@@ -473,43 +468,7 @@ const styles = ({
         zIndex: 9,
         paddingVertical: 15
     },
-    menu: {
-        backgroundColor: '#f6f6f6',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        height: 50,
-        width: '100%',
-        paddingVertical: 5,
-        alignItems: 'center',
-    },
-    notification_circle: {
-        width: 15,
-        height: 15,
-        borderRadius: 7,
-        backgroundColor: '#B22850',
-        end: 10,
-        top: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        position: 'absolute',
-        borderWidth: 2,
-        borderColor: '#f6f6f6',
-        borderRadius: 20,
-        zIndex: 99
-    },
-    menu_icon: {
-        width: 50,
-        height: 50,
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'relative'
-    },
-    title: {
-        fontSize: 14,
-        fontFamily: 'ISBold',
-        color: '#333',
-        textAlign: 'center',
-    },
+
     summary_Text: {
         fontFamily: 'ISBold',
         fontSize: 10,
