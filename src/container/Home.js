@@ -19,6 +19,8 @@ import Mapir from 'mapir-react-native-sdk'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-community/async-storage';
 import Slider from '@react-native-community/slider';
+import LinearGradient from 'react-native-linear-gradient';
+
 // import Slider from "react-native-slider";
 
 // import { Slider} from 'react-native'
@@ -249,11 +251,24 @@ class Home extends Component {
                             <Requestitems navigate={this._showRequestsNavigate} />
                         </ScrollView>
                     </View>
-                    <TouchableOpacity activeOpacity={.8} style={styles.modal_button}
+                    <TouchableOpacity activeOpacity={.9} style={styles.modal_button}
                         onPress={() => this.setState({ modalVisible: true })}>
+                        <LinearGradient
+                            start={{ x: 1, y: 1 }}
+                            end={{ x: 1, y: 0 }}
+                            colors={['#c73664', '#A52D53']}
+                            style={{
+                                width: 70,
+                                height: 70,
+                                borderRadius: 18,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                elevation: 10,
+                            }}>
                             <Icon name="magnify" size={36} color="#fff" />
-                    </TouchableOpacity>
 
+                        </LinearGradient>
+                    </TouchableOpacity>
 
 
                 </View>
@@ -600,17 +615,12 @@ const styles = ({
         bottom: 140,
         zIndex: 10,
         right: 20,
-        width: 80,
-        height: 80,
-        borderRadius: 100,
-        backgroundColor: '#fff',
-        flexDirection: 'column',
+        width: 70,
+        height: 70,
+        borderRadius: 18,
+        backgroundColor: '#33',
         justifyContent: 'center',
         alignItems: 'center',
-        shadowColor: "#A52D53",
-        shadowOpacity: .5,
-        elevation: 10,
-        backgroundColor:'#A52D53'
     },
 
     icon_parent: {
