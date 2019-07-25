@@ -11,9 +11,9 @@ import {
     BackHandler
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import Mapir from 'mapir-react-native-sdk'
 import ImageSlider from 'react-native-image-slider';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MapView, { Marker } from 'react-native-maps';
 
 
 //components 
@@ -32,9 +32,11 @@ const arrowUp = <Icon style={{ top: -10 }} name="chevron-up" size={36} color="#c
 let parent_slider = {
 
 }
+
 let image_slider_parent = {
 
 }
+
 let image_slider = {
     width: '100%',
     height: Dimensions.get('window').width,
@@ -77,7 +79,10 @@ export default class Details extends Component {
             aboutvila: false,
             conditionsText: 'بیشتر',
             conditions: false,
-            sliderFullScreen: false
+            sliderFullScreen: false,
+            markers: [
+                { latitude: 35.68925, longitude: 51.3890, latitudeDelta: 0, longitudeDelta: 0, },
+            ],
         }
     }
 
@@ -213,7 +218,7 @@ export default class Details extends Component {
     }
 
 
-    
+
     render() {
 
         const images = [
@@ -223,6 +228,21 @@ export default class Details extends Component {
             'https://placeimg.com/640/640/beer',
         ];
 
+        // map marker
+        const marker = (
+            this.state.markers.map(marker => (
+                <Marker coordinate={marker} key={marker.latitude}>
+                    <Text style={{
+                        backgroundColor: '#a52d5388',
+                        width: 100,
+                        height: 100,
+                        borderRadius: 50,
+                        borderWidth: 3,
+                        borderColor: '#a52d53'
+                    }} ></Text>
+                </Marker>
+            ))
+        )
 
         return (
 
@@ -466,29 +486,20 @@ export default class Details extends Component {
                             style={{
                                 width: Dimensions.get('window').width,
                                 height: Dimensions.get('window').width,
-                                marginTop: 20
+                                marginTop: 20,
+                                position: 'relative'
                             }}
                         >
-                            <Mapir
-                                accessToken={'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjM5ZjlmMWZhNDA4YzM0ODI2ZjcxZGI5YTdlM2U2ZmVjNDEzMzNmMDU0MjVhM2MzOTM0NmMwNTlkMzBiMzcyYjA5YzU1OGZjOGU4NTJmNWJhIn0.eyJhdWQiOiJteWF3ZXNvbWVhcHAiLCJqdGkiOiIzOWY5ZjFmYTQwOGMzNDgyNmY3MWRiOWE3ZTNlNmZlYzQxMzMzZjA1NDI1YTNjMzkzNDZjMDU5ZDMwYjM3MmIwOWM1NThmYzhlODUyZjViYSIsImlhdCI6MTU1OTQ1NTIzMiwibmJmIjoxNTU5NDU1MjMyLCJleHAiOjE1NTk0NTg4MzIsInN1YiI6IiIsInNjb3BlcyI6WyJiYXNpYyIsImVtYWlsIl19.JNowwSPWaoVoJ1Omirk9OTtkDySsNL91nP00GcCARdM-YHoTQYw3NZy3SaVlAsbafO9oPPvlVfhNIxPIHESACZATutE3tb7RBEmQGEXX-8G7GOSu8IzyyLBmHaQe75LtisgdKi-zPTGsx8zFv0Acn6HrDDxFrKFNtmI85L3jos_GVxvYYhHWKAez8mbJRHcH1b15DrwgWAhCjO2p_HqpuGLdRF1l03J6HsOnJLMid2997g7iAVTOa8mt2oaEPvmwA_f6pwFZSURqw-RJzdN_R8IEmtqWQq5ZNTEppVaV82yuwfnSmrb0_Sak2hfBIiLwQeCMsnfhU_CvUbE_1rukmQ'}
-                                zoomLevel={13}
-                                zoomEnabled={false}
-                                centerCoordinate={[51.422548, 35.732573]}
+                            <MapView
                                 style={{ flex: 1 }}
-                                logoEnabled={false}
+                                mapType="hybrid"
+                                zoomLevel={7}
                                 scrollEnabled={false}
+                                initialRegion={this.state.markers[0]}
+                                maxZoomLevel={16}
                             >
-                                <Mapir.Marker
-                                    id={'1'}
-                                    coordinate={[51.422548, 35.732573]}
-                                >
-                                    <View style={{ width: 100, height: 100 }}>
-                                        <View style={{ marginLeft: 20, width: 80, height: 80, borderRadius: 50, backgroundColor: 'rgba(165, 45, 83,.3)', borderColor: 'rgb(165, 45, 83)', borderWidth: 2 }}>
-
-                                        </View>
-                                    </View>
-                                </Mapir.Marker>
-                            </Mapir>
+                                {marker}
+                            </MapView>
                         </View>
 
                         <View style={styles.save_button}

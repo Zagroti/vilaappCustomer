@@ -14,6 +14,8 @@ import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.reactnativecommunity.slider.ReactSliderPackage;
+import com.airbnb.android.react.maps.MapsPackage;
+
 
 import java.util.Arrays;
 import java.util.List;
@@ -36,7 +38,9 @@ public class MainApplication extends Application implements ReactApplication {
           new AsyncStoragePackage(),
           new VectorIconsPackage(),
           new PickerPackage(),
-          new ReactSliderPackage()
+          new ReactSliderPackage(),
+          new MapsPackage()
+
       );
     }
 
