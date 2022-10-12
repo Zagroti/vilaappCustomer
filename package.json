@@ -12,7 +12,7 @@
     "mapir-react-native-sdk": "^1.6.1",
     "moment-jalaali": "^0.8.3",
     "react": "16.6.3",
-    "react-native": "0.57.8",
+    "react-native": "0.70.2",
     "react-native-image-crop-picker": "^0.24.1",
     "react-native-image-slider": "^2.0.3",
     "react-native-input-scroll-view": "^1.9.2",
